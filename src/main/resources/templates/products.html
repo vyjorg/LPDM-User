@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Produits</title>
+</head>
+<body>
+
+products
+
+<section layout:fragment="content">
+    <!-- INSERT CONTENT HERE -->
+    <div th:each = "product:${products}">
+        <img th:src="${product.getPicture()}"/>
+        <div th:text="${product.getName()}"/>
+    </div>
+
+    <table class="table">
+        <tr>
+            <th>Image</th>
+            <th>Nom </th>
+            <th>Catégorie</th>
+        </tr>
+        <tr th:each = "product:${products}">
+            <td><img th:src="${product.getPicture()}"/>
+            <td th:text="${product.getName()}"/>
+            <td th:text="${product.getCategory()}"/>
+        </tr>
+    </table>
+</section>
+
+
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+:root {
+    --elsize: brown; /* elements width */
+    --margL: 10px; /* margin (left and right)*/
+    --margT: 10px; /* margin top */
+    --bRs: 1em; /* border radius */
+    --bckCol: #213370; /* background color*/
+    --br: black 2px solid; /* border  */
+    --clr: floralwhite;
+}
+
+.container-fluid{
+    width: 50%;
+    text-align: center;
+    background: var(--bckCol);
+    color: lightslategray;
+
+}

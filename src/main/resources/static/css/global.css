@@ -1,0 +1,130 @@
+
+:root {
+    --elsize: brown; /* elements width */
+    --margL: 10px; /* margin (left and right)*/
+    --margT: 10px; /* margin top */
+    --bRs: 1em; /* border radius */
+    --bckCol: #213370; /* background color*/
+    --br: black 2px solid; /* border  */
+    --clr: floralwhite;
+}
+
+
+th{
+    padding-right: 10px
+}
+
+a{
+    color: indianred;
+}
+
+a:hover{
+    color: black;
+}
+
+.icone{
+    width: available;
+    background: var(--bckCol);
+    border: var(--br);
+    border-radius: var(--bRs);
+    font-size: 2em;
+    text-align: center;
+    margin-top: var(--margT);
+}
+
+header{
+    margin-left: var(--margL);
+    margin-right: var(--margL);
+    height: 14em;
+    background: var(--bckCol);
+    border: black 2px solid;
+    border-radius: var(--bRs);
+    padding: 10px;
+    color:lightslategray;
+}
+
+.sidenav{
+    margin-left: var(--margL);
+    margin-top: var(--margT);
+    width: var(--elsize);
+    height: content-box;
+    background: var(--bckCol);
+    color: floralwhite;
+    border: var(--br);
+    border-radius: var(--bRs);
+    font-size: 2.5em;
+    position: center;
+
+}
+
+#logo{
+    display: flex;
+    max-height: 6em;
+    padding: auto;
+    padding-left: 5px;
+    padding-top: 5px;
+    margin-top: auto;
+}
+
+#contactform{
+    width: var(--elsize);
+    margin-left: var(--margL);
+    position: center;
+    text-align: center;
+    border: var(--br);
+    border-radius: var(--bRs);
+    margin-bottom: 5px;
+    margin-top: var(--margT);
+}
+
+ul{
+    list-style: none;
+}
+
+
+.author{
+    background: gray;
+    color: floralwhite;
+}
+
+.region{
+    background: darkgrey;
+}
+
+.title{
+    background: black ;
+}
+
+
+.fontawesome{
+    width: fit-content;
+    text-align: center;
+    background: var(--bckCol);
+    border: var(--br);
+    border-radius: var(--bRs);
+    margin-top: var(--margT);
+    margin-right: var(--margL);
+}
+
+
+.calendar_wrap {
+    padding: 0;
+    text-align: center;
+}
+
+.calendar_wrap table {
+    max-width: 10em;
+}
+
+.calendar_wrap th {
+    max-width: 0.5em;
+}
+
+.calendar_wrap td{
+    color: floralwhite;
+    background: var(--bckCol);
+    max-width: 0.8em;
+}
+
+
+

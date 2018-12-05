@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      >
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/global.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+</head>
+<body>
+
+    <div class="container-fluid">
+
+        <table class="table">
+            <tr>
+                <th>Email utilisateur</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+            </tr>
+            <tr th:each = "user:${users}">
+                <td th:text="${user.getEmail()}"/>
+                <td th:text="${user.getFirstName()}"/>
+                <td th:text="${user.getName()}"/>
+            </tr>
+        </table>
+
+        <table class="table">
+            <tr>
+                <th>Image</th>
+                <th>Nom </th>
+                <th>Catégorie</th>
+            </tr>
+            <tr th:each = "product:${products}">
+                <td><img th:src="${product.getPicture()}"/>
+                <td th:text="${product.getName()}"/>
+                <td th:text="${product.getCategory().getName()}"/>
+            </tr>
+        </table>
+
+    </div>
+</body>
+</html>
