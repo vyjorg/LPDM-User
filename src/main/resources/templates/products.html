@@ -21,7 +21,7 @@ products
             <th>Catégorie</th>
         </tr>
         <tr th:each = "product:${products}">
-            <td><img th:src="${product.getPicture()}"/>
+            <td><img th:src="${product.getPicture()}"/></td>
             <td th:text="${product.getName()}"/>
             <td th:text="${product.getCategory().getName()}"/>
         </tr>

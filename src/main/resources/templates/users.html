@@ -10,20 +10,6 @@
 </head>
 <body>
 
-<table class="table">
-    <tr>
-        <th>Email utilisateur</th>
-        <th>Prénom</th>
-        <th>Nom</th>
-    </tr>
-    <tr th:each = "user:${users}">
-        <td th:text="${user.getEmail()}"/>
-        <td th:text="${user.getFirstName()}"/>
-        <td th:text="${user.getName()}"/>
-        <td th:text="${user.getRole()}"/>
-    </tr>
-</table>
-
 <section layout:fragment="content">
     <!-- INSERT CONTENT HERE -->
     <table class="table">
