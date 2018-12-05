@@ -21,6 +21,7 @@ public class ProductController {
         List<ProductBean> products = msProductProxy.listProduct();
         model.addAttribute("products", products);
         return "products";
-
     }
+
+
 }
