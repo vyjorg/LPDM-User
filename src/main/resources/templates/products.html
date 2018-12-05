@@ -13,10 +13,6 @@ products
 
 <section layout:fragment="content">
     <!-- INSERT CONTENT HERE -->
-    <div th:each = "product:${products}">
-        <img th:src="${product.getPicture()}"/>
-        <div th:text="${product.getName()}"/>
-    </div>
 
     <table class="table">
         <tr>
@@ -27,7 +23,7 @@ products
         <tr th:each = "product:${products}">
             <td><img th:src="${product.getPicture()}"/>
             <td th:text="${product.getName()}"/>
-            <td th:text="${product.getCategory()}"/>
+            <td th:text="${product.getCategory().getName()}"/>
         </tr>
     </table>
 </section>
