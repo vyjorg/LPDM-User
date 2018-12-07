@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="en">
 
 <head> <!--layout:fragment="head"-->
     <meta charset="UTF-8"/>
@@ -13,83 +13,89 @@
     <body>
         <div class="container-fluid">
             <!-- Row 1 -->
-            <header class="row" layout:fragment="header">
+            <header layout:fragment="header">
                 <!-- col 1  -->
-
-                <div class="col-md-3">
-                    <img id="logo" src="/panier.png" alt="panier rigolo"/>
-                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <img id="logo" src="/panier.png" alt="panier rigolo"/>
+                    </div>
                 <!-- col 2  -->
-                <div class="col-md-7">
-                    <h1>Bienvenue sur LaPlaceDuMarche.fr !</h1>
-                    <h2>Plateforme écologique</h2>
-                    <h3>Mangeons ce que nous pouvons, pas ce que nous voulons...</h3>
-                </div><br />
+                    <div class="col-md-7">
+                        <h1>Bienvenue sur LaPlaceDuMarche.fr !</h1>
+                        <h2>Plateforme écologique</h2>
+                        <h3>Mangeons ce que nous pouvons, pas ce que nous voulons...</h3>
+                    </div>
                 <!-- col 3  -->
-                <div class="col-md-2">
-                    <a th:unless="${username}" href="/login">Identification</a>
-                    <h3 th:unless="!${username}" th:text="'Bienvenue, ' + ${username}"/>
+                    <div class="col-md-2">
+                        <a th:unless="${username}" href="/login">Identification</a>
+                        <h3 th:unless="!${username}" th:text="'Bienvenue, ' + ${username}"/>
+                    </div>
                 </div>
-
             </header>
 
             <!-- Row 2 -->
-        <div class="row">
+            <div class="row">
             <!-- col 1  -->
-        <section class="col-md-3">
-            <nav class="sidenav" layout:fragment="sidenav">
-                <ul>
-                    <li><a href="/">Home</a> </li>
-                    <li><a href="/users">Users</a></li>
-                    <li><a href="/products">Products</a></li>
-                    <li><a href="/test">Test</a></li>
-                </ul>
-            </nav>
-            <!--
-            <div id="contactform" class="jumbotron" layout:fragment="contactform">
-            <form method="post" action="/routes">
+                <section class="col-md-3">
+                    <nav class="sidenav" layout:fragment="sidenav">
+                        <ul>
+                            <li><a href="/">Home</a> </li>
+                            <li><a href="/users">Users</a></li>
+                            <li><a href="/products">Products</a></li>
+                            <li><a href="/test">Test</a></li>
+                        </ul>
+                    </nav>
+                                <!--
+                                <div id="contactform" class="jumbotron" layout:fragment="contactform">
+                                <form method="post" action="/routes">
 
-                <fieldset>
-                    <legend>Contactez nous</legend>
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" class="form-control"/>
-                    <label for="email">Email</label>
-                    <input id="email" type="email" name="email" class="form-control"/><br />
-                    <button type="submit" class="form-control btn-primary">Soumettre</button>
-                </fieldset>
+                                    <fieldset>
+                                        <legend>Contactez nous</legend>
+                                        <label for="message">Message</label>
+                                        <textarea id="message" name="message" class="form-control"/>
+                                        <label for="email">Email</label>
+                                        <input id="email" type="email" name="email" class="form-control"/><br />
+                                        <button type="submit" class="form-control btn-primary">Soumettre</button>
+                                    </fieldset>
 
-            </form>
-            </div>
-            -->
-        </section>
+                                </form>
+                                </div>
+                                -->
+                </section>
+
+
             <!-- col 2  -->
-            <section class="col-md-6">
-                <h2>Content section</h2>
+                <section class="col-md-6">
 
-               <section layout:fragment="content"/>
+                    <h2>Content section</h2>
 
-            </section>
+                    <section layout:fragment="content"/>
+
+                </section>
 
             <!-- col 3  -->
-            <section class="col-md-3">
+                <section class="col-md-3">
 
-                <h2>Right-Content section</h2>
+                    <h2>Right-Content section</h2>
 
-            <section layout:fragment="content-right"/>
+                    <section layout:fragment="content-right"/>
 
 
 
-            </section>
-        </div>
-            <!-- Row 3 -->
-
-            <div class="row">
-                <div class="icone">
-                    <a href="https://www.linkedin.com/in/julien-cauwet-01035554/"> <i class="fa fa-linkedin-square"></i></a>
-                    <a href="https://github.com/juliencauwet"> <i class="fa fa-github-square"></i></a>
-                    <a href="https://www.facebook.com/julien.cauwet"> <i class="fa fa-facebook-square"></i></a>
-                </div>
+                </section>
             </div>
+            <!-- Row 3 -->
+            <footer>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="icone">
+                            <a href="https://www.linkedin.com/in/julien-cauwet-01035554/"> <i class="fa fa-linkedin-square"></i></a>
+                            <a href="https://github.com/juliencauwet"> <i class="fa fa-github-square"></i></a>
+                            <a href="https://www.facebook.com/julien.cauwet"> <i class="fa fa-facebook-square"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
     </body>
 </html>

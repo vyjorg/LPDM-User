@@ -24,23 +24,25 @@ a:hover{
 
 .icone{
     width: available;
-    background: var(--bckCol);
-    border: var(--br);
-    border-radius: var(--bRs);
     font-size: 2em;
     text-align: center;
-    margin-top: var(--margT);
+
 }
 
-header{
+header, footer{
     margin-left: var(--margL);
     margin-right: var(--margL);
-    height: 14em;
+    margin-top: var(--margT);
     background: var(--bckCol);
-    border: black 2px solid;
+    border: var(--br);
+    /*border: black 2px solid;*/
     border-radius: var(--bRs);
     padding: 10px;
     color:lightslategray;
+}
+
+header{
+    height: 14em;
 }
 
 .sidenav{
@@ -52,7 +54,7 @@ header{
     color: floralwhite;
     border: var(--br);
     border-radius: var(--bRs);
-    font-size: 2.5em;
+    font-size: 1.5em;
     position: center;
 
 }
