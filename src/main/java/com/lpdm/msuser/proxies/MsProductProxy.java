@@ -21,7 +21,7 @@ public interface MsProductProxy {
     public void addProduct(@RequestBody ProductBean product);
 
     @DeleteMapping(value="/products/{id}")
-    public void deleteStock(@PathVariable int id);
+    public void deleteStock(@PathVariable("id") int id);
 
     @PutMapping(value="/products")
     public void updateStock(@RequestBody ProductBean product);

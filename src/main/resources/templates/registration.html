@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+
+<head>
+    <title>Enregistrement</title>
+
+</head>
+
+<body>
+
+<form class="form-group" action="login" method="post">
+
+    <table width="400" border="1 floralwhite solid" align="center"
+           cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+                <table border="0" cellspacing="2"
+                       cellpadding="1" width="100%">
+                    <tr bgcolor="#eaeac8">
+                        <label class="form-control">Authentification</label>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2"><p>&nbsp;</p></td>
+                    </tr>
+
+                    <tr align="center">
+                        <td><div class="form-control" key="email" label="Email utilisateur" required="true"/></td>
+                    </tr>
+
+                    <tr align="center">
+                        <td><div class="form-control" key="password" label="Mot de Passe" required="true"/></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2"><p>&nbsp;</p></td>
+                    </tr>
+
+                    <tr>
+                        <td align="center" colspan="2"><s:submit class="form-control" value="Identifiez-vous!"/> </td>
+                        <td><s:a action="inscription">Inscription</s:a> </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+
+
+</body>
+</html>

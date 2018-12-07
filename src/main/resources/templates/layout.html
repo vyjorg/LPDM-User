@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<head layout:fragment="head">
+<head> <!--layout:fragment="head"-->
     <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/global.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 </head>
 
@@ -15,6 +15,7 @@
             <!-- Row 1 -->
             <header class="row" layout:fragment="header">
                 <!-- col 1  -->
+
                 <div class="col-md-3">
                     <img id="logo" src="/panier.png" alt="panier rigolo"/>
                 </div>
@@ -26,9 +27,10 @@
                 </div><br />
                 <!-- col 3  -->
                 <div class="col-md-2">
-                    <a th:unless="${username}" href="/sign">Sign In / Sign up</a>
+                    <a th:unless="${username}" href="/login">Identification</a>
                     <h3 th:unless="!${username}" th:text="'Bienvenue, ' + ${username}"/>
                 </div>
+
             </header>
 
             <!-- Row 2 -->
@@ -43,9 +45,10 @@
                     <li><a href="/test">Test</a></li>
                 </ul>
             </nav>
+            <!--
             <div id="contactform" class="jumbotron" layout:fragment="contactform">
             <form method="post" action="/routes">
-                <!--
+
                 <fieldset>
                     <legend>Contactez nous</legend>
                     <label for="message">Message</label>
@@ -54,13 +57,14 @@
                     <input id="email" type="email" name="email" class="form-control"/><br />
                     <button type="submit" class="form-control btn-primary">Soumettre</button>
                 </fieldset>
-                -->
-            </form>
 
+            </form>
             </div>
+            -->
         </section>
             <!-- col 2  -->
             <section class="col-md-6">
+                <h2>Content section</h2>
 
                <section layout:fragment="content"/>
 
@@ -68,6 +72,8 @@
 
             <!-- col 3  -->
             <section class="col-md-3">
+
+                <h2>Right-Content section</h2>
 
             <section layout:fragment="content-right"/>
 
