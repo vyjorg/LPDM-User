@@ -1,0 +1,15 @@
+version: '3.5'
+services:
+  ms-user:
+    image: postgres:alpine
+    ports:
+      - '28182:5432'
+    container_name: LPDM-UserDB
+    environment:
+      POSTGRES_DB: db_user
+      POSTGRES_USER: usr_user
+      POSTGRES_PASSWORD: user
+    volumes:
+      - '.sql:/docker-entrypoint-initdb.d'
+    restart: always
+    network_mode: bridge
