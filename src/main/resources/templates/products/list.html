@@ -22,10 +22,49 @@ products
         </tr>
         <tr th:each = "product:${products}">
             <td><img th:src="${product.getPicture()}"/></td>
-            <td th:text="${product.getName()}"/>
+            <td><a th:href="@{'/products/' + ${product.getId()}}" th:value="${product.getId()}"
+                   th:text="${product.getName()}"/></td>
             <td th:text="${product.getCategory().getName()}"/>
         </tr>
     </table>
+
+    <!--
+    <div class="row">
+        <div class="col-md-4">
+            <table class="table">
+            <th>Sites</th>
+            <tr th:each="site : ${sites}">
+
+                <td><a style="color: #213370" th:href="@{'/routes/' + ${site.getId()}}" th:value="${site.getId()}"
+                       th:text="${site.getName()}"/></td>
+            </tr>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table class="table">
+            <th>Secteurs</th>
+
+    <tr th:each="area : ${areas}">
+        <td>
+
+            <a style="color: #213370"
+               th:href="@{'/routes/' + ${area.getSite().getId()} + '/' + ${area.getId()}}"
+               th:value="${area.getId()}" th:text="${area.getName()}"/></td>
+    </tr>
+    </table>
+    </div>
+    <div class="col-md-4">
+        <table class="table">
+            <th>Voies</th>
+            <tr th:each="route : ${routes}">
+                <td><a style="color: #213370" th:href="@{'/routedescription/' + ${route.getId()}}"
+                       th:value="${route.getId()}" th:text="${route.getName()}"/></td>
+            </tr>
+        </table>
+    </div>
+
+    </div>
+    -->
 </section>
 
 
