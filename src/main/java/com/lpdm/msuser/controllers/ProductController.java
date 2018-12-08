@@ -1,6 +1,7 @@
 package com.lpdm.msuser.controllers;
 
 
+import com.lpdm.msuser.msproduct.CategoryBean;
 import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.proxies.MsProductProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class ProductController {
     public String productList(Model model){
         List<ProductBean> products = msProductProxy.listProduct();
         model.addAttribute("products", products);
+        List<ProductBean> cats = msProductProxy.listProduct();
+        model.addAttribute("cats", cats);
         return "products/list";
     }
 

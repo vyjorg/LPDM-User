@@ -28,43 +28,36 @@ products
         </tr>
     </table>
 
-    <!--
-    <div class="row">
-        <div class="col-md-4">
-            <table class="table">
-            <th>Sites</th>
-            <tr th:each="site : ${sites}">
+    </section>
 
-                <td><a style="color: #213370" th:href="@{'/routes/' + ${site.getId()}}" th:value="${site.getId()}"
-                       th:text="${site.getName()}"/></td>
-            </tr>
-            </table>
-        </div>
-        <div class="col-md-4">
-            <table class="table">
-            <th>Secteurs</th>
+<section layout:fragment="content-right">
 
-    <tr th:each="area : ${areas}">
-        <td>
+    <form class="form-group "> <!-- right-content-form -->
+        <ul class="form-style-1">
+            <li><label>Produit <span class="required">*</span></label><input type="text" name="field1" class="form-control" placeholder="Nom du Produit" /> </li>
+            <li>
+                <label>Email <span class="required">*</span></label>
+                <input type="email" name="field3" class="field-long form-control" />
+            </li>
+            <li>
+                <label>Catégorie<span class="required">*</span></label>
+                <select th:field="*{cats}" name="field4" class="field-select form-control">
+                    <option th:each="cat:${cats}"
+                            th:value="${cat.getId()}"
+                            th:utext="${cat.getCategory().getName()}"
+                    />
+                </select>
+            </li>
+            <li>
+                <label>Descriptif <span class="required">*</span></label>
+                <textarea name="field5" id="field5" class="field-long field-textarea form-control"></textarea>
+            </li>
+            <li>
+                <input type="submit" value="Enregistrer" class="form-control"/>
+            </li>
+        </ul>
+    </form>
 
-            <a style="color: #213370"
-               th:href="@{'/routes/' + ${area.getSite().getId()} + '/' + ${area.getId()}}"
-               th:value="${area.getId()}" th:text="${area.getName()}"/></td>
-    </tr>
-    </table>
-    </div>
-    <div class="col-md-4">
-        <table class="table">
-            <th>Voies</th>
-            <tr th:each="route : ${routes}">
-                <td><a style="color: #213370" th:href="@{'/routedescription/' + ${route.getId()}}"
-                       th:value="${route.getId()}" th:text="${route.getName()}"/></td>
-            </tr>
-        </table>
-    </div>
-
-    </div>
-    -->
 </section>
 
 
