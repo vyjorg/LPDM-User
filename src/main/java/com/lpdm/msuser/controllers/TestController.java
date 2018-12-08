@@ -20,7 +20,7 @@ public class TestController {
     @Autowired
     MsProductProxy msProductProxy;
 
-    @GetMapping("/test")
+    @GetMapping("/test/test")
     public String test(Model model){
         List<ProductBean> products = msProductProxy.listProduct();
         model.addAttribute("products", products);
@@ -28,6 +28,6 @@ public class TestController {
         List<AppUserBean> appUsers = msUserProxy.getAllUsers();
         model.addAttribute("users", appUsers);
 
-        return "test";
+        return "test/test";
     }
 }

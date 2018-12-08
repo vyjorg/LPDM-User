@@ -27,7 +27,7 @@
                     </div>
                 <!-- col 3  -->
                     <div class="col-md-2">
-                        <a th:unless="${username}" href="/login">Identification</a>
+                        <a th:unless="${username}" href="/identification/login">Identification</a>
                         <h3 th:unless="!${username}" th:text="'Bienvenue, ' + ${username}"/>
                     </div>
                 </div>
@@ -39,10 +39,10 @@
                 <section class="col-md-3">
                     <nav class="sidenav" layout:fragment="sidenav">
                         <ul>
-                            <li><a href="/">Home</a> </li>
-                            <li><a href="/users">Users</a></li>
-                            <li><a href="/products">Products</a></li>
-                            <li><a href="/test">Test</a></li>
+                            <li><a href="/">Accueil</a> </li>
+                            <li><a href="/users/list">Liste des utilisateurs</a></li>
+                            <li><a href="/products/list">Liste des produits</a></li>
+                            <li><a href="/test/test">Test</a></li>
                         </ul>
                     </nav>
                                 <!--
