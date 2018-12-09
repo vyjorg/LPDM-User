@@ -16,8 +16,6 @@ public class AppUserBean {
     private String name;
     private String firstName;
 
-    private AddressBean address;
-
     public AppUserBean() {
     }
 
@@ -27,13 +25,13 @@ public class AppUserBean {
         this.role = role;
     }
 
-    public AppUserBean(String email, String password, Enum<Access> role, String name, String firstName, AddressBean address) {
+    public AppUserBean(String email, String password, Enum<Access> role, String name, String firstName) {
         this.email = email;
         this.password = password;
         this.role = role;
         this.name = name;
         this.firstName = firstName;
-        this.address = address;
+
     }
 
     public int getId() {
@@ -84,14 +82,6 @@ public class AppUserBean {
         this.firstName = firstName;
     }
 
-    public AddressBean getAddressBean() {
-        return address;
-    }
-
-    public void setAddressBean(AddressBean address) {
-        this.address = address;
-    }
-
     @Override
     public String toString() {
         return "AppUser{" +
@@ -101,7 +91,6 @@ public class AppUserBean {
                 ", role=" + role +
                 ", name='" + name + '\'' +
                 ", firstName='" + firstName + '\'' +
-                ", address=" + address +
                 '}';
     }
 }

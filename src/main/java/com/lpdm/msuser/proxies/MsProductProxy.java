@@ -12,17 +12,17 @@ import java.util.List;
 public interface MsProductProxy {
 
     @GetMapping(value = "/products")
-    public List<ProductBean> listProduct();
+    List<ProductBean> listProduct();
 
     @GetMapping(value="/products/{id}")
-    public ProductBean findProduct(@PathVariable("id") int id);
+    ProductBean findProduct(@PathVariable("id") int id);
 
     @PostMapping(value = "/products")
-    public void addProduct(@RequestBody ProductBean product);
+    void addProduct(@RequestBody ProductBean product);
 
     @DeleteMapping(value="/products/{id}")
-    public void deleteStock(@PathVariable("id") int id);
+    void deleteStock(@PathVariable("id") int id);
 
     @PutMapping(value="/products")
-    public void updateStock(@RequestBody ProductBean product);
+    void updateStock(@RequestBody ProductBean product);
 }

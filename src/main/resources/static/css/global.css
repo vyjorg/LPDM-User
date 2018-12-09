@@ -42,7 +42,7 @@ header, footer{
 }
 
 header{
-    height: 14em;
+    height: fit-content;
 }
 
 .sidenav{
