@@ -2,6 +2,8 @@ package com.lpdm.msuser.msauthentication;
 
 import com.lpdm.msuser.msauthentication.enumeration.Access;
 
+import javax.validation.constraints.NotNull;
+
 
 public class AppUserBean {
 
@@ -19,20 +21,51 @@ public class AppUserBean {
     public AppUserBean() {
     }
 
-    public AppUserBean(String email, String password, Enum<Access> role) {
+    public AppUserBean(@NotNull String email, @NotNull String password) {
         this.email = email;
         this.password = password;
-        this.role = role;
     }
 
-    public AppUserBean(String email, String password, Enum<Access> role, String name, String firstName) {
+    public AppUserBean(@NotNull String email, @NotNull String password, Enum<Access> role) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public AppUserBean(@NotNull String email, @NotNull String password, Enum<Access> role, String name, String firstName, String address) {
         this.email = email;
         this.password = password;
         this.role = role;
         this.name = name;
         this.firstName = firstName;
-
     }
+
+    /*
+    private Enum<AccessEnum> role;
+
+    private String name;
+    private String firstName;
+
+    public AppUser() {
+    }
+
+    public AppUser(@NotNull String email, @NotNull String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public AppUser(@NotNull String email, @NotNull String password, Enum<AccessEnum> role) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public AppUser(@NotNull String email, @NotNull String password, Enum<AccessEnum> role, String name, String firstName, String address) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.name = name;
+        this.firstName = firstName;
+    }
+     */
 
     public int getId() {
         return id;
