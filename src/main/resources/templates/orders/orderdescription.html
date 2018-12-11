@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+
+<head>
+    <title>Template</title>
+
+</head>
+
+<body>
+<section layout:fragment="content">
+    <h3>Description  du produit:</h3>
+
+
+    <table class="table">
+        <tr>
+            <td>Client</td>
+            <td th:text="${order.getCustomer().getName()}"/>
+        </tr>
+
+        <tr>
+            <td>Date de commande</td>
+            <td th:text="${order.getOrderDate()}"/>
+        </tr>
+        <tr>
+            <td>Total</td>
+            <td th:text="${order.getTotal()} + '€'"/>
+        </tr>
+    </table>
+
+    <table class="table">
+        <tr th:each="product:${products}">
+            <td><a th:value="${product.getProduct().getId()}" th:href="@{'/products/' + ${product.getProduct().getId()}}" th:text="${product.getProduct().getName()}"/><td></td>
+        </tr>
+
+    </table>
+
+</section>
+
+<section layout:fragment="content-right">
+
+    <!-- INSERT SOMETHING HERE -->
+
+</section>
+
+
+</body>
+</html>

@@ -8,6 +8,36 @@
 </head>
 <body>
 
+<section layout:fragment="content">
+    <!-- INSERT CONTENT HERE -->
+
+    <table class="table">
+        <tr>
+            <th>Email utilisateur</th>
+            <th>Prénom</th>
+            <th>Nom</th>
+        </tr>
+        <tr th:each = "user:${users}">
+            <td th:text="${user.getEmail()}"/>
+            <td><a th:text="${user.getId()}" th:href="@{'/orders/' + ${user.getId()}}" th:value="${user.getId()}"/></td>
+            <td th:text="${user.getName()}"/>
+        </tr>
+    </table>
+
+    <table class="table">
+        <tr>
+            <th>Image</th>
+            <th>Nom </th>
+            <th>Catégorie</th>
+        </tr>
+        <tr th:each = "product:${products}">
+            <td><img th:src="${product.getPicture()}"/>
+            <td th:text="${product.getName()}"/>
+            <td th:text="${product.getCategory().getName()}"/>
+        </tr>
+    </table>
+</section>
+
     <div class="container-fluid">
 
         <table class="table">
@@ -18,7 +48,7 @@
             </tr>
             <tr th:each = "user:${users}">
                 <td th:text="${user.getEmail()}"/>
-                <td th:text="${user.getFirstName()}"/>
+                <td><a th:text="${user.getId()}" th:href="@{'/orders/' + ${user.getId()}}"/></td>
                 <td th:text="${user.getName()}"/>
             </tr>
         </table>

@@ -5,10 +5,7 @@ import com.lpdm.msuser.proxies.MsUserProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +21,13 @@ public class UserController {
         List<AppUserBean> appUsers = msUserProxy.getAllUsers();
         model.addAttribute("users", appUsers);
         return "users/list";
+    }
+
+    @GetMapping("/{id}")
+    public String userDescription(@PathVariable ("id") int id, Model model){
+        AppUserBean user = msUserProxy.getUserById(id);
+        model.addAttribute("user", user);
+        return "users/userdescription";
     }
 
     @PostMapping("/")

@@ -17,6 +17,7 @@
             <th>Mot de Passe</th>
         </tr>
         <tr th:each = "user:${users}">
+            <td><a th:href="@{'/users/'+ ${user.getId()}}" th:value="${user.getId()}" th:text="${user.getId()}"/></td>
             <td th:text="${user.getEmail()}"/>
             <td th:text="${user.getFirstName()}"/>
             <td th:text="${user.getName()}"/>

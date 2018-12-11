@@ -14,17 +14,21 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Component
-@FeignClient(name = "ms-order", url = "localhost:28083")
+@FeignClient(name = "ms-order", url = "localhost:28083/orders")
 public interface MsOrderProxy {
-
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    OrderBean getOrderById(@PathVariable int id);
+    OrderBean getOrderById(@PathVariable("id") int id);
 
     @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     OrderBean saveOrder(@Valid @RequestBody OrderBean order);
 
     @GetMapping(value = "/by/customer/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    List<OrderBean> findAllByUserId(@PathVariable int id);
+    List<OrderBean> findAllByUserId(@PathVariable("id") int id);
 
     @GetMapping(value = "/payments", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<PaymentBean> getPaymentList();
