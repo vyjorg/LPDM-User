@@ -81,4 +81,18 @@ public class ProductBean {
     public void setProductorID(Integer productorID) {
         this.productorID = productorID;
     }
+
+    @Override
+    public String toString() {
+        return "ProductBean{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category=" + category +
+                ", label='" + label + '\'' +
+                ", price=" + price +
+                ", stockId=" + stockId +
+                ", picture='" + picture + '\'' +
+                ", productorID=" + productorID +
+                '}';
+    }
 }

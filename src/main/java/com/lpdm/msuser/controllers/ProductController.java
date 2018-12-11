@@ -37,8 +37,15 @@ public class ProductController{
 
     @PostMapping(value = "/")
     public void addProduct(@ModelAttribute ProductBean product){
+
         System.out.println(product.getName());
         System.out.println(product.getLabel());
+        product.setLabel("test");
+        product.setProductorID(900);
+        product.setPicture("test.jpg");
+        product.setCategory(msProductProxy.findProduct(1).getCategory());
+        product.setStockId(900);
+        System.out.println(product.toString());
         msProductProxy.addProduct(product);
     }
 
