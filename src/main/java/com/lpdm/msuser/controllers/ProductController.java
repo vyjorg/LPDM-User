@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/products")
-public class ProductController implements MsProductProxy{
+public class ProductController{
 
     @Autowired
     MsProductProxy msProductProxy;
@@ -34,32 +34,12 @@ public class ProductController implements MsProductProxy{
         return "products/productdescription";
     }
 
-    @Override
-    public List<ProductBean> listProduct() {
-        return null;
-    }
 
-    @Override
-    public ProductBean findProduct(int id) {
-        return null;
-    }
-
-    @PostMapping(value = "/add")
+    @PostMapping(value = "/")
     public void addProduct(@ModelAttribute ProductBean product){
+        System.out.println(product.getName());
+        System.out.println(product.getLabel());
         msProductProxy.addProduct(product);
     }
-
-    @Override
-    public void deleteStock(int id) {
-
-    }
-
-    @Override
-    public void updateStock(ProductBean product) {
-
-    }
-
-    ;
-
 
 }
