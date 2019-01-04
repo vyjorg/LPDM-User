@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="layout">
+      layout:decorate="layout">
 <head>
     <meta charset="UTF-8">
     <title>Produits</title>
@@ -42,15 +42,17 @@ products
         <ul class="form-style-1">
             <li><label>Produit <span class="required">*</span></label><input type="text" name="name" class="form-control" placeholder="Nom du Produit" /> </li>
 
+            <!--
             <li>
                 <label>Catégorie<span class="required">*</span></label>
-                <select th:field="*{cats}" name="category" class="field-select form-control">
+                <select th:field="*{cats}" name="categoryId" class="field-select form-control">
                     <option th:each="cat:${cats}"
                             th:value="${cat.getId()}"
                             th:utext="${cat.getCategory().getName()}"
                     />
                 </select>
             </li>
+            -->
             <li>
                 <label> Prix<span class="required">*</span></label>
                 <input type="text" name="price" class="field-long form-control" />

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="layout">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title>Enregistrement</title>
@@ -10,46 +8,19 @@
 
 <body>
 
-<form class="form-group" action="login" method="post">
-
-    <table width="400" border="1 floralwhite solid" align="center"
-           cellpadding="0" cellspacing="0">
-        <tr>
-            <td>
-                <table border="0" cellspacing="2"
-                       cellpadding="1" width="100%">
-                    <tr bgcolor="#eaeac8">
-                        <label class="form-control">Authentification</label>
-                    </tr>
-
-                    <tr>
-                        <td colspan="2"><p>&nbsp;</p></td>
-                    </tr>
-
-                    <tr align="center">
-                        <td><div class="form-control" key="email" label="Email utilisateur" required="true"/></td>
-                    </tr>
-
-                    <tr align="center">
-                        <td><div class="form-control" key="password" label="Mot de Passe" required="true"/></td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="2"><p>&nbsp;</p></td>
-                    </tr>
-
-                    <tr>
-                        <td align="center" colspan="2"><s:submit class="form-control" value="Identifiez-vous!"/> </td>
-                        <td><s:a action="inscription">Inscription</s:a> </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+<div th:if="${param.error}">
+    Utilisateur ou mot de passe invalide
+</div>
+<div th:if="${param.logout}">
+    Vous êtes déconnecté.
+</div>
+<form th:action="@{/identification/registration}" method="post">
+    <div><label> Nom : <input type="text" name="name"/> </label></div>
+    <div><label> Prénom : <input type="text" name="firstName"/> </label></div>
+    <div><label> Adresse email : <input type="text" name="email"/> </label></div>
+    <div><label> Mot de passe : <input type="password" name="password"/> </label></div>
+    <div><label> Confirmation du mot de passe : <input type="password" name="password2"/> </label></div>
+    <div><input type="submit" value="Sign In"/></div>
 </form>
-
-
-
-
 </body>
 </html>

@@ -27,17 +27,13 @@ public class TestController {
     public String test(Model model){
         log.info("Récupération des produits et des utilsateurs puis affichage: ");
         System.out.println("Récupération des produits et des utilsateurs puis affichage: ");
-        List<ProductBean> products = msProductProxy.listProduct();
-        model.addAttribute("products", products);
+      // List<ProductBean> products = msProductProxy.listProduct();
+      // model.addAttribute("products", products);
 
 
-        List<AppUserBean> appUsers = msUserProxy.getAllUsers();
-        model.addAttribute("users", appUsers);
+      // List<AppUserBean> appUsers = msUserProxy.getAllUsers();
+      // model.addAttribute("users", appUsers);
 
-        for (AppUserBean u: appUsers
-             ) {
-            System.out.println(u.getEmail());
-        }
         return "test/test";
     }
 }

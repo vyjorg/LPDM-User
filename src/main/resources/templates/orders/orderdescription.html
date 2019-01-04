@@ -10,7 +10,7 @@
 
 <body>
 <section layout:fragment="content">
-    <h3>Description  du produit:</h3>
+    <h3>Détail de la commande:</h3>
 
 
     <table class="table">
@@ -30,8 +30,18 @@
     </table>
 
     <table class="table">
+        <tr>
+            <th>Article</th>
+            <th>Quantité</th>
+            <th>Prix unitaire</th>
+            <th>Montant</th>
+
+        </tr>
         <tr th:each="product:${products}">
-            <td><a th:value="${product.getProduct().getId()}" th:href="@{'/products/' + ${product.getProduct().getId()}}" th:text="${product.getProduct().getName()}"/><td></td>
+            <td><a th:value="${product.getProduct().getId()}" th:href="@{'/products/' + ${product.getProduct().getId()}}" th:text="${product.getProduct().getName()}"/>
+            <td th:text="${product.getQuantity()}"/>
+            <td th:text="${product.getProduct().getPrice()}"/>
+            <td th:text="${product.getProduct().getPrice()} * ${product.getQuantity()}">
         </tr>
 
     </table>

@@ -36,17 +36,31 @@ public class ProductController{
 
 
     @PostMapping(value = "/")
-    public void addProduct(@ModelAttribute ProductBean product){
+    public String addProduct(@ModelAttribute ProductBean product){
 
-        System.out.println(product.getName());
-        System.out.println(product.getLabel());
-        product.setLabel("test");
-        product.setProductorID(900);
-        product.setPicture("test.jpg");
-        product.setCategory(msProductProxy.findProduct(1).getCategory());
-        product.setStockId(900);
         System.out.println(product.toString());
+
         msProductProxy.addProduct(product);
+
+        return "products/list";
     }
+
+    /*
+    @PostMapping("/")
+    public String addUser(@ModelAttribute AppUserBean user){
+
+        msUserProxy.addUser(user);
+
+        return "users/list";
+    }
+
+
+    @PostMapping(value = "/products")
+    void addProduct(@RequestBody ProductBean product);
+
+   @PostMapping("/users")
+    void addUser(@RequestBody AppUserBean user);
+
+     */
 
 }

@@ -9,6 +9,12 @@
     --clr: floralwhite;
 }
 
+h2:hover{
+    color: chartreuse;
+}
+
+#mapid { height: 180px;
+            background-color: #88D5E9}
 
 th{
     padding-right: 10px
@@ -196,3 +202,4 @@ select{
 .right-content-form{
     width: 30%;
 }
+

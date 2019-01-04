@@ -3,6 +3,7 @@ package com.lpdm.msuser.msauthentication;
 import com.lpdm.msuser.msauthentication.enumeration.Access;
 
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
 
 
 public class AppUserBean {
@@ -14,6 +15,8 @@ public class AppUserBean {
     private String password;
 
     private Enum<Access> role;
+
+    private Collection<AppRoleBean> roles;
 
     private String name;
     private String firstName;
@@ -113,6 +116,14 @@ public class AppUserBean {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public Collection<AppRoleBean> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<AppRoleBean> roles) {
+        this.roles = roles;
     }
 
     @Override
