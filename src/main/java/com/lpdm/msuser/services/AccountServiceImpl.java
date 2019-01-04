@@ -35,7 +35,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AppUserBean findUserByUserName(String userName) {
-        return userProxy.getUserByUsername(userName);
+        return null; //userProxy.getUserByUsername(userName);
     }
 
 
