@@ -13,7 +13,7 @@ import java.util.Optional;
 @FeignClient(name = "microservice-authentication", url = "localhost:28081")
 public interface MsUserProxy {
 
-    @GetMapping("/users")
+    @GetMapping("/users/")
     List<AppUserBean> getAllUsers();
 
     @GetMapping("/users/{id}")

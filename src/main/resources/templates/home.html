@@ -16,42 +16,18 @@
         <div  th:each="product:${products}" class="col-md-4 item">
             <img th:src="${product.getPicture()}" class="product"/><br/>
             <a th:href="@{'/products/' + ${product.getId()}}" th:value="${product.getId()}"
-               th:text="${product.getName()}"/><br/>
+               th:text="${product.getName()}"/> <div th:text="${product.getPrice()}"/><br/>
             <p><a th:href="@{'/products/' + ${product.getId()} + '/sub'}" class="minus" th:value="${product.getId()}" >-</a> <input class="nbitem" /> <a th:href="@{'/products/' + ${product.getId()} + '/add'}" class="plus" th:value="${product.getId()}" >+</a></p>
         </div>
 
     </div>
 
-
-
-
 </section>
 
 <section layout:fragment="content-right">
 
-    <!-- INSERT SOMETHING HERE
-
-    <form th:action="@{products/list}" th:method="post">
-        <ul class="form-style-1">
-
-                <label>Catégorie<span class="required">*</span></label>
-                <select th:field="*{cats}" name="categoryId" class="field-select form-control">
-                    <option th:each="cat:${cats}"
-                            th:value="${cat.getId()}"
-                            th:utext="${cat.getCategory().getName()}"
-                    />
-                </select>
-
-
-
-                <input type="submit" value="Submit" />
-            </li>
-        </ul>
-    </form>
-
-    -->
-
     <p>Panier</p>
+    <p>Total Panier: <span th:text="${total}"></p>
     <table class="table">
         <tr>
             <th>Article</th>

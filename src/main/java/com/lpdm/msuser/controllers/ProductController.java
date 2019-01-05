@@ -22,6 +22,8 @@ public class ProductController{
 
     public static Map<String, Integer> cart = new HashMap();
 
+    public  static double cartTotal = 0;
+
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping("/{id}")
@@ -53,15 +55,18 @@ public class ProductController{
 
     @GetMapping("/{id}/add")
     public String addItem(@PathVariable("id") int productId, Model model){
-        int q = 0;
 
         logger.info("Entrée dans addItem pour produit : " + productId);
         ProductBean product = msProductProxy.findProduct(productId);
 
         cart.put(product.getName(), cart.get(product.getName()) == null ? 1 : cart.get(product.getName()) + 1);
 
+        cartTotal += product.getPrice();
+
         model.addAttribute("cart", cart);
         model.addAttribute("products", msProductProxy.listProduct());
+        model.addAttribute("total", cartTotal);
+
 
         return "home";
     }
