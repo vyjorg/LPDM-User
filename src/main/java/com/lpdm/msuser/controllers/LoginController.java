@@ -20,6 +20,23 @@ public class LoginController {
     @Autowired
     private MsUserProxy msUserProxy;
 
+
+   //public static AppUserBean getUser(HttpSession session){
+
+   //    Logger logger = LoggerFactory.getLogger(LoginController.class);
+
+   //    try {
+   //        AppUserBean user = (AppUserBean) session.getAttribute("user");
+   //        return user;
+   //    }catch (NullPointerException e){
+   //        logger.info("Pas d'utilisateur identifié");
+   //    }finally {
+   //        logger.info("Utilisateur null");
+   //        return null;
+   //    }
+
+   //}
+
     @GetMapping("/login")
     public String loginForm(HttpSession session, Model model){
 
@@ -56,7 +73,8 @@ public class LoginController {
         } else if (user.getPassword().equals(appUser.getPassword())){
             logger.info("Entrée de l'utilisateur dans la session");
             session.setAttribute("user", appUser);
-            logger.info("vérification :" + session.getAttribute("user").toString());
+            model.addAttribute("username", appUser.getFirstName());
+
             return "home";
         } else {
             logger.info("Mot de passe incorrect: " + user.getPassword() + " " + appUser.getPassword());

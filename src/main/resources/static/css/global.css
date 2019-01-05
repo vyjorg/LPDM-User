@@ -203,3 +203,12 @@ select{
     width: 30%;
 }
 
+.item{
+    border: 1px solid black;
+    align-content: center;
+    text-align: center;
+    padding: auto;
+    margin: 2% auto;
+    min-height: 4em;
+}
+

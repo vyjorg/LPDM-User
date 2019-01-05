@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
@@ -11,14 +12,95 @@
 <section layout:fragment="content">
     <!-- INSERT CONTENT HERE -->
 
+    <div class="row">
+        <div  th:each="product:${products}" class="col-md-4 item">
+            <img th:src="${product.getPicture()}" class="product"/><br/>
+            <a th:href="@{'/products/' + ${product.getId()}}" th:value="${product.getId()}"
+               th:text="${product.getName()}"/><br/>
+            <p><a th:href="@{'/products/' + ${product.getId()} + '/sub'}" class="minus" th:value="${product.getId()}" >-</a> <input class="nbitem" /> <a th:href="@{'/products/' + ${product.getId()} + '/add'}" class="plus" th:value="${product.getId()}" >+</a></p>
+        </div>
+
+    </div>
+
+
+
 
 </section>
 
 <section layout:fragment="content-right">
 
-    <!-- INSERT SOMETHING HERE -->
+    <!-- INSERT SOMETHING HERE
+
+    <form th:action="@{products/list}" th:method="post">
+        <ul class="form-style-1">
+
+                <label>Catégorie<span class="required">*</span></label>
+                <select th:field="*{cats}" name="categoryId" class="field-select form-control">
+                    <option th:each="cat:${cats}"
+                            th:value="${cat.getId()}"
+                            th:utext="${cat.getCategory().getName()}"
+                    />
+                </select>
+
+
+
+                <input type="submit" value="Submit" />
+            </li>
+        </ul>
+    </form>
+
+    -->
+
+    <p>Panier</p>
+    <table class="table">
+        <tr>
+            <th>Article</th>
+            <th>Quantité</th>
+        </tr>
+    <tr th:each="item:${cart}">
+        <td th:text="${item.key}" />
+        <td th:text="${item.value}" />
+    </tr>
+    </table>
+    <a th:href="@{/products/emptycart}" th:text="'Vider le panier'"/><br/>
+    <a th:href="@{/products/order}" th:text="'Valider la commande'"/><br/>
+
+    <div id="test"></div>
+
+<script>
+
+    var x = 0;
+    var cart = {};
+
+    $(document).ready(function(){
+       $("#test").addClass("animated shake").css("color","red");
+
+    });
+
+    $(".minus").on('click',function(){
+
+        $("#test").html($(this).value());
+    });
+
+    $(".minus").on('click',function(){
+        $("#test").html($(this).value());
+    });
+
+
+
+    $(".button").on('mouseenter',function(){
+        $(this).fadeTo(200,0.5);
+    });
+    $("button").on('mouseleave',function(){
+        $(this).fadeTo(100,1);
+    });
+
+    $("#test").html(x);
+
+
+</script>
 
 </section>
-</div>
+
 </body>
 </html>
