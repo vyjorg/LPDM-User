@@ -65,13 +65,12 @@ public class OrderController {
     public String saveOrder(Model model, HttpSession session){
 
         OrderBean order = new OrderBean();
+        OrderBean orderConfirmation = new OrderBean();
 
         PaymentBean payment = orderProxy.getPaymentList().get(1);
 
-        AppUserBean user = null;
-
         try {
-            user = (AppUserBean) session.getAttribute("user");
+            AppUserBean user = (AppUserBean) session.getAttribute("user");
             order.setCustomerId(user.getId());
         }catch (NullPointerException e){
             logger.info("L'utilisateur dpoit s'authentifier");
@@ -80,42 +79,18 @@ public class OrderController {
 
         List<OrderedProductBean> orderDetails = new ArrayList<>();
 
-        AppUserBean userBean = user;
-
-        logger.info(" ajout dans orderDetails du client : " + order.getCustomerId());
-
         orderDetails.addAll(cart);
-
-        for (OrderedProductBean item : orderDetails
-             ) {
-            logger.info(item.getProduct().getName());
-        }
-
         order.setTotal(cartTotal);
-
         order.setOrderedProducts(orderDetails);
-
-        //order.setStatus(StatusEnum.PROCESSED);
-
-
-
-        for (OrderedProductBean item : order.getOrderedProducts()) {
-            logger.info(item.getProduct().getName());
-        }
-
-
-
+        order.setStatus(StatusEnum.PROCESSED);
         order.setOrderDate(LocalDateTime.now());
-
         order.setPayment(payment);
 
-        logger.info(order.getPayment().getLabel());
+        orderConfirmation = orderProxy.saveOrder(order);
+        model.addAttribute("order", orderConfirmation);
+        model.addAttribute("products", orderDetails);
 
-        logger.info("id de l'order: " + order.getCustomerId());
-
-        orderProxy.saveOrder(order);
-
-        return "home";
+        return "orders/orderdescription";
     }
 
     @GetMapping("/{id}/add")
@@ -141,8 +116,6 @@ public class OrderController {
             orderedProduct.setQuantity(1);
             cart.add(orderedProduct);
         }
-
-
 
         cartTotal += product.getPrice();
 
