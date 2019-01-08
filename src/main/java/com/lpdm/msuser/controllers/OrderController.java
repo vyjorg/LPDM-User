@@ -102,6 +102,8 @@ public class OrderController {
 
         ProductBean product = msProductProxy.findProduct(productId);
 
+        // check stock quantity available
+
         for (OrderedProductBean item: cart) {
             if (item.getProduct().getId() == productId) {
                 orderedProduct = item;
@@ -109,7 +111,6 @@ public class OrderController {
                 break;
             }
         }
-
         if (orderedProduct == null){
             orderedProduct = new OrderedProductBean();
             orderedProduct.setProduct(product);
@@ -118,6 +119,35 @@ public class OrderController {
         }
 
         cartTotal += product.getPrice();
+
+        model.addAttribute("product", product);
+        model.addAttribute("cart", cart);
+        model.addAttribute("products", msProductProxy.listProduct());
+        model.addAttribute("total", cartTotal);
+
+        return "home";
+    }
+
+    @GetMapping("/{id}/sub")
+    public String subItem(@PathVariable("id") int productId, Model model){
+
+        logger.info("Entrée dans addItem pour produit : " + productId);
+
+        OrderedProductBean orderedProduct = null;
+
+        ProductBean product = msProductProxy.findProduct(productId);
+
+        for (OrderedProductBean item: cart) {
+            if (item.getProduct().getId() == productId) {
+                orderedProduct = item;
+                orderedProduct.setQuantity(orderedProduct.getQuantity() >= 1 ? orderedProduct.getQuantity() - 1 : orderedProduct.getQuantity());
+                if(orderedProduct.getQuantity() == 0)
+                    cart.remove(orderedProduct);
+                break;
+            }
+        }
+
+        cartTotal -= product.getPrice();
 
         model.addAttribute("product", product);
         model.addAttribute("cart", cart);
