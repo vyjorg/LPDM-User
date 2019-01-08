@@ -1,0 +1,17 @@
+version: '3.5'
+services:
+
+  # POSTGRESQL CONTAINER
+  storage-db:
+    image: postgres:alpine
+    ports:
+    - '28189:5432'
+    container_name: LPDM-User
+    environment:
+      POSTGRES_DB: lpdm-storage
+      POSTGRES_USER: lpdm
+      POSTGRES_PASSWORD: lpdm
+    volumes:
+    - './db/sql:/docker-entrypoint-initdb.d'
+    restart: always
+    network_mode: bridge

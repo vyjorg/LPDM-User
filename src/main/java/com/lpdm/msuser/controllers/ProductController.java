@@ -1,5 +1,6 @@
 package com.lpdm.msuser.controllers;
 
+import com.lpdm.msuser.msorder.OrderedProductBean;
 import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.proxies.MsProductProxy;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +22,7 @@ public class ProductController{
     @Autowired
     private MsProductProxy msProductProxy;
 
-    public static Map<String, Integer> cart = new HashMap();
+    public static List<OrderedProductBean> cart = new ArrayList<>();
 
     public  static double cartTotal = 0;
 
@@ -53,23 +55,42 @@ public class ProductController{
         return "products/list";
     }
 
-    @GetMapping("/{id}/add")
-    public String addItem(@PathVariable("id") int productId, Model model){
+   //@GetMapping("/{id}/add")
+   //public String addItem(@PathVariable("id") int productId, Model model){
 
-        logger.info("Entrée dans addItem pour produit : " + productId);
-        ProductBean product = msProductProxy.findProduct(productId);
+   //    logger.info("Entrée dans addItem pour produit : " + productId);
 
-        cart.put(product.getName(), cart.get(product.getName()) == null ? 1 : cart.get(product.getName()) + 1);
+   //    OrderedProductBean orderedProduct = null;
 
-        cartTotal += product.getPrice();
+   //    ProductBean product = msProductProxy.findProduct(productId);
 
-        model.addAttribute("cart", cart);
-        model.addAttribute("products", msProductProxy.listProduct());
-        model.addAttribute("total", cartTotal);
+   //    for (OrderedProductBean item: cart) {
+   //        if (item.getProduct().getId() == productId) {
+   //            orderedProduct = item;
+   //            orderedProduct.setQuantity(orderedProduct.getQuantity() + 1);
+   //            break;
+   //        }
+   //    }
+
+   //    if (orderedProduct == null){
+   //        orderedProduct = new OrderedProductBean();
+   //        orderedProduct.setProduct(product);
+   //        orderedProduct.setQuantity(1);
+   //        cart.add(orderedProduct);
+   //    }
 
 
-        return "home";
-    }
+
+  //     cartTotal += product.getPrice();
+
+  //     model.addAttribute("product", product);
+  //     model.addAttribute("cart", cart);
+  //     model.addAttribute("products", msProductProxy.listProduct());
+  //     model.addAttribute("total", cartTotal);
+
+
+  //     return "home";
+  // }
 
     /*
     @PostMapping("/")

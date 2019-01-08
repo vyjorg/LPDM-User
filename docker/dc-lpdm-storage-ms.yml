@@ -1,0 +1,16 @@
+version: '3.5'
+services:
+
+  # LPDM-StorageMS
+  storage-ms:
+    container_name: LPDM-StorageMS
+    volumes:
+      - /var/www/html/lpdm/storage:/app/files:consistent
+    build:
+      context: .
+      dockerfile: Dockerfile
+    external_links:
+    - LPDM-StorageDB
+    ports:
+    - '28089:28089'
+    restart: always

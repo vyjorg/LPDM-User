@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Component
-@FeignClient(name = "ms-order", url = "localhost:28083/orders")
+@FeignClient(name = "ms-order", url = "https://order.lpdm.kybox.fr/orders/")
 public interface MsOrderProxy {
     /**
      *

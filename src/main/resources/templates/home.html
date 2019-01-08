@@ -17,7 +17,7 @@
             <img th:src="${product.getPicture()}" class="product"/><br/>
             <a th:href="@{'/products/' + ${product.getId()}}" th:value="${product.getId()}"
                th:text="${product.getName()}"/> <div th:text="${product.getPrice()}"/><br/>
-            <p><a th:href="@{'/products/' + ${product.getId()} + '/sub'}" class="minus" th:value="${product.getId()}" >-</a> <input class="nbitem" /> <a th:href="@{'/products/' + ${product.getId()} + '/add'}" class="plus" th:value="${product.getId()}" >+</a></p>
+            <p><a th:href="@{'/orders/' + ${product.getId()} + '/sub'}" class="minus" th:value="${product.getId()}" >-</a> <input class="nbitem" /> <a th:href="@{'/orders/' + ${product.getId()} + '/add'}" class="plus" th:value="${product.getId()}" >+</a></p>
         </div>
 
     </div>
@@ -34,12 +34,12 @@
             <th>Quantité</th>
         </tr>
     <tr th:each="item:${cart}">
-        <td th:text="${item.key}" />
-        <td th:text="${item.value}" />
+        <td th:text="${item.product.getName()}" />
+        <td th:text="${item.getQuantity()}" />
     </tr>
     </table>
     <a th:href="@{/products/emptycart}" th:text="'Vider le panier'"/><br/>
-    <a th:href="@{/products/order}" th:text="'Valider la commande'"/><br/>
+    <a th:href="@{/orders/save}" th:text="'Valider la commande'"/><br/>
 
     <div id="test"></div>
 

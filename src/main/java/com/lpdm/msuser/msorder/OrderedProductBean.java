@@ -5,8 +5,6 @@ import com.lpdm.msuser.msproduct.ProductBean;
 
 public class OrderedProductBean {
 
-    private OrderedProductPKBean orderedProductPK = new OrderedProductPKBean();
-
     private OrderBean order;
 
     private ProductBean product;
@@ -37,11 +35,4 @@ public class OrderedProductBean {
         this.product = product;
     }
 
-    public OrderedProductPKBean getOrderedProductPK() {
-        return orderedProductPK;
-    }
-
-    public void setOrderedProductPK(OrderedProductPKBean orderedProductPK) {
-        this.orderedProductPK = orderedProductPK;
-    }
 }

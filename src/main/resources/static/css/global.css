@@ -204,11 +204,13 @@ select{
 }
 
 .item{
-    border: 1px solid black;
+
     align-content: center;
     text-align: center;
-    padding: auto;
+    padding: 2% auto;
     margin: 2% auto;
     min-height: 4em;
+
+
 }
 

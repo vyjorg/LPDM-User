@@ -1,17 +1,23 @@
 package com.lpdm.msuser.controllers;
 
+import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.OrderedProductBean;
 import com.lpdm.msuser.msorder.PaymentBean;
+import com.lpdm.msuser.msorder.enumeration.StatusEnum;
+import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.proxies.MsOrderProxy;
+import com.lpdm.msuser.proxies.MsProductProxy;
 import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -22,6 +28,15 @@ public class OrderController {
 
     @Autowired
     MsOrderProxy orderProxy;
+
+    @Autowired
+    MsProductProxy msProductProxy;
+
+    org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public static List<OrderedProductBean> cart = new ArrayList<>();
+
+    public  static double cartTotal = 0;
 
     @GetMapping("/{id}")
     public String orderDescription(@PathVariable("id") int id, Model model){
@@ -45,5 +60,100 @@ public class OrderController {
         model.addAttribute("payments", allPayments);
         return "orders/payments";
     }
+
+    @GetMapping("/save")
+    public String saveOrder(Model model, HttpSession session){
+
+        OrderBean order = new OrderBean();
+
+        PaymentBean payment = orderProxy.getPaymentList().get(1);
+
+        AppUserBean user = null;
+
+        try {
+            user = (AppUserBean) session.getAttribute("user");
+            order.setCustomerId(user.getId());
+        }catch (NullPointerException e){
+            logger.info("L'utilisateur dpoit s'authentifier");
+            return "identification/login";
+        }
+
+        List<OrderedProductBean> orderDetails = new ArrayList<>();
+
+        AppUserBean userBean = user;
+
+        logger.info(" ajout dans orderDetails du client : " + order.getCustomerId());
+
+        orderDetails.addAll(cart);
+
+        for (OrderedProductBean item : orderDetails
+             ) {
+            logger.info(item.getProduct().getName());
+        }
+
+        order.setTotal(cartTotal);
+
+        order.setOrderedProducts(orderDetails);
+
+        //order.setStatus(StatusEnum.PROCESSED);
+
+
+
+        for (OrderedProductBean item : order.getOrderedProducts()) {
+            logger.info(item.getProduct().getName());
+        }
+
+
+
+        order.setOrderDate(LocalDateTime.now());
+
+        order.setPayment(payment);
+
+        logger.info(order.getPayment().getLabel());
+
+        logger.info("id de l'order: " + order.getCustomerId());
+
+        orderProxy.saveOrder(order);
+
+        return "home";
+    }
+
+    @GetMapping("/{id}/add")
+    public String addItem(@PathVariable("id") int productId, Model model){
+
+        logger.info("Entrée dans addItem pour produit : " + productId);
+
+        OrderedProductBean orderedProduct = null;
+
+        ProductBean product = msProductProxy.findProduct(productId);
+
+        for (OrderedProductBean item: cart) {
+            if (item.getProduct().getId() == productId) {
+                orderedProduct = item;
+                orderedProduct.setQuantity(orderedProduct.getQuantity() + 1);
+                break;
+            }
+        }
+
+        if (orderedProduct == null){
+            orderedProduct = new OrderedProductBean();
+            orderedProduct.setProduct(product);
+            orderedProduct.setQuantity(1);
+            cart.add(orderedProduct);
+        }
+
+
+
+        cartTotal += product.getPrice();
+
+        model.addAttribute("product", product);
+        model.addAttribute("cart", cart);
+        model.addAttribute("products", msProductProxy.listProduct());
+        model.addAttribute("total", cartTotal);
+
+
+        return "home";
+    }
+
 
 }
