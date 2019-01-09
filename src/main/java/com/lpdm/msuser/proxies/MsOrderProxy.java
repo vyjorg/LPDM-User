@@ -2,6 +2,7 @@ package com.lpdm.msuser.proxies;
 
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -14,23 +15,24 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Component
-@FeignClient(name = "ms-order", url = "https://order.lpdm.kybox.fr/orders/")
+@FeignClient(name = "zuul-server", url = "http://localhost:28090")
+@RibbonClient(name = "ms-order")
 public interface MsOrderProxy {
     /**
      *
      * @param id
      * @return
      */
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/ms-order/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     OrderBean getOrderById(@PathVariable("id") int id);
 
-    @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/ms-order/save", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     OrderBean saveOrder(@Valid @RequestBody OrderBean order);
 
-    @GetMapping(value = "/by/customer/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/ms-order/by/customer/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<OrderBean> findAllByUserId(@PathVariable("id") int id);
 
-    @GetMapping(value = "/payments", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/ms-order/payments", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<PaymentBean> getPaymentList();
 
 }

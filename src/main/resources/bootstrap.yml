@@ -12,12 +12,15 @@
 
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: microservice-users
-cloud:
-  config:
-    allow-override: true
-    uri: https://config.lpdm.kybox.fr
-jpa:
-  hibernate:
-    ddl-auto: validate
+  cloud:
+    config:
+      allow-override: true
+      uri: https://config.lpdm.kybox.fr
+  jpa:
+    hibernate:
+      ddl-auto: validate
+

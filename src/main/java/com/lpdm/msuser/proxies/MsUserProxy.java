@@ -2,6 +2,7 @@ package com.lpdm.msuser.proxies;
 
 import com.lpdm.msuser.msauthentication.AppRoleBean;
 import com.lpdm.msuser.msauthentication.AppUserBean;
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -10,21 +11,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-@FeignClient(name = "microservice-authentication", url = "localhost:28081")
+@FeignClient(name = "zuul-server", url = "http://localhost:28090")
+@RibbonClient(name = "microservice-users")
 public interface MsUserProxy {
 
-    @GetMapping("/users/")
+    @GetMapping("/microservice-users/users/")
     List<AppUserBean> getAllUsers();
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/microservice-users/users/{id}")
     AppUserBean getUserById(@PathVariable("id") int id);
 
-    @PostMapping("/users")
+    @PostMapping("/microservice-users/users")
     AppUserBean addUser(@RequestBody AppUserBean user);
 
-    @PostMapping("/roles")
+    @PostMapping("/microservice-users/roles")
     AppRoleBean addRole(@RequestBody AppRoleBean role);
 
-    @PostMapping("/users/get")
+    @PostMapping("/microservice-users/users/get")
     AppUserBean getUserByUsername(@RequestParam String username);
 }

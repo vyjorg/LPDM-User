@@ -38,6 +38,8 @@ public class OrderController {
 
     public  static double cartTotal = 0;
 
+
+
     @GetMapping("/{id}")
     public String orderDescription(@PathVariable("id") int id, Model model){
 
@@ -119,6 +121,8 @@ public class OrderController {
         }
 
         cartTotal += product.getPrice();
+        logger.info("total panier + :" + cartTotal);
+
 
         model.addAttribute("product", product);
         model.addAttribute("cart", cart);
@@ -140,14 +144,16 @@ public class OrderController {
         for (OrderedProductBean item: cart) {
             if (item.getProduct().getId() == productId) {
                 orderedProduct = item;
-                orderedProduct.setQuantity(orderedProduct.getQuantity() >= 1 ? orderedProduct.getQuantity() - 1 : orderedProduct.getQuantity());
+                orderedProduct.setQuantity(orderedProduct.getQuantity() >= 1 ? orderedProduct.getQuantity() - 1 : 0);
                 if(orderedProduct.getQuantity() == 0)
                     cart.remove(orderedProduct);
                 break;
             }
         }
 
-        cartTotal -= product.getPrice();
+        cartTotal = orderedProduct.getQuantity() > 0 ? cartTotal -= product.getPrice() : cartTotal;
+
+        logger.info("total panier - :" + cartTotal);
 
         model.addAttribute("product", product);
         model.addAttribute("cart", cart);
@@ -158,5 +164,8 @@ public class OrderController {
         return "home";
     }
 
+    public double getCartTotal(double price){
+        return cartTotal + price;
+    }
 
 }

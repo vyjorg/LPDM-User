@@ -1,6 +1,7 @@
 package com.lpdm.msuser.proxies;
 
 import com.lpdm.msuser.msproduct.ProductBean;
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -8,21 +9,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Component
-@FeignClient(name = "ms-product", url = "localhost:28085")
+@FeignClient(name = "zuul-server", url = "http://localhost:28090")
+@RibbonClient(name = "ms-product")
 public interface MsProductProxy {
 
-    @GetMapping(value = "/products")
+    @GetMapping(value = "/ms-product/products")
     List<ProductBean> listProduct();
 
-    @GetMapping(value="/products/{id}")
+    @GetMapping(value="/ms-product/products/{id}")
     ProductBean findProduct(@PathVariable("id") int id);
 
-    @PostMapping(value = "/products")
+    @PostMapping(value = "/ms-product/products")
     void addProduct(@RequestBody ProductBean product);
 
-    @DeleteMapping(value="/products/{id}")
+    @DeleteMapping(value="/ms-product/products/{id}")
     void deleteStock(@PathVariable("id") int id);
 
-    @PutMapping(value="/products")
+    @PutMapping(value="/ms-product/products")
     void updateStock(@RequestBody ProductBean product);
 }

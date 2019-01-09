@@ -2,13 +2,13 @@ version: '3.5'
 services:
 
   # POSTGRESQL CONTAINER
-  storage-db:
+  user-db:
     image: postgres:alpine
     ports:
-    - '28189:5432'
+    - '28182:5432'
     container_name: LPDM-User
     environment:
-      POSTGRES_DB: lpdm-storage
+      POSTGRES_DB: lpdm-user
       POSTGRES_USER: lpdm
       POSTGRES_PASSWORD: lpdm
     volumes:
