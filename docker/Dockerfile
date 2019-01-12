@@ -20,4 +20,4 @@ COPY --from=clone /app/LPDM-User /app
 # Build the project
 RUN mvn clean package
 
-CMD ["java", "-jar", "target/ms-storage-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/ms-users-0.0.1-SNAPSHOT.jar"]

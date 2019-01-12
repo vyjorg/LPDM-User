@@ -3,7 +3,7 @@ pipeline {
     tools {
         maven 'Apache Maven 3.5.2'
     }
-    stages {
+    stages{
         stage('Checkout') {
             steps {
                 git 'https://github.com/vyjorg/LPDM-User'
@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Tests') {
             steps {
-                sh 'mvn test'
+                sh 'mvn clean test'
             }
             post {
                 always {
@@ -22,11 +22,16 @@ pipeline {
                 }
             }
         }
+        stage('Push to DockerHub') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
         stage('Deploy') {
             steps {
                 sh "docker stop LPDM-UserMS || true && docker rm LPDM-UserMS || true"
-                sh 'docker-compose -f /var/lib/jenkins/workspace/LPDM_LPDM-Storage_master/docker/dc-lpdm-storage-ms.yml build --no-cache'
-                step([$class: 'DockerComposeBuilder', dockerComposeFile: 'docker/dc-lpdm-storage-ms.yml', option: [$class: 'StartAllServices'], useCustomDockerComposeFile: true])
+                sh "docker pull vyjorg/lpdm-user:latest"
+                sh "docker run -d --name LPDM-UserMS -p 28083:28083 --restart always --memory-swappiness=0 vyjorg/lpdm-user:latest"
             }
         }
     }
