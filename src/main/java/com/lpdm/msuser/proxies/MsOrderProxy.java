@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Component
-@FeignClient(name = "zuul-server", url = "http://localhost:28090")
+@FeignClient(name = "zuul-server", url = "https://zuul.lpdm.kybox.fr")
 @RibbonClient(name = "ms-order")
 public interface MsOrderProxy {
     /**

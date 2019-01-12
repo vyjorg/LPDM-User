@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Component
-@FeignClient(name = "zuul-server", url = "http://localhost:28090")
-@RibbonClient(name = "ms-product")
+@FeignClient(name = "zuul-server", url = "https://zuul.lpdm.kybox.fr")
+@RibbonClient(name = "ms-order")
 public interface MsProductProxy {
 
     @GetMapping(value = "/ms-product/products")
