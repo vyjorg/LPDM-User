@@ -23,4 +23,5 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-
+  thymeleaf:
+    cache: false

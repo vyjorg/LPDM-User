@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="search">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Recherche d'une commande</div>
+                <div class="panel-body">
+                    <form>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <input type="text" class="form-control" id="keyword" placeholder="Saisir une recherche de commande">
+                            </div>
+                            <span class="input-group-btn">
+                                <label for="select" class="input-group-addon">
+                                    <select class="form-control" id="select">
+                                        <option value="1">Identifiant de commande</option>
+                                        <option value="2">Référence de facture</option>
+                                        <option value="2">E-mail du client</option>
+                                        <option value="2">Nom du client</option>
+                                    </select>
+                                </label>
+                            </span>
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Rechercher la commande</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div data-th-if="${result != null}">
+        Résultat de la recherche
+    </div>
+</div>
+</html>
