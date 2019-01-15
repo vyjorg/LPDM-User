@@ -107,4 +107,20 @@ public class OrderBean {
     public void setOrderedProducts(List<OrderedProductBean> orderedProducts) {
         this.orderedProducts = orderedProducts;
     }
+
+    @Override
+    public String toString() {
+        return "OrderBean{" +
+                "id=" + id +
+                ", total=" + total +
+                ", orderDate=" + orderDate +
+                ", status=" + status +
+                ", payment=" + payment +
+                ", storeId=" + storeId +
+                ", store=" + store +
+                ", customerId=" + customerId +
+                ", customer=" + customer +
+                ", orderedProducts=" + orderedProducts +
+                '}';
+    }
 }

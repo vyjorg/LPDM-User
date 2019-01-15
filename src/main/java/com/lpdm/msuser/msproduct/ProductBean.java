@@ -18,6 +18,8 @@ public class ProductBean {
 
     private Integer productorID;
 
+    private int tva;
+
     public Integer getId() {
         return id;
     }
@@ -82,6 +84,14 @@ public class ProductBean {
         this.productorID = productorID;
     }
 
+    public int getTva() {
+        return tva;
+    }
+
+    public void setTva(int tva) {
+        this.tva = tva;
+    }
+
     @Override
     public String toString() {
         return "ProductBean{" +
@@ -93,6 +103,7 @@ public class ProductBean {
                 ", stockId=" + stockId +
                 ", picture='" + picture + '\'' +
                 ", productorID=" + productorID +
+                ", tva=" + tva +
                 '}';
     }
 }

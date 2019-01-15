@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="payments">
+    <div class="panel panel-default">
+        <div class="panel-heading">Liste des différents moyens de paiement disponibles</div>
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item" data-th-each="payment : ${result}">
+                    <span data-th-text="${payment.label}"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</html>

@@ -2,6 +2,7 @@ package com.lpdm.msuser.proxies;
 
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
+import feign.FeignException;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @FeignClient(name = "zuul-server", url = "https://zuul.lpdm.kybox.fr")
@@ -23,8 +25,8 @@ public interface MsOrderProxy {
      * @param id
      * @return
      */
-    @GetMapping(value = "/ms-order/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    OrderBean getOrderById(@PathVariable("id") int id);
+    @GetMapping(value = "/ms-order/orders/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    OrderBean getOrderById(@PathVariable("id") int id) throws FeignException;
 
     @PostMapping(value = "/ms-order/save", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     OrderBean saveOrder(@Valid @RequestBody OrderBean order);
@@ -32,7 +34,19 @@ public interface MsOrderProxy {
     @GetMapping(value = "/ms-order/by/customer/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<OrderBean> findAllByUserId(@PathVariable("id") int id);
 
-    @GetMapping(value = "/ms-order/payments", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/ms-order/orders/payments", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<PaymentBean> getPaymentList();
+
+    @GetMapping(value = "${lpdm.order.name}/admin/orders/all/customer/email/{email}",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    List<OrderBean> findAllByUserEmail(@PathVariable("email") String email);
+
+    @GetMapping(value = "${lpdm.order.name}/admin/orders/all/customer/name/{name}",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    List<OrderBean> findAllByUserLastName(@PathVariable("name") String name);
+
+    @GetMapping(value = "${lpdm.order.name}/admin/orders/invoice/{ref}",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    OrderBean findByInvoiceReference(@PathVariable("ref") String ref);
 
 }

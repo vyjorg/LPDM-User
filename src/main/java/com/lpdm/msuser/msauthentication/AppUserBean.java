@@ -20,6 +20,7 @@ public class AppUserBean {
 
     private String name;
     private String firstName;
+    private String lastName;
 
     public AppUserBean() {
     }
@@ -126,15 +127,25 @@ public class AppUserBean {
         this.roles = roles;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     @Override
     public String toString() {
-        return "AppUser{" +
+        return "AppUserBean{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
+                ", roles=" + roles +
                 ", name='" + name + '\'' +
                 ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 '}';
     }
 }

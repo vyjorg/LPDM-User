@@ -35,4 +35,11 @@ public class OrderedProductBean {
         this.product = product;
     }
 
+    @Override
+    public String toString() {
+        return "OrderedProductBean{" +
+                "product=" + product +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

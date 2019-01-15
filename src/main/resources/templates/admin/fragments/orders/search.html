@@ -6,18 +6,18 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Recherche d'une commande</div>
                 <div class="panel-body">
-                    <form>
+                    <form method="post" data-th-action="@{/admin/orders/search}" data-th-object="${searchForm}">
                         <div class="input-group">
                             <div class="input-group-addon">
-                                <input type="text" class="form-control" id="keyword" placeholder="Saisir une recherche de commande">
+                                <input type="text" class="form-control" data-th-field="*{keyword}" placeholder="Saisir une recherche de commande">
                             </div>
                             <span class="input-group-btn">
                                 <label for="select" class="input-group-addon">
-                                    <select class="form-control" id="select">
+                                    <select class="form-control" id="select" data-th-field="*{searchValue}">
                                         <option value="1">Identifiant de commande</option>
                                         <option value="2">Référence de facture</option>
-                                        <option value="2">E-mail du client</option>
-                                        <option value="2">Nom du client</option>
+                                        <option value="3">E-mail du client</option>
+                                        <option value="4">Nom du client</option>
                                     </select>
                                 </label>
                             </span>
@@ -34,7 +34,72 @@
     </div>
     <br>
     <div data-th-if="${result != null}">
-        Résultat de la recherche
+        <div data-th-if="${result instanceof T(com.lpdm.msuser.msorder.OrderBean) OR result instanceof T(java.util.Optional)}">
+            <ul class="list-group">
+                <li class="list-group-item">Id : <span data-th-text="${result.id}"></span> </li>
+                <li class="list-group-item">Date : <span data-th-text="${result.orderDate}"></span> </li>
+                <li class="list-group-item">Statut : <span data-th-text="${result.status}"></span> </li>
+                <li class="list-group-item">Payment : <span data-th-text="${result.payment.label}"></span> </li>
+                <li class="list-group-item">Client :
+                    <span data-th-text="${result.customer.firstName}"></span>
+                    <span data-th-text="${result.customer.lastName}"></span>
+                </li>
+            </ul>
+            <div class="panel-group">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse1">Produits commandés</a>
+                            <span class="badge" data-th-text="${#lists.size(result.orderedProducts)}"></span>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse in" aria-expanded="true">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Désignation</th>
+                                <th class="text-center">Prix unitaire HT</th>
+                                <th class="text-center">Quantité</th>
+                                <th class="text-center">T.V.A.</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-th-each="orderedProduct : ${result.orderedProducts}">
+                                <td data-th-text="${orderedProduct.product.name}"></td>
+                                <td data-th-text="${orderedProduct.product.price}" class="text-center"></td>
+                                <td data-th-text="${orderedProduct.quantity}" class="text-center"></td>
+                                <td data-th-text="${orderedProduct.product.tva}+' %'" class="text-center"> <span> %</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="panel-footer text-right">
+                            Total de la commande : <span data-th-text="${result.total}"></span> euros TTC
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-th-if="${result instanceof T(java.util.List)}">
+            List Object
+            <br>
+            Résultat : <span data-th-text="${result}"></span>
+        </div>
+        <div data-th-if="${result instanceof T(java.lang.String)}">
+            Erreur : <span data-th-text="${result}"></span>
+        </div>
+        <div data-th-if="${result instanceof T(java.lang.Integer)}" class="alert alert-danger">
+            <span data-th-if="${result == 404}">
+                <i class="glyphicon glyphicon-remove" style="display:table-cell;"></i>
+                Aucune commande n'a été trouvée.
+            </span>
+            <span data-th-if="${result == 500}">
+                <i class="glyphicon glyphicon-remove" style="display:table-cell;"></i>
+                La syntaxe de la requête est erronée ou le microservice est injoignable.
+            </span>
+        </div>
+        <div class="panel-success">
+            <span data-th-text="${result}"></span>
+        </div>
     </div>
 </div>
 </html>

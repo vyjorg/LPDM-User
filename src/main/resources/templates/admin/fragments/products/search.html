@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="search">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Recherche d'un produit</div>
+                <div class="panel-body">
+                    <form method="post" data-th-action="@{/admin/products/search}" data-th-object="${searchForm}">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <input type="text" class="form-control" data-th-field="*{keyword}" placeholder="Saisir une recherche de produit">
+                            </div>
+                            <span class="input-group-btn">
+                                <label for="select" class="input-group-addon">
+                                    <select class="form-control" id="select" data-th-field="*{searchValue}">
+                                        <option value="1">Identifiant du produit</option>
+                                        <option value="2">Nom du produit</option>
+                                        <option value="3">Nom de la catégorie</option>
+                                        <option value="4">Nom du producteur</option>
+                                    </select>
+                                </label>
+                            </span>
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Rechercher le produit</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div data-th-if="${result != null}">
+        <div data-th-if="${result instanceof T(com.lpdm.msuser.msproduct.ProductBean)}">
+            <ul class="list-group">
+                <li class="list-group-item">Id : <span data-th-text="${result.id}"></span> </li>
+                <li class="list-group-item">Nom : <span data-th-text="${result.name}"></span> </li>
+                <li class="list-group-item">Catégorie : <span data-th-text="${result.category.name}"></span> </li>
+                <li class="list-group-item">Description : <span data-th-text="${result.label}"></span> </li>
+                <li class="list-group-item">Prix unitaire HT : <span data-th-text="${result.price}"></span> €</li>
+                <li class="list-group-item">T.V.A. : <span data-th-text="${result.tva}"></span> %</li>
+            </ul>
+            <div class="panel panel-default">
+                <div class="panel-body text-center">
+                    <button type="button" class="btn btn-danger">Désactiver ce produit</button>
+                </div>
+            </div>
+        </div>
+        <div data-th-if="${result instanceof T(java.util.List)}">
+            List Object
+            <br>
+            Résultat : <span data-th-text="${result}"></span>
+        </div>
+        <div data-th-if="${result instanceof T(java.lang.String)}">
+            Erreur : <span data-th-text="${result}"></span>
+        </div>
+        <div data-th-if="${result instanceof T(java.lang.Integer)}" class="alert alert-danger">
+            <span data-th-if="${result == 404}">
+                <i class="glyphicon glyphicon-remove" style="display:table-cell;"></i>
+                Aucune commande n'a été trouvée.
+            </span>
+            <span data-th-if="${result == 500}">
+                <i class="glyphicon glyphicon-remove" style="display:table-cell;"></i>
+                La syntaxe de la requête est erronée ou le microservice est injoignable.
+            </span>
+        </div>
+        <div class="panel-success">
+            <span data-th-text="${result}"></span>
+        </div>
+    </div>
+</div>
+</html>
