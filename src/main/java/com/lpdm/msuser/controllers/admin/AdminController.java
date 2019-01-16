@@ -92,51 +92,5 @@ public class AdminController {
                 .addObject("result", adminService.findAllPayment());
     }
 
-    @GetMapping(value = {"/products", "products/"})
-    public ModelAndView adminProducts(){
 
-        return new ModelAndView("/admin/fragments/products")
-                .addObject("pageTitle", "Admin products");
-    }
-
-    @GetMapping(value = {"/products/search", "/products/search/"})
-    public ModelAndView searchProduct(){
-        return new ModelAndView("/admin/fragments/products")
-                .addObject("pageTitle", "Search product")
-                .addObject("content", "searchPage")
-                .addObject("searchForm", new SearchForm());
-    }
-
-    @PostMapping(value = {"/products/search", "/products/search/"})
-    public ModelAndView searchProductResult(
-            @Valid @ModelAttribute("searchForm") SearchForm searchForm){
-
-        String keyword = searchForm.getKeyword();
-        Object result = null;
-        try{
-            switch (searchForm.getSearchValue()){
-                case 1:
-                    if(Pattern.compile("^\\d+$").matcher(keyword).matches())
-                        result = adminService.findProductById(Integer.valueOf(keyword));
-                    else result = 500;
-                    break;
-                    /*
-                case 2:
-                    result = adminService.findOrderByInvoiceReference(keyword);
-                    break;
-                case 3:
-                    result = adminService.findAllOrdersByUserEmail(keyword);
-                    break;
-                case 4:
-                    result = adminService.findAllOrdersByUserLastName(keyword);
-                    */
-            }
-        }
-        catch (FeignException e ){ result = e.status(); }
-
-        return new ModelAndView("/admin/fragments/products")
-                .addObject("pageTitle", "Search product")
-                .addObject("content", "searchPage")
-                .addObject("result", result);
-    }
 }

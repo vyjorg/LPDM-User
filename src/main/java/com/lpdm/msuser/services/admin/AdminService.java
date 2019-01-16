@@ -1,12 +1,16 @@
 package com.lpdm.msuser.services.admin;
 
+import com.lpdm.msuser.model.Store;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
+import com.lpdm.msuser.msproduct.CategoryBean;
 import com.lpdm.msuser.msproduct.ProductBean;
+import com.netflix.discovery.EurekaClient;
+import com.netflix.discovery.shared.Application;
+import com.netflix.discovery.shared.Applications;
 import feign.FeignException;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface AdminService {
 
@@ -24,4 +28,17 @@ public interface AdminService {
      * Product
      */
     ProductBean findProductById(int id);
+    List<CategoryBean> findAllCategories();
+
+    /**
+     * Store
+     */
+    Store findStoreById(int id) throws FeignException;
+    List<Store> findStoreByName(String name) throws FeignException;
+
+    /**
+     * Eureka
+     */
+    List<Application> findAllApps() throws FeignException;
+
 }

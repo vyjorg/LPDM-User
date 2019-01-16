@@ -1,5 +1,7 @@
 package com.lpdm.msuser.msproduct;
 
+import com.lpdm.msuser.msauthentication.AppUserBean;
+
 public class ProductBean {
 
     private Integer id;
@@ -17,6 +19,8 @@ public class ProductBean {
     private String picture;
 
     private Integer productorID;
+
+    private AppUserBean producer;
 
     private int tva;
 
@@ -92,6 +96,14 @@ public class ProductBean {
         this.tva = tva;
     }
 
+    public AppUserBean getProducer() {
+        return producer;
+    }
+
+    public void setProducer(AppUserBean producer) {
+        this.producer = producer;
+    }
+
     @Override
     public String toString() {
         return "ProductBean{" +
@@ -103,6 +115,7 @@ public class ProductBean {
                 ", stockId=" + stockId +
                 ", picture='" + picture + '\'' +
                 ", productorID=" + productorID +
+                ", producer=" + producer +
                 ", tva=" + tva +
                 '}';
     }

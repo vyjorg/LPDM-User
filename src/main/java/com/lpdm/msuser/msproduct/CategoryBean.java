@@ -21,4 +21,12 @@ public class CategoryBean {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "CategoryBean{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

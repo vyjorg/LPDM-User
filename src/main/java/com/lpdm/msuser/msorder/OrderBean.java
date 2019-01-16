@@ -117,7 +117,7 @@ public class OrderBean {
                 ", status=" + status +
                 ", payment=" + payment +
                 ", storeId=" + storeId +
-                ", store=" + store +
+                ", stores=" + store +
                 ", customerId=" + customerId +
                 ", customer=" + customer +
                 ", orderedProducts=" + orderedProducts +

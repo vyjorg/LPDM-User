@@ -1,5 +1,6 @@
 package com.lpdm.msuser.proxies;
 
+import com.lpdm.msuser.msproduct.CategoryBean;
 import com.lpdm.msuser.msproduct.ProductBean;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -27,4 +28,7 @@ public interface MsProductProxy {
 
     @PutMapping(value="/ms-product/products")
     void updateStock(@RequestBody ProductBean product);
+
+    @GetMapping(value = "${lpdm.product.name}/categories")
+    List<CategoryBean> findAllCotegories();
 }

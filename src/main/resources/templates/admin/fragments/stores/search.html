@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="search">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Recherche d'un magasin</div>
+                <div class="panel-body">
+                    <form method="post" data-th-action="@{/admin/stores/search}" data-th-object="${searchForm}">
+                        <div class="form-group">
+                            <div class="label-control col-sm-3">
+                                <select class="form-control" id="select" data-th-field="*{searchValue}">
+                                    <option value="1">Identifiant du magasin</option>
+                                    <option value="2">Nom du magasin</option>
+                                </select>
+                            </div>
+                            <div id="change_me" class="input-group">
+                                <input type="text" class="form-control" data-th-field="*{keyword}" placeholder="Saisir une recherche de magasin" required>
+                                <span class="input-group-btn">
+                                <button class="btn btn-primary" type="submit">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                    Rechercher
+                                </button>
+                              </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div data-th-if="${result != null}">
+        <div data-th-if="${result instanceof T(java.util.List)}">
+            <div class="panel panel-default">
+                <div class="panel-heading">Résultat de la recherche</div>
+                <div class="panel-body">
+                    <div data-th-each="store : ${result}">
+                        <ul class="list-group">
+                            <li class="list-group-item"><b>ID <span data-th-text="${store.id}"></span></b></li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <label for="name" class="input-group-addon" style="width: 140px;">Nom :</label>
+                                            <input type="text" data-th-value="${store.name}" class="form-control" id="name">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-primary" type="submit">
+                                                    Modifier
+                                                    <span class="glyphicon glyphicon-ok" style="padding-left: 6px;"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-th-if="${result instanceof T(java.lang.String)}">
+            Erreur : <span data-th-text="${result}"></span>
+        </div>
+        <div data-th-if="${result instanceof T(java.lang.Integer)}" class="alert alert-danger">
+            <span data-th-if="${result == 404}">
+                <i class="glyphicon glyphicon-remove" style="display:table-cell;"></i>
+                Aucune commande n'a été trouvée.
+            </span>
+            <span data-th-if="${result == 500}">
+                <i class="glyphicon glyphicon-remove" style="display:table-cell;"></i>
+                La syntaxe de la requête est erronée ou le microservice est injoignable.
+            </span>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Console</div>
+            <div class="panel-body">
+                <pre data-th-text="${result}"></pre>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

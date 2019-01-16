@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html data-layout-decorate="~{admin/layout}">
+<head>
+    <title data-th-text="${pageTitle}"></title>
+</head>
+<body>
+<div data-layout-fragment="content" style="margin-top: 80px;">
+    <div class="container-fluid text-center">
+        <div class="row content">
+            <div data-th-replace="admin/fragments/eureka/nav :: nav"></div>
+            <div class="col-sm-9 text-left">
+                <div data-th-if="${content=='overview'}">
+                    <div data-th-replace="admin/fragments/eureka/overview :: overview"></div>
+                </div>
+                <div data-th-if="${content=='unsubscribe'}">
+                    <div data-th-replace="admin/fragments/eureka/unsubscribe :: unsubscribe"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

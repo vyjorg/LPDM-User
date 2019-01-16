@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="overview">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Vue d'ensemble des microservices
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-th-if="${data instanceof T(java.util.List)}">
+
+        <!-- LOOP MICROSERVICE -->
+        <div data-th-each="ms,status : ${data}">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <a data-toggle="collapse" data-th-href="'#collapse' + ${status.index}">
+                                <span data-th-text="${ms.name}"></span>
+                                <span class="badge" data-th-text="${#lists.size(ms.getInstances())}" style="position: absolute;margin:0px 7px;"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div data-th-id="collapse + ${status.index}" class="panel-collapse collapse">
+
+                        <!-- INSTANCE LOOP -->
+                        <div class="panel panel-info" data-th-each="inst,status2 : ${ms.getInstances()}">
+                            <div class="panel-heading">
+                                <div class="panel-title">
+                                    <a data-toggle="collapse" data-th-href="'#collapse2' + ${status2.index} + ${status.index}">
+                                    <span data-th-text="${inst.instanceId}"></span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div data-th-id="collapse2 + ${status2.index} + ${status.index}" class="panel-collapse collapse">
+
+                                <!-- INSTANCE INFOS -->
+                                <table class="table table-hover">
+                                    <tbody>
+                                    <tr><th>Hostname</th><td data-th-text="${inst.getHostName()}"></td></tr>
+                                    <tr><th>App Name</th><td data-th-text="${inst.getAppName()}"></td></tr>
+                                    <tr><th>IP Address</th><td data-th-text="${inst.getIPAddr()}"></td></tr>
+                                    <tr><th>Status</th><td data-th-text="${inst.getStatus().name()}"></td></tr>
+                                    <tr><th>Port</th><td data-th-text="${inst.getPort()}"></td></tr>
+                                    <tr><th>Secure port</th><td data-th-text="${inst.getSecurePort()}"></td></tr>
+                                    <tr><th>Data center info</th><td data-th-text="${inst.getDataCenterInfo().getName()}"></td></tr>
+                                    <tr><th>Registration</th><td data-th-text="${#dates.format(inst.getLeaseInfo().getRegistrationTimestamp(), 'dd / MM / yyyy à HH:mm:ss')}"></td></tr>
+                                    <tr><th>Last renewal</th><td data-th-text="${#dates.format(inst.getLeaseInfo().getRenewalTimestamp(), 'dd / MM / yyyy à HH:mm:ss')}"></td></tr>
+                                    <tr><th>Last updated</th><td data-th-text="${#dates.format(inst.getLastUpdatedTimestamp(), 'dd / MM / yyyy à HH:mm:ss')}"></td></tr>
+                                    <tr><th>Action type</th><td data-th-text="${inst.getActionType().name()}"></td></tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END LOOP MICROSERVICE -->
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Console</div>
+        <div class="panel-body" id="consolePanel">
+            <pre data-th-text="${data}"></pre>
+        </div>
+    </div>
+</div>
+</html>

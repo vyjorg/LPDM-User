@@ -4,60 +4,28 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Recherche d'une commande</div>
+                <div class="panel-heading">Recherche d'un utilisateur</div>
                 <div class="panel-body">
-
-                    <!-- START TABS -->
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#Identifiant">Identifiant</a></li>
-                        <li><a data-toggle="tab" href="#menu1">Client</a></li>
-                        <li><a data-toggle="tab" href="#menu2">Statut</a></li>
-                        <li><a data-toggle="tab" href="#menu3">Date</a></li>
-                        <li><a data-toggle="tab" href="#menu4">Paiement</a></li>
-                        <li><a data-toggle="tab" href="#menu5">Produit</a></li>
-                    </ul>
-
-                    <div class="tab-content">
-                        <div id="Identifiant" class="tab-pane fade in active">
-                            <br>
-                            <form method="post" data-th-action="@{/admin/orders/search}" data-th-object="${searchForm}">
-                                <div class="form-group">
-                                    <!--
-                                    <div class="label-control col-sm-3">
-                                        <select class="form-control" id="select" data-th-field="*{searchValue}">
-                                            <option value="1">Identifiant commande</option>
-                                            <option value="2">Nom du client</option>
-                                            <option value="3">Nom de la catégorie</option>
-                                            <option value="4">Nom du producteur</option>
-                                        </select>
-                                    </div>
-                                    -->
-                                    <div id="change_me" class="input-group">
-                                        <input type="text" class="form-control" data-th-field="*{keyword}"
-                                               placeholder="Saisir un identifiant de commande" required>
-                                        <span class="input-group-btn">
+                    <form method="post" data-th-action="@{/admin/orders/search}" data-th-object="${searchForm}">
+                        <div class="form-group">
+                            <div class="label-control col-sm-3">
+                                <select class="form-control" id="select" data-th-field="*{searchValue}">
+                                    <option value="1">Identifiant</option>
+                                    <option value="2">Nom de famille</option>
+                                </select>
+                            </div>
+                            <div id="change_me" class="input-group">
+                                <input type="text" class="form-control" data-th-field="*{keyword}"
+                                       placeholder="Saisir une recherche d'un client" required>
+                                <span class="input-group-btn">
                                 <button class="btn btn-primary" type="submit">
                                     <span class="glyphicon glyphicon-search"></span>
                                     Rechercher
                                 </button>
                               </span>
-                                    </div>
-                                </div>
-                            </form>
+                            </div>
                         </div>
-                        <div id="menu1" class="tab-pane fade">
-                            <h3>Menu 1</h3>
-                            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                        </div>
-                        <div id="menu2" class="tab-pane fade">
-                            <h3>Menu 2</h3>
-                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-                        </div>
-                        <div id="menu3" class="tab-pane fade">
-                            <h3>Menu 3</h3>
-                            <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
