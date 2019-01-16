@@ -1,11 +1,12 @@
 package com.lpdm.msuser.msproduct;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class StockBean {
     private Integer id;
     private Integer quantity;
-    private LocalDateTime expireDate;
+    private LocalDate expireDate;
     private String packaging;
     private Integer unitByPackage;
 
@@ -25,11 +26,11 @@ public class StockBean {
         this.quantity = quantity;
     }
 
-    public LocalDateTime getExpireDate() {
+    public LocalDate getExpireDate() {
         return expireDate;
     }
 
-    public void setExpireDate(LocalDateTime expireDate) {
+    public void setExpireDate(LocalDate expireDate) {
         this.expireDate = expireDate;
     }
 
