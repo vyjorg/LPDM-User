@@ -1,5 +1,6 @@
 package com.lpdm.msuser.proxies;
 
+import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
 import feign.FeignException;
@@ -48,5 +49,9 @@ public interface MsOrderProxy {
     @GetMapping(value = "${lpdm.order.name}/admin/orders/invoice/{ref}",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     OrderBean findByInvoiceReference(@PathVariable("ref") String ref);
+
+    @GetMapping(value = "${lpdm.order.name}/admin/orders/stats/year/{year}",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    OrderStats findOrderStatsByYear(@PathVariable("year") Integer year);
 
 }
