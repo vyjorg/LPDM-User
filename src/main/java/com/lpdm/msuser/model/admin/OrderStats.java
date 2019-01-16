@@ -1,25 +1,28 @@
 package com.lpdm.msuser.model.admin;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class OrderStats {
 
-    private int total;
-    private Map<String, Integer> annualTotal;
+    private Map<Integer, Object> dataStats;
 
-    public int getTotal() {
-        return total;
+    public OrderStats() {
     }
 
-    public void setTotal(int total) {
-        this.total = total;
+    public Map<Integer, Object> getDataStats() {
+        if(dataStats == null) dataStats = new LinkedHashMap<>();
+        return dataStats;
     }
 
-    public Map<String, Integer> getAnnualTotal() {
-        return annualTotal;
+    public void setDataStats(Map<Integer, Object> dataStats) {
+        this.dataStats = dataStats;
     }
 
-    public void setAnnualTotal(Map<String, Integer> annualTotal) {
-        this.annualTotal = annualTotal;
+    @Override
+    public String toString() {
+        return "OrderStats{" +
+                "dataStats=" + dataStats +
+                '}';
     }
 }

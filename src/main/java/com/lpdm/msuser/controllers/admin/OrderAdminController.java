@@ -1,5 +1,6 @@
 package com.lpdm.msuser.controllers.admin;
 
+import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchForm;
 import com.lpdm.msuser.services.admin.AdminService;
 import feign.FeignException;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 @RestController
@@ -28,8 +30,16 @@ public class OrderAdminController {
     @GetMapping(value = {"", "/"})
     public ModelAndView adminOrders(){
         log.info("Admin order");
+        LocalDate date = LocalDate.now();
+        OrderStats currentYear = adminService.findOrderStatsByYear(date.getYear());
+        OrderStats lastYear = adminService.findOrderStatsByYear(date.getYear() - 1);
+        OrderStats average = adminService.getAverageStats(currentYear, lastYear);
+
         return new ModelAndView("admin/fragments/orders")
-                .addObject("pageTitle","Admin orders");
+                .addObject("pageTitle","Admin orders")
+                .addObject("statsCurrentYear", currentYear)
+                .addObject("statsLastYear", lastYear)
+                .addObject("statsAverageYear", average);
     }
 
     @GetMapping(value = {"/search", "/search/"})
