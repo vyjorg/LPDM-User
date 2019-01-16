@@ -9,53 +9,153 @@
 
                     <!-- START TABS -->
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#Identifiant">Identifiant</a></li>
-                        <li><a data-toggle="tab" href="#menu1">Client</a></li>
-                        <li><a data-toggle="tab" href="#menu2">Statut</a></li>
-                        <li><a data-toggle="tab" href="#menu3">Date</a></li>
-                        <li><a data-toggle="tab" href="#menu4">Paiement</a></li>
-                        <li><a data-toggle="tab" href="#menu5">Produit</a></li>
+                        <li class="active"><a data-toggle="tab" href="#identifiant">Identifiant</a></li>
+                        <li><a data-toggle="tab" href="#client">Client</a></li>
+                        <li><a data-toggle="tab" href="#invoice">Facture</a></li>
+                        <li><a data-toggle="tab" href="#status">Statut</a></li>
+                        <li><a data-toggle="tab" href="#date">Date</a></li>
+                        <li><a data-toggle="tab" href="#payment">Paiement</a></li>
+                        <li><a data-toggle="tab" href="#product">Produit</a></li>
                     </ul>
 
                     <div class="tab-content">
-                        <div id="Identifiant" class="tab-pane fade in active">
+                        <div id="identifiant" class="tab-pane fade in active">
                             <br>
                             <form method="post" data-th-action="@{/admin/orders/search}" data-th-object="${searchForm}">
                                 <div class="form-group">
-                                    <!--
-                                    <div class="label-control col-sm-3">
-                                        <select class="form-control" id="select" data-th-field="*{searchValue}">
-                                            <option value="1">Identifiant commande</option>
-                                            <option value="2">Nom du client</option>
-                                            <option value="3">Nom de la catégorie</option>
-                                            <option value="4">Nom du producteur</option>
-                                        </select>
-                                    </div>
-                                    -->
-                                    <div id="change_me" class="input-group">
+                                    <div class="input-group">
                                         <input type="text" class="form-control" data-th-field="*{keyword}"
                                                placeholder="Saisir un identifiant de commande" required>
                                         <span class="input-group-btn">
-                                <button class="btn btn-primary" type="submit">
-                                    <span class="glyphicon glyphicon-search"></span>
-                                    Rechercher
-                                </button>
-                              </span>
+                                            <button class="btn btn-primary" type="submit">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                                Rechercher
+                                            </button>
+                                        </span>
+                                        <input type="hidden" name="searchValue" value="1">
                                     </div>
                                 </div>
                             </form>
                         </div>
-                        <div id="menu1" class="tab-pane fade">
-                            <h3>Menu 1</h3>
-                            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <div id="client" class="tab-pane fade">
+                            <br>
+                            <form method="post" data-th-action="@{/admin/products/search}" data-th-object="${searchForm}">
+                                <div class="form-group">
+                                    <div class="label-control col-sm-3">
+                                        <select class="form-control" id="select" data-th-field="*{searchValue}">
+                                            <option value="3">E-mail du client</option>
+                                            <option value="4">Nom de famille</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" data-th-field="*{keyword}"
+                                               placeholder="Saisir l'information sur le client" required>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" type="submit">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                                Rechercher
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        <div id="menu2" class="tab-pane fade">
-                            <h3>Menu 2</h3>
-                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                        <div id="invoice" class="tab-pane fade">
+                            <br>
+                            <form method="post" data-th-action="@{/admin/orders/search}" data-th-object="${searchForm}">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" data-th-field="*{keyword}"
+                                               placeholder="Saisir la référence de la facture" required>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" type="submit">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                                Rechercher
+                                            </button>
+                                        </span>
+                                        <input type="hidden" name="searchValue" value="2">
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        <div id="menu3" class="tab-pane fade">
-                            <h3>Menu 3</h3>
-                            <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                        <div id="status" class="tab-pane fade">
+                            <br>
+                            <form method="post" data-th-action="@{/admin/products/search}" data-th-object="${searchForm}">
+                                <div class="input-group">
+                                    <label for="selectStatus"></label>
+                                    <select class="form-control" id="selectStatus" data-th-field="*{searchValue}">
+                                        <option value="3">E-mail du client</option>
+                                        <option value="4">Nom de famille</option>
+                                    </select>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="submit">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                            Rechercher
+                                        </button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="date" class="tab-pane fade">
+                            <br>
+                            <form method="post" data-th-action="@{/admin/orders/search}" data-th-object="${searchForm}">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" data-th-field="*{keyword}"
+                                               placeholder="Saisir la référence de la facture" required>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" type="submit">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                                Rechercher
+                                            </button>
+                                        </span>
+                                        <input type="hidden" name="searchValue" value="2">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="payment" class="tab-pane fade">
+                            <br>
+                            <form method="post" data-th-action="@{/admin/products/search}" data-th-object="${searchForm}">
+                                <div class="input-group">
+                                    <label for="selectPayment"></label>
+                                    <select class="form-control" id="selectPayment" data-th-field="*{searchValue}">
+                                        <option data-th-each="p,id : ${payments}"
+                                                data-th-text="${p.label}"
+                                                data-th-value="${id.index}">
+                                        </option>
+                                    </select>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="submit">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                            Rechercher
+                                        </button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="product" class="tab-pane fade">
+                            <br>
+                            <form method="post" data-th-action="@{/admin/products/search}" data-th-object="${searchForm}">
+                                <div class="form-group">
+                                    <div class="label-control col-sm-3">
+                                        <select class="form-control" id="selectProduct" data-th-field="*{searchValue}">
+                                            <option value="3">Identifiant du produit</option>
+                                            <option value="4">Nom du produit</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" data-th-field="*{keyword}"
+                                               placeholder="Saisir l'information sur le produit" required>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" type="submit">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                                Rechercher
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
