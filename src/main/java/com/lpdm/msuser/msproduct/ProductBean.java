@@ -1,6 +1,10 @@
 package com.lpdm.msuser.msproduct;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lpdm.msuser.msauthentication.AppUserBean;
+
+import java.util.List;
+import java.util.Optional;
 
 public class ProductBean {
 
@@ -14,15 +18,17 @@ public class ProductBean {
 
     private double price;
 
-    private Integer stockId;
+    private double tva;
+
+    private boolean deactivate;
+
+    private List<StockBean> listStock;
 
     private String picture;
 
-    private Integer productorID;
+    private Integer producerID;
 
-    private AppUserBean producer;
-
-    private int tva;
+    private Optional<ProducerBean> producer;
 
     public Integer getId() {
         return id;
@@ -64,12 +70,20 @@ public class ProductBean {
         this.price = price;
     }
 
-    public Integer getStockId() {
-        return stockId;
+    public double getTva() {
+        return tva;
     }
 
-    public void setStockId(Integer stockId) {
-        this.stockId = stockId;
+    public void setTva(double tva) {
+        this.tva = tva;
+    }
+
+    public List<StockBean> getListStock() {
+        return listStock;
+    }
+
+    public void setListStock(List<StockBean> listStock) {
+        this.listStock = listStock;
     }
 
     public String getPicture() {
@@ -80,43 +94,27 @@ public class ProductBean {
         this.picture = picture;
     }
 
-    public Integer getProductorID() {
-        return productorID;
+    public Integer getProducerID() {
+        return producerID;
     }
 
-    public void setProductorID(Integer productorID) {
-        this.productorID = productorID;
+    public void setProducerID(Integer producerID) {
+        this.producerID = producerID;
     }
 
-    public int getTva() {
-        return tva;
-    }
-
-    public void setTva(int tva) {
-        this.tva = tva;
-    }
-
-    public AppUserBean getProducer() {
+    public Optional<ProducerBean> getProducer() {
         return producer;
     }
 
-    public void setProducer(AppUserBean producer) {
+    public void setProducer(Optional<ProducerBean> producer) {
         this.producer = producer;
     }
 
-    @Override
-    public String toString() {
-        return "ProductBean{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", category=" + category +
-                ", label='" + label + '\'' +
-                ", price=" + price +
-                ", stockId=" + stockId +
-                ", picture='" + picture + '\'' +
-                ", productorID=" + productorID +
-                ", producer=" + producer +
-                ", tva=" + tva +
-                '}';
+    public boolean isDeactivate() {
+        return deactivate;
+    }
+
+    public void setDeactivate(boolean deactivate) {
+        this.deactivate = deactivate;
     }
 }
