@@ -5,17 +5,17 @@ import java.util.Map;
 
 public class OrderStats {
 
-    private Map<Integer, Object> dataStats;
+    private Map<Object, Object> dataStats;
 
     public OrderStats() {
     }
 
-    public Map<Integer, Object> getDataStats() {
+    public Map<Object, Object> getDataStats() {
         if(dataStats == null) dataStats = new LinkedHashMap<>();
         return dataStats;
     }
 
-    public void setDataStats(Map<Integer, Object> dataStats) {
+    public void setDataStats(Map<Object, Object> dataStats) {
         this.dataStats = dataStats;
     }
 

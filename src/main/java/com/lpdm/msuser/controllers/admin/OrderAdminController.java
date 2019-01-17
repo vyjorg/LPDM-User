@@ -29,7 +29,7 @@ public class OrderAdminController {
 
     @GetMapping(value = {"", "/"})
     public ModelAndView adminOrders(){
-        log.info("Admin order");
+
         LocalDate date = LocalDate.now();
         OrderStats currentYear = adminService.findOrderStatsByYear(date.getYear());
         OrderStats lastYear = adminService.findOrderStatsByYear(date.getYear() - 1);

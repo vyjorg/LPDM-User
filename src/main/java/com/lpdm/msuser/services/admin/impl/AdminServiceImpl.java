@@ -81,7 +81,7 @@ public class AdminServiceImpl implements AdminService {
 
         OrderStats averageStats = new OrderStats();
 
-        for(Map.Entry<Integer, Object> entry : stats1.getDataStats().entrySet()){
+        for(Map.Entry<Object, Object> entry : stats1.getDataStats().entrySet()){
 
             Integer value1 = (Integer) entry.getValue();
             Integer value2 = (Integer) stats2.getDataStats().get(entry.getKey());
@@ -100,6 +100,34 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<CategoryBean> findAllCategories() {
         return productProxy.findAllCotegories();
+    }
+
+    @Override
+    public OrderStats findOrderedProductsStatsByYear(int year) {
+
+        return orderProxy.findOrderedProductsStatsByYear(year);
+    }
+
+    @Override
+    public OrderStats findOrderedProductsStatsByYearAndCategory(int year) {
+
+        OrderStats orderStats = new OrderStats();
+        List<CategoryBean> categoryList = productProxy.findAllCotegories();
+
+        for(CategoryBean category : categoryList){
+
+            OrderStats stats = orderProxy.findOrderedProductsStatsByYearAndCategory(year, category.getId());
+
+            int totalProduct = 0;
+            for(Map.Entry entry : stats.getDataStats().entrySet()){
+
+                totalProduct += (int) entry.getValue();
+            }
+
+            orderStats.getDataStats().put(category.getName(), totalProduct);
+        }
+
+        return orderStats;
     }
 
     @Override
