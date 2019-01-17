@@ -18,9 +18,97 @@
                 <div data-th-if="${content=='paymentsPage'}">
                     <div data-th-replace="admin/fragments/orders/payments :: payments"></div>
                 </div>
+                <div data-th-if="${content=='stats'}">
+                    <canvas id="myChart"></canvas>
+                </div>
             </div>
         </div>
     </div>
+    <br>
+    <div class="col-sm-3"></div>
+    <div data-th-if="${content=='stats'}" class="col-sm-4">
+        <canvas id="pie1"></canvas>
+    </div>
+    <div class="col-sm-1"></div>
+    <div data-th-if="${content=='stats'}" class="col-sm-4">
+        <canvas id="pie2"></canvas>
+    </div>
+    <script data-th-src="@{/js/stats.js}"></script>
+    <script data-th-inline="javascript">
+        /*<![CDATA[*/
+        let statsCurrentYear = [[${statsCurrentYear}]];
+        let statsLastYear = [[${statsLastYear}]];
+        let statsAverageYear = [[${statsAverageYear}]];
+        let statsCatCurrentYear = [[${statsCatCurrentYear}]];
+        let statsCatLastYear = [[${statsCatLastYear}]];
+        let statsCatAverageYear = [[${statsCatAverageYear}]];
+        /*]]>*/
+
+        /**
+         *  FIRST CHART
+         */
+
+        let month = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+            "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+
+        // Stats for the current year
+        let orders1 = [];
+        for(let key in statsCurrentYear.dataStats) {
+
+            if(statsCurrentYear.dataStats.hasOwnProperty(key))
+                orders1.push(statsCurrentYear.dataStats[key]);
+        }
+
+        // Stats for the last year
+        let orders2 = [];
+        for(let key in statsLastYear.dataStats) {
+
+            if(statsLastYear.dataStats.hasOwnProperty(key))
+                orders2.push(statsLastYear.dataStats[key]);
+        }
+
+        // Stats average of current year and last year
+        let orders3 = [];
+        for(let key in statsAverageYear.dataStats) {
+
+            if(statsAverageYear.dataStats.hasOwnProperty(key))
+                orders3.push(statsAverageYear.dataStats[key]);
+        }
+
+        var ctx = document.getElementById("myChart");
+        orderedProductsStatsByYear(ctx, month, orders1, orders2, orders3);
+
+        /**
+         *  PIE CHARTS
+         */
+
+        let catLabels = [];
+        let catData1 = [];
+        for(let key in statsCatCurrentYear.dataStats) {
+
+            if(statsCatCurrentYear.dataStats.hasOwnProperty(key)) {
+                catData1.push(statsCatCurrentYear.dataStats[key]);
+                catLabels.push(key);
+            }
+        }
+        let ctx2 = document.getElementById("pie1");
+        let title = ["Produits commandés par catégories", "sur l'année courante"];
+        orderedProductsStatsByYearAndCategory(ctx2, catLabels, catData1, title);
+
+        catLabels = [];
+        catData1 = [];
+        for(let key in statsCatLastYear.dataStats) {
+
+            if(statsCatLastYear.dataStats.hasOwnProperty(key)) {
+                catData1.push(statsCatLastYear.dataStats[key]);
+                catLabels.push(key);
+            }
+        }
+        title = ["Produits commandés par catégories", "sur l'année précédente"];
+        let ctx3 = document.getElementById("pie2");
+        orderedProductsStatsByYearAndCategory(ctx3, catLabels, catData1, title);
+
+    </script>
 </div>
 </body>
 </html>

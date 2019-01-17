@@ -32,6 +32,8 @@ public interface AdminService {
      */
     ProductBean findProductById(int id);
     List<CategoryBean> findAllCategories();
+    OrderStats findOrderedProductsStatsByYear(int year);
+    OrderStats findOrderedProductsStatsByYearAndCategory(int year);
 
     /**
      * Store

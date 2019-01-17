@@ -54,4 +54,12 @@ public interface MsOrderProxy {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     OrderStats findOrderStatsByYear(@PathVariable("year") Integer year);
 
+    @GetMapping(value = "${lpdm.order.name}/admin/orderedproducts/stats/year/{year}",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    OrderStats findOrderedProductsStatsByYear(@PathVariable("year") Integer year);
+
+    @GetMapping(value = "${lpdm.order.name}/admin/orderedproducts/stats/year/{year}/category",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    OrderStats findOrderedProductsStatsByYearAndCategory(@PathVariable("year") Integer year);
+
 }
