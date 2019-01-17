@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AppRoleBean {
 
-    private Long id;
+    private int id;
+
     private String roleName;
+
+    private AppUserBean appUser;
 }
