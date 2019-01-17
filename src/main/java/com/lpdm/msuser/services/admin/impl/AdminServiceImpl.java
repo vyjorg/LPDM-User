@@ -111,23 +111,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public OrderStats findOrderedProductsStatsByYearAndCategory(int year) {
 
-        OrderStats orderStats = new OrderStats();
-        List<CategoryBean> categoryList = productProxy.findAllCotegories();
-
-        for(CategoryBean category : categoryList){
-
-            OrderStats stats = orderProxy.findOrderedProductsStatsByYearAndCategory(year, category.getId());
-
-            int totalProduct = 0;
-            for(Map.Entry entry : stats.getDataStats().entrySet()){
-
-                totalProduct += (int) entry.getValue();
-            }
-
-            orderStats.getDataStats().put(category.getName(), totalProduct);
-        }
-
-        return orderStats;
+        return orderProxy.findOrderedProductsStatsByYearAndCategory(year);
     }
 
     @Override
