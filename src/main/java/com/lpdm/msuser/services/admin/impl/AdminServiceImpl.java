@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,8 +43,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public OrderBean findOrderById(int id) throws FeignException {
-        return orderProxy.getOrderById(id);
+    public List<OrderBean> findOrderById(int id) throws FeignException {
+        List<OrderBean> orderList = new ArrayList<>();
+        orderList.add(orderProxy.getOrderById(id));
+        return orderList;
     }
 
     @Override

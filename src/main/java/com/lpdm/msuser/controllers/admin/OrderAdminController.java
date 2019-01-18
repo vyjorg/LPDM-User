@@ -48,7 +48,8 @@ public class OrderAdminController {
                 .addObject("pageTitle", "Search order")
                 .addObject("content", "searchPage")
                 .addObject("searchForm", new SearchForm())
-                .addObject("payments", adminService.findAllPayment());
+                .addObject("payments", adminService.findAllPayment())
+                .addObject("selectedTab", "order_id");
     }
 
     @PostMapping(value = {"/search", "/search/"})
@@ -60,16 +61,28 @@ public class OrderAdminController {
         log.info("Value = " + searchForm.getSearchValue());
 
         String keyword = searchForm.getKeyword();
+        String selectedTab = null;
         Object result = null;
         try{
             switch (searchForm.getSearchValue()){
+                // Search by order id
                 case 1:
                     if(Pattern.compile("^\\d+$").matcher(keyword).matches())
                         result = adminService.findOrderById(Integer.valueOf(keyword));
                     else result = 500;
+                    selectedTab = "order_id";
                     break;
+                // Search by user id
                 case 2:
+                    if(Pattern.compile("^\\d+$").matcher(keyword).matches())
+                        result = adminService.findAllOrdersByUserId(Integer.valueOf(keyword));
+                    else result = 500;
+                    selectedTab = "customer";
+                    break;
+                // Search by user email
+                case 3:
                     result = adminService.findAllOrdersByUserEmail(keyword);
+                    selectedTab = "customer";
                     break;
                     /*
                 case 2:
@@ -93,7 +106,8 @@ public class OrderAdminController {
                 .addObject("content", "searchPage")
                 .addObject("result", result)
                 .addObject("searchForm", new SearchForm())
-                .addObject("payments", adminService.findAllPayment());
+                .addObject("payments", adminService.findAllPayment())
+                .addObject("selectedTab", selectedTab);
     }
 
     @GetMapping(value = {"/payments", "/payments/"})

@@ -32,7 +32,7 @@ public interface MsOrderProxy {
     @PostMapping(value = "/ms-order/save", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     OrderBean saveOrder(@Valid @RequestBody OrderBean order);
 
-    @GetMapping(value = "/ms-order/by/customer/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "${lpdm.order.name}/orders/all/customer/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<OrderBean> findAllByUserId(@PathVariable("id") int id);
 
     @GetMapping(value = "/ms-order/orders/payments", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

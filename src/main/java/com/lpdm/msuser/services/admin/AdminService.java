@@ -18,7 +18,7 @@ public interface AdminService {
     /**
      * Order
      */
-    OrderBean findOrderById(int id) throws FeignException;
+    List<OrderBean> findOrderById(int id) throws FeignException;
     List<OrderBean> findAllOrdersByUserId(int id);
     List<OrderBean> findAllOrdersByUserEmail(String email);
     List<OrderBean> findAllOrdersByUserLastName(String lastName);

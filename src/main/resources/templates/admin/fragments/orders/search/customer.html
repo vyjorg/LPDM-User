@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<div id="customer" class="tab-pane fade" data-th-fragment="customer">
+    <br>
+    <form method="post" data-th-action="@{/admin/orders/search}" data-th-object="${searchForm}">
+        <div class="form-group">
+            <div class="label-control col-sm-3">
+                <select class="form-control" id="select" data-th-field="*{searchValue}">
+                    <option value="2">Identifiant client</option>
+                    <option value="3">E-mail du client</option>
+                    <option value="4">Nom de famille</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <input type="text" class="form-control" data-th-field="*{keyword}"
+                       placeholder="Saisir l'information sur le client" required>
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="submit">
+                        <span class="glyphicon glyphicon-search"></span>
+                        Rechercher
+                    </button>
+                </span>
+            </div>
+        </div>
+    </form>
+</div>
+</html>

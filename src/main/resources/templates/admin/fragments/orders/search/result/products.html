@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="products(order, total)">
+    <div class="panel-group">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse1">Produits commandés</a>
+                    <span class="badge" data-th-text="${#lists.size(order.orderedProducts)}"></span>
+                </h4>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse in" aria-expanded="true">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Désignation</th>
+                        <th class="text-center">Prix unitaire HT</th>
+                        <th class="text-center">Quantité</th>
+                        <th class="text-center">T.V.A.</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-th-each="orderedProduct : ${order.orderedProducts}">
+                        <td data-th-text="${orderedProduct.product.name}"></td>
+                        <td data-th-text="${orderedProduct.product.price}" class="text-center"></td>
+                        <td data-th-text="${orderedProduct.quantity}" class="text-center"></td>
+                        <td data-th-text="${orderedProduct.product.tva}+' %'" class="text-center"> <span> %</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="panel-footer text-right">
+                    Total de la commande : <span data-th-text="${total}"></span> euros TTC
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

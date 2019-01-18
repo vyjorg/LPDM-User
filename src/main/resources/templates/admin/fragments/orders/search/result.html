@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="search_result(result)">
+    <div data-th-if="${result instanceof T(java.util.List)}">
+        <div data-th-if="${#lists.size(result)} > 1">
+            <div class="alert alert-info">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button"
+                            data-toggle="dropdown" id="btnMenuOrders">
+                        Liste des commandes
+                        <span class="caret" style="margin-left: 10px;"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li data-th-each="order,loop : ${result}">
+                            <a href="#" data-th-id="'order_menu_' + ${order.id}">
+                                <span data-th-text="'ID ' + ${order.id} + ' - Montant : ' + ${order.total} + ' €'"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div data-th-each="order,status : ${result}" data-th-id="'order_' + ${order.id}" data-th-style="${#lists.size(result) > 1} ? 'display:none;'">
+            <ul class="list-group">
+                <li class="list-group-item" style="border: none;display: block;">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h2><b>ID <span data-th-text="${order.id}"></span></b></h2>
+                        </div>
+                        <div class="col-sm-5 pull-right">
+                            <div class="alert alert-info">
+                                Identifiant : <span data-th-text="${order.customer.id}"></span><br>
+                                Nom <span data-th-text="${order.customer.firstName}"></span><br>
+                                Address :<br>
+                                Email : <span data-th-text="${order.customer.email}"></span><br>
+                                Tel :
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item" style="height: 56px; border: none;display: block;">
+                    <div class="input-group">
+                        <label for="orderDate" class="input-group-addon" style="width: 160px;">
+                            Date de commande
+                        </label>
+                        <input type="text" id="orderDate" class="form-control"
+                               data-th-value="${#temporals.format(order.orderDate, 'dd / MM / yyyy à HH:mm:ss')}"
+                               disabled>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit" disabled>
+                                <span class="glyphicon glyphicon-check" style="padding-left: 6px;"></span>
+                            </button>
+                        </span>
+                    </div>
+                </li>
+                <li class="list-group-item" style="height: 56px; border: none;">
+                    <div class="input-group">
+                        <label for="orderStatus" class="input-group-addon" style="width: 160px;">
+                            Statut
+                        </label>
+                        <input type="text" id="orderStatus" class="form-control"
+                               data-th-value="${order.status}"
+                               disabled>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit" disabled>
+                                <span class="glyphicon glyphicon-check" style="padding-left: 6px;"></span>
+                            </button>
+                        </span>
+                    </div>
+                </li>
+                <li class="list-group-item" style="height: 56px; border: none;">
+                    <div class="input-group">
+                        <label for="orderPayment" class="input-group-addon" style="width: 160px;">
+                            Paiement
+                        </label>
+                        <input type="text" id="orderPayment" class="form-control"
+                               data-th-value="${order.payment.label}"
+                               disabled>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit" disabled>
+                                <span class="glyphicon glyphicon-check" style="padding-left: 6px;"></span>
+                            </button>
+                        </span>
+                    </div>
+                </li>
+                <li class="list-group-item text-center" style="height: 56px; border: none;"
+                    data-th-if="${order.status != 'CART' AND order.status != 'VALIDATE'}">
+                    <button class="btn btn-warning" type="submit">
+                        Afficher la facture
+                        <span class="glyphicon glyphicon-list-alt" style="padding-left: 6px;"></span>
+                    </button>
+                </li>
+            </ul>
+            <div data-th-replace="admin/fragments/orders/search/result/products :: products(${order}, ${order.total})"></div>
+        </div>
+    </div>
+    <div data-th-if="${result instanceof T(java.lang.String)}">
+        Erreur : <span data-th-text="${result}"></span>
+    </div>
+    <div data-th-if="${result instanceof T(java.lang.Integer)}" class="alert alert-danger">
+            <span data-th-if="${result == 404}">
+                <i class="glyphicon glyphicon-remove" style="display:table-cell;"></i>
+                Aucune commande n'a été trouvée.
+            </span>
+        <span data-th-if="${result == 500}">
+                <i class="glyphicon glyphicon-remove" style="display:table-cell;"></i>
+                La syntaxe de la requête est erronée ou le microservice est injoignable.
+            </span>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Console</div>
+        <div class="panel-body">
+            <pre data-th-text="${result}"></pre>
+        </div>
+    </div>
+</div>
+</html>
