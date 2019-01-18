@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 @FeignClient(name = "zuul-server", url = "https://zuul.lpdm.kybox.fr")
-@RibbonClient(name = "ms-order")
+@RibbonClient(name = "ms-product")
 public interface MsProductProxy {
 
     @GetMapping(value = "/ms-product/products")

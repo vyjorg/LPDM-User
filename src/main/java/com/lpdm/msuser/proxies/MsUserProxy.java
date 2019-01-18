@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Component
 @FeignClient(name = "zuul-server", url = "https://zuul.lpdm.kybox.fr")
-@RibbonClient(name = "ms-order")
+@RibbonClient(name = "microservice-authentication")
 public interface MsUserProxy {
 
     @GetMapping("/microservice-users/users/")
