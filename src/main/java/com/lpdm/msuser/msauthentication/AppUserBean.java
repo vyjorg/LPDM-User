@@ -1,12 +1,15 @@
 package com.lpdm.msuser.msauthentication;
 
-import com.lpdm.msuser.msauthentication.enumeration.Access;
-
-import javax.validation.constraints.NotNull;
-import java.util.Collection;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class AppUserBean {
+
+    public AppUserBean() {
+    }
 
     private int id;
 
@@ -14,61 +17,21 @@ public class AppUserBean {
 
     private String password;
 
-    private Enum<Access> role;
-
-    private Collection<AppRoleBean> roles;
+    private Set<AppRoleBean> roles = new HashSet<>();
 
     private String name;
+
     private String firstName;
 
-    public AppUserBean() {
-    }
+    private String tel;
 
-    public AppUserBean(@NotNull String email, @NotNull String password) {
-        this.email = email;
-        this.password = password;
-    }
+    private LocalDate birthday;
 
-    public AppUserBean(@NotNull String email, @NotNull String password, Enum<Access> role) {
-        this.email = email;
-        this.password = password;
-    }
+    private LocalDateTime registrationDate;
 
-    public AppUserBean(@NotNull String email, @NotNull String password, Enum<Access> role, String name, String firstName, String address) {
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.name = name;
-        this.firstName = firstName;
-    }
+    private int addressId;
 
-    /*
-    private Enum<AccessEnum> role;
-
-    private String name;
-    private String firstName;
-
-    public AppUser() {
-    }
-
-    public AppUser(@NotNull String email, @NotNull String password) {
-        this.email = email;
-        this.password = password;
-    }
-
-    public AppUser(@NotNull String email, @NotNull String password, Enum<AccessEnum> role) {
-        this.email = email;
-        this.password = password;
-    }
-
-    public AppUser(@NotNull String email, @NotNull String password, Enum<AccessEnum> role, String name, String firstName, String address) {
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.name = name;
-        this.firstName = firstName;
-    }
-     */
+    private Boolean active;
 
     public int getId() {
         return id;
@@ -94,12 +57,12 @@ public class AppUserBean {
         this.password = password;
     }
 
-    public Enum<Access> getRole() {
-        return role;
+    public Set<AppRoleBean> getRoles() {
+        return roles;
     }
 
-    public void setRole(Enum<Access> role) {
-        this.role = role;
+    public void setRoles(Set<AppRoleBean> roles) {
+        this.roles = roles;
     }
 
     public String getName() {
@@ -118,25 +81,51 @@ public class AppUserBean {
         this.firstName = firstName;
     }
 
-    public Collection<AppRoleBean> getRoles() {
-        return roles;
+    public String getTel() {
+        return tel;
     }
 
-    public void setRoles(Collection<AppRoleBean> roles) {
-        this.roles = roles;
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 
+    public LocalDate getBirthday() {
+        return birthday;
+    }
 
-    @Override
-    public String toString() {
-        return "AppUserBean{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", role=" + role +
-                ", roles=" + roles +
-                ", name='" + name + '\'' +
-                ", firstName='" + firstName + '\'' +
-                '}';
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public LocalDateTime getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(LocalDateTime registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public int getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public void login(){
+
+    }
+
+    public void logout(){
+
     }
 }
