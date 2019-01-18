@@ -22,7 +22,7 @@ public interface AdminService {
     List<OrderBean> findAllOrdersByUserId(int id);
     List<OrderBean> findAllOrdersByUserEmail(String email);
     List<OrderBean> findAllOrdersByUserLastName(String lastName);
-    OrderBean findOrderByInvoiceReference(String ref);
+    List<OrderBean> findOrderByInvoiceReference(String ref);
     List<PaymentBean> findAllPayment();
     OrderStats findOrderStatsByYear(Integer year);
     OrderStats getAverageStats(OrderStats stats1, OrderStats stats2);

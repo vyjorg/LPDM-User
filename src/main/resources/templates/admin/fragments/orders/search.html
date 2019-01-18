@@ -18,7 +18,7 @@
                     <ul class="nav nav-tabs">
                         <li id="li_order_id"><a data-toggle="tab" href="#order_id">Identifiant</a></li>
                         <li id="li_customer"><a data-toggle="tab" href="#customer">Client</a></li>
-                        <li><a data-toggle="tab" href="#invoice">Facture</a></li>
+                        <li id="li_invoice"><a data-toggle="tab" href="#invoice">Facture</a></li>
                         <li><a data-toggle="tab" href="#status">Statut</a></li>
                         <li><a data-toggle="tab" href="#date">Date</a></li>
                         <li><a data-toggle="tab" href="#payment">Paiement</a></li>
@@ -32,24 +32,9 @@
                         <!-- Search by order id -->
                         <div data-th-replace="admin/fragments/orders/search/customer :: customer"></div>
 
-                        <div id="invoice" class="tab-pane fade">
-                            <br>
-                            <form method="post" data-th-action="@{/admin/orders/search}" data-th-object="${searchForm}">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" data-th-field="*{keyword}"
-                                               placeholder="Saisir la référence de la facture" required>
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-primary" type="submit">
-                                                <span class="glyphicon glyphicon-search"></span>
-                                                Rechercher
-                                            </button>
-                                        </span>
-                                        <input type="hidden" name="searchValue" value="0">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                        <!-- Search by invoice ref -->
+                        <div data-th-replace="admin/fragments/orders/search/invoice :: invoice"></div>
+
                         <div id="status" class="tab-pane fade">
                             <br>
                             <form method="post" data-th-action="@{/admin/products/search}" data-th-object="${searchForm}">

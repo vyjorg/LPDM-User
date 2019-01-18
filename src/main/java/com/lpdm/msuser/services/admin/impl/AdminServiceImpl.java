@@ -65,8 +65,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public OrderBean findOrderByInvoiceReference(String ref) {
-        return orderProxy.findByInvoiceReference(ref);
+    public List<OrderBean> findOrderByInvoiceReference(String ref) {
+        List<OrderBean> orderList = new ArrayList<>();
+        orderList.add(orderProxy.findByInvoiceReference(ref));
+        return orderList;
     }
 
     @Override

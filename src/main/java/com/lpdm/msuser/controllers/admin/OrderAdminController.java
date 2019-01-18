@@ -82,7 +82,17 @@ public class OrderAdminController {
                 // Search by user email
                 case 3:
                     result = adminService.findAllOrdersByUserEmail(keyword);
+                    log.info(result.toString());
                     selectedTab = "customer";
+                    break;
+                // Search bu user lastname
+                case 4:
+                    selectedTab = "customer";
+                    break;
+                // Search by invoice ref
+                case 5:
+                    result = adminService.findOrderByInvoiceReference(keyword);
+                    selectedTab = "invoice";
                     break;
                     /*
                 case 2:
