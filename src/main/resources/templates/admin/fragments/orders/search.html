@@ -39,11 +39,11 @@
                         </div>
                         <div id="client" class="tab-pane fade">
                             <br>
-                            <form method="post" data-th-action="@{/admin/products/search}" data-th-object="${searchForm}">
+                            <form method="post" data-th-action="@{/admin/orders/search}" data-th-object="${searchForm}">
                                 <div class="form-group">
                                     <div class="label-control col-sm-3">
                                         <select class="form-control" id="select" data-th-field="*{searchValue}">
-                                            <option value="3">E-mail du client</option>
+                                            <option value="2">E-mail du client</option>
                                             <option value="4">Nom de famille</option>
                                         </select>
                                     </div>
@@ -73,7 +73,7 @@
                                                 Rechercher
                                             </button>
                                         </span>
-                                        <input type="hidden" name="searchValue" value="2">
+                                        <input type="hidden" name="searchValue" value="0">
                                     </div>
                                 </div>
                             </form>
@@ -84,8 +84,8 @@
                                 <div class="input-group">
                                     <label for="selectStatus"></label>
                                     <select class="form-control" id="selectStatus" data-th-field="*{searchValue}">
-                                        <option value="3">E-mail du client</option>
-                                        <option value="4">Nom de famille</option>
+                                        <option value="0">E-mail du client</option>
+                                        <option value="0">Nom de famille</option>
                                     </select>
                                     <span class="input-group-btn">
                                         <button class="btn btn-primary" type="submit">
@@ -109,7 +109,7 @@
                                                 Rechercher
                                             </button>
                                         </span>
-                                        <input type="hidden" name="searchValue" value="2">
+                                        <input type="hidden" name="searchValue" value="0">
                                     </div>
                                 </div>
                             </form>
@@ -140,8 +140,8 @@
                                 <div class="form-group">
                                     <div class="label-control col-sm-3">
                                         <select class="form-control" id="selectProduct" data-th-field="*{searchValue}">
-                                            <option value="3">Identifiant du produit</option>
-                                            <option value="4">Nom du produit</option>
+                                            <option value="0">Identifiant du produit</option>
+                                            <option value="0">Nom du produit</option>
                                         </select>
                                     </div>
                                     <div class="input-group">

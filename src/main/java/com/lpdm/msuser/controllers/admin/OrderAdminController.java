@@ -69,6 +69,10 @@ public class OrderAdminController {
                     else result = 500;
                     break;
                 case 2:
+                    result = adminService.findAllOrdersByUserEmail(keyword);
+                    break;
+                    /*
+                case 2:
                     result = adminService.findOrderByInvoiceReference(keyword);
                     break;
                 case 3:
@@ -76,14 +80,20 @@ public class OrderAdminController {
                     break;
                 case 4:
                     result = adminService.findAllOrdersByUserLastName(keyword);
+                    */
             }
         }
-        catch (FeignException e ){ result = e.status(); }
+        catch (FeignException e ){
+            log.warn(e.getMessage());
+            result = e.status();
+        }
 
         return new ModelAndView("/admin/fragments/orders")
                 .addObject("pageTitle", "Search order")
                 .addObject("content", "searchPage")
-                .addObject("result", result);
+                .addObject("result", result)
+                .addObject("searchForm", new SearchForm())
+                .addObject("payments", adminService.findAllPayment());
     }
 
     @GetMapping(value = {"/payments", "/payments/"})
