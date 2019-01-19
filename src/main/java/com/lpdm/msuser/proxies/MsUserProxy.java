@@ -29,6 +29,6 @@ public interface MsUserProxy {
     @PostMapping("/microservice-authentication/users/get")
     AppUserBean getUserByUsername(@RequestParam String username);
 
-    @GetMapping("/email/{email}")
+    @GetMapping("/microservice-authentication/email/{email}")
     AppUserBean getUserByEmail(@PathVariable String email);
 }
