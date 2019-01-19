@@ -12,7 +12,7 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li data-th-each="order,loop : ${result}">
-                            <a href="#" data-th-id="'order_menu_' + ${order.id}">
+                            <a href="#" data-th-id="'ordermenu_' + ${order.id}">
                                 <span data-th-text="'ID ' + ${order.id} + ' - Montant : ' + ${order.total} + ' €'"></span>
                             </a>
                         </li>

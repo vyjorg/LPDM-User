@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <div data-th-fragment="search">
-    <script data-th-src="@{/js/admin/order.js}"></script>
+    <script data-th-src="@{/js/admin/order/order.js}"></script>
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panel-default">
@@ -19,10 +19,7 @@
                         <li id="li_order_id"><a data-toggle="tab" href="#order_id">Identifiant</a></li>
                         <li id="li_customer"><a data-toggle="tab" href="#customer">Client</a></li>
                         <li id="li_invoice"><a data-toggle="tab" href="#invoice">Facture</a></li>
-                        <li><a data-toggle="tab" href="#status">Statut</a></li>
-                        <li><a data-toggle="tab" href="#date">Date</a></li>
-                        <li><a data-toggle="tab" href="#payment">Paiement</a></li>
-                        <li><a data-toggle="tab" href="#product">Produit</a></li>
+                        <li id="li_date"><a data-toggle="tab" href="#date">Date</a></li>
                     </ul>
 
                     <div class="tab-content">
@@ -35,85 +32,9 @@
                         <!-- Search by invoice ref -->
                         <div data-th-replace="admin/fragments/orders/search/invoice :: invoice"></div>
 
-                        <div id="status" class="tab-pane fade">
-                            <br>
-                            <form method="post" data-th-action="@{/admin/products/search}" data-th-object="${searchForm}">
-                                <div class="input-group">
-                                    <label for="selectStatus"></label>
-                                    <select class="form-control" id="selectStatus" data-th-field="*{searchValue}">
-                                        <option value="0">E-mail du client</option>
-                                        <option value="0">Nom de famille</option>
-                                    </select>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-primary" type="submit">
-                                            <span class="glyphicon glyphicon-search"></span>
-                                            Rechercher
-                                        </button>
-                                    </span>
-                                </div>
-                            </form>
-                        </div>
-                        <div id="date" class="tab-pane fade">
-                            <br>
-                            <form method="post" data-th-action="@{/admin/orders/search}" data-th-object="${searchForm}">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" data-th-field="*{keyword}"
-                                               placeholder="Saisir la référence de la facture" required>
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-primary" type="submit">
-                                                <span class="glyphicon glyphicon-search"></span>
-                                                Rechercher
-                                            </button>
-                                        </span>
-                                        <input type="hidden" name="searchValue" value="0">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div id="payment" class="tab-pane fade">
-                            <br>
-                            <form method="post" data-th-action="@{/admin/products/search}" data-th-object="${searchForm}">
-                                <div class="input-group">
-                                    <label for="selectPayment"></label>
-                                    <select class="form-control" id="selectPayment" data-th-field="*{searchValue}">
-                                        <option data-th-each="p,id : ${payments}"
-                                                data-th-text="${p.label}"
-                                                data-th-value="${id.index}">
-                                        </option>
-                                    </select>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-primary" type="submit">
-                                            <span class="glyphicon glyphicon-search"></span>
-                                            Rechercher
-                                        </button>
-                                    </span>
-                                </div>
-                            </form>
-                        </div>
-                        <div id="product" class="tab-pane fade">
-                            <br>
-                            <form method="post" data-th-action="@{/admin/products/search}" data-th-object="${searchForm}">
-                                <div class="form-group">
-                                    <div class="label-control col-sm-3">
-                                        <select class="form-control" id="selectProduct" data-th-field="*{searchValue}">
-                                            <option value="0">Identifiant du produit</option>
-                                            <option value="0">Nom du produit</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" data-th-field="*{keyword}"
-                                               placeholder="Saisir l'information sur le produit" required>
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-primary" type="submit">
-                                                <span class="glyphicon glyphicon-search"></span>
-                                                Rechercher
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                        <!-- Search by date -->
+                        <div data-th-replace="admin/fragments/orders/search/date :: date"></div>
+
                     </div>
                 </div>
             </div>

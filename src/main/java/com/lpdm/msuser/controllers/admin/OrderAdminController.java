@@ -1,7 +1,9 @@
 package com.lpdm.msuser.controllers.admin;
 
 import com.lpdm.msuser.model.admin.OrderStats;
+import com.lpdm.msuser.model.admin.SearchDates;
 import com.lpdm.msuser.model.admin.SearchForm;
+import com.lpdm.msuser.msorder.enumeration.StatusEnum;
 import com.lpdm.msuser.services.admin.AdminService;
 import feign.FeignException;
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
 @RestController
@@ -49,7 +52,8 @@ public class OrderAdminController {
                 .addObject("content", "searchPage")
                 .addObject("searchForm", new SearchForm())
                 .addObject("payments", adminService.findAllPayment())
-                .addObject("selectedTab", "order_id");
+                .addObject("selectedTab", "order_id")
+                .addObject("statusList", StatusEnum.values());
     }
 
     @PostMapping(value = {"/search", "/search/"})
@@ -94,16 +98,17 @@ public class OrderAdminController {
                     result = adminService.findOrderByInvoiceReference(keyword);
                     selectedTab = "invoice";
                     break;
-                    /*
-                case 2:
-                    result = adminService.findOrderByInvoiceReference(keyword);
+                // Search by date
+                case 6:
+                    String date1 = keyword.substring(0, keyword.lastIndexOf(":"));
+                    String date2 = keyword.substring(keyword.lastIndexOf(":") + 1);
+                    DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    SearchDates dates = new SearchDates(
+                            LocalDate.parse(date1, df),
+                            LocalDate.parse(date2, df));
+                    result = adminService.findAllOrdersBetweenTwoDates(dates);
+                    selectedTab = "date";
                     break;
-                case 3:
-                    result = adminService.findAllOrdersByUserEmail(keyword);
-                    break;
-                case 4:
-                    result = adminService.findAllOrdersByUserLastName(keyword);
-                    */
             }
         }
         catch (FeignException e ){
@@ -117,7 +122,8 @@ public class OrderAdminController {
                 .addObject("result", result)
                 .addObject("searchForm", new SearchForm())
                 .addObject("payments", adminService.findAllPayment())
-                .addObject("selectedTab", selectedTab);
+                .addObject("selectedTab", selectedTab)
+                .addObject("statusList", StatusEnum.values());
     }
 
     @GetMapping(value = {"/payments", "/payments/"})

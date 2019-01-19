@@ -2,6 +2,7 @@ package com.lpdm.msuser.services.admin;
 
 import com.lpdm.msuser.model.Store;
 import com.lpdm.msuser.model.admin.OrderStats;
+import com.lpdm.msuser.model.admin.SearchDates;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
 import com.lpdm.msuser.msproduct.CategoryBean;
@@ -11,6 +12,7 @@ import com.netflix.discovery.shared.Application;
 import com.netflix.discovery.shared.Applications;
 import feign.FeignException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface AdminService {
@@ -26,6 +28,7 @@ public interface AdminService {
     List<PaymentBean> findAllPayment();
     OrderStats findOrderStatsByYear(Integer year);
     OrderStats getAverageStats(OrderStats stats1, OrderStats stats2);
+    List<OrderBean> findAllOrdersBetweenTwoDates(SearchDates dates);
 
     /**
      * Product

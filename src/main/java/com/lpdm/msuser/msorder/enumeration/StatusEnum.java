@@ -2,7 +2,7 @@ package com.lpdm.msuser.msorder.enumeration;
 
 public enum StatusEnum {
 
-    UNFINALIZED(1), PAID(2), PROCESSED(3), IN_DELIVERING(4), DELIVERED(5);
+    CART(1), VALIDATED(2) , PAID(3), PROCESSED(4), IN_DELIVERING(5), DELIVERED(6);
 
     private int id;
 

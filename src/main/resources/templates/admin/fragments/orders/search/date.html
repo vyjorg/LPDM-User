@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<div id="date" class="tab-pane fade" data-th-fragment="date">
+    <script data-th-src="@{/js/admin/order/datepicker.js}" charset="UTF-8"></script>
+    <br>
+    <form method="post" data-th-action="@{/admin/orders/search}" data-th-object="${searchForm}">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">Entre le</span>
+                <div class="input-group date" data-provide="datepicker" id="dateSelector1">
+                    <input type="text" class="form-control" id="inputDate1" required>
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
+                <span class="input-group-addon">et le</span>
+                <div class="input-group date" data-provide="datepicker" id="dateSelector2">
+                    <input type="text" class="form-control" id="inputDate2" required>
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="submit">
+                        <span class="glyphicon glyphicon-search"></span>
+                        Rechercher
+                    </button>
+                </span>
+                <input type="hidden" name="searchValue" value="6">
+                <input type="hidden" name="keyword" id="keyword_date">
+            </div>
+        </div>
+    </form>
+</div>
+</html>

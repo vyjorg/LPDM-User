@@ -16,7 +16,7 @@ $( document ).ready(function() {
         btnDropdown.append("<span class='caret' style='margin-left: 10px;'></span>");
 
         let currentId = $.trim($(this).attr("id"));
-        orderId = currentId.slice(-1, currentId.length);
+        orderId = currentId.substr(currentId.indexOf("_") + 1, currentId.length);
         currentOrder = $("#order_" + orderId);
         currentOrder.delay(500).fadeIn();
     });
