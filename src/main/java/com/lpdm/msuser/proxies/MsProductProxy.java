@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 @FeignClient(name = "zuul-server", url = "https://zuul.lpdm.kybox.fr")
-@RibbonClient(name = "ms-order")
+@RibbonClient(name = "${lpdm.product.name}")
 public interface MsProductProxy {
 
     @GetMapping(value = "/ms-product/products")
@@ -26,8 +26,8 @@ public interface MsProductProxy {
     @DeleteMapping(value="/ms-product/products/{id}")
     void deleteStock(@PathVariable("id") int id);
 
-    @PutMapping(value="/ms-product/products")
-    void updateStock(@RequestBody ProductBean product);
+    @PutMapping(value="${lpdm.product.name}/products")
+    void updateProduct(@RequestBody ProductBean product);
 
     @GetMapping(value = "${lpdm.product.name}/categories")
     List<CategoryBean> findAllCategories();

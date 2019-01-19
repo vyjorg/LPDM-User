@@ -29,15 +29,12 @@
                         </div>
                         <div class="col-sm-5 pull-right">
                             <div class="alert alert-info">
-                                <h4>Producteur</h4>
-                                <!--
-                                Identifiant : <span data-th-text="${product.producer.id}"></span><br>
+                                <h4><i><b>Info producteur</b></i></h4>
                                 Nom : <span data-th-text="${product.producer.firstName}"></span>
                                 <span data-th-text="${product.producer.lastName}"></span><br>
                                 Address :<br>
                                 Email : <span data-th-text="${product.producer.email}"></span><br>
                                 Tel : <span data-th-text="${product.producer.tel}"></span>
-                                -->
                             </div>
                             <div class="input-group">
                                 <label for="name" class="input-group-addon">Catégorie</label>
@@ -61,33 +58,14 @@
                         </div>
                     </div>
                 </li>
-                <!--
-                <li class="list-group-item" style="height: 60px; border: none;">
-                    <b>ID <span data-th-text="${product.id}"></span></b>
-                    <div class="pull-right">
-                        <div class="input-group">
-                            <label for="name" class="input-group-addon">Catégorie</label>
-                            <select class="form-control">
-                                <option data-th-each="cat,status : ${categories}"
-                                        data-th-value="${status.index}"
-                                        data-th-text="${cat.name}"
-                                        data-th-selected="${cat.name == product.category.name}">
-                                </option>
-                            </select>
-                            <div class="input-group-btn">
-                                <button class="btn btn-primary" type="button" tabindex="-1">
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true" style="padding-left: 6px;"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                -->
                 <li class="list-group-item" style="height: 56px; border: none;">
                     <div class="form-group">
                         <div class="input-group">
-                            <label for="name" class="input-group-addon" style="width: 140px;">Nom</label>
-                            <input type="text" data-th-value="${product.name}" class="form-control" id="name">
+                            <label data-th-for="'name_' + ${product.id}" class="input-group-addon" style="width: 140px;">
+                                Nom
+                            </label>
+                            <input type="text" data-th-value="${product.name}" class="form-control"
+                                    data-th-id="'name_' + ${product.id}">
                             <div class="input-group-btn">
                                 <button class="btn btn-default" type="button" tabindex="-1" disabled
                                         data-toggle="tooltip" data-placement="left"
@@ -101,8 +79,11 @@
                 <li class="list-group-item" style="height: 56px; border: none;">
                     <div class="form-group">
                         <div class="input-group">
-                            <label for="name" class="input-group-addon" style="width: 140px;">Désignation</label>
-                            <input type="text" data-th-value="${product.label}" class="form-control" id="label">
+                            <label data-th-for="'label_' + ${product.id}" class="input-group-addon" style="width: 140px;">
+                                Désignation
+                            </label>
+                            <input type="text" data-th-value="${product.label}" class="form-control"
+                                    data-th-id="'label_' + ${product.id}">
                             <div class="input-group-btn">
                                 <button class="btn btn-default" type="button" tabindex="-1" disabled
                                         data-toggle="tooltip" data-placement="left"
@@ -116,8 +97,11 @@
                 <li class="list-group-item" style="height: 56px; border: none;">
                     <div class="form-group">
                         <div class="input-group">
-                            <label for="name" class="input-group-addon" style="width: 140px;">Prix unitaire HT</label>
-                            <input type="text" data-th-value="${product.price}" class="form-control" id="price">
+                            <label data-th-for="'price_' + ${product.id}" class="input-group-addon" style="width: 140px;">
+                                Prix unitaire HT
+                            </label>
+                            <input type="text" data-th-value="${product.price}" class="form-control"
+                                    data-th-id="'price_' + ${product.id}">
                             <div class="input-group-btn">
                                 <button class="btn btn-default" type="button" tabindex="-1" disabled
                                         data-toggle="tooltip" data-placement="left"
@@ -131,8 +115,11 @@
                 <li class="list-group-item" style="height: 56px; border: none;">
                     <div class="form-group">
                         <div class="input-group">
-                            <label for="name" class="input-group-addon" style="width: 140px;">T.V.A %</label>
-                            <input type="text" data-th-value="${product.tva}" class="form-control" id="tva">
+                            <label data-th-for="'tva_' + ${product.id}" class="input-group-addon" style="width: 140px;">
+                                T.V.A %
+                            </label>
+                            <input type="text" data-th-value="${product.tva}" class="form-control"
+                                    data-th-id="'tva_' + ${product.id}">
                             <div class="input-group-btn">
                                 <button class="btn btn-default" type="button" tabindex="-1" disabled
                                         data-toggle="tooltip" data-placement="left"
@@ -148,7 +135,8 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <label for="name" class="input-group-addon" style="width: 140px;">Photo</label>
-                                <input type="text" data-th-value="${product.picture}" class="form-control" id="picture" readonly>
+                                <input type="text" data-th-value="${product.picture}" class="form-control"
+                                       data-th-id="'pic' + ${status.index} + '_' + ${product.producer.id}" readonly>
                                 <div class="input-group-btn">
                                     <button class="btn btn-default" type="button" tabindex="-1" disabled
                                             data-toggle="tooltip" data-placement="left"
@@ -163,18 +151,20 @@
             </ul>
             <div class="panel panel-default">
                 <div class="panel-body text-center">
-                    <img data-th-src="${product.picture}" class="img-rounded pull-left" alt="Image du produit" style="height: 150px;">
-
-
+                    <img data-th-src="${product.picture}" class="img-rounded" alt="Image du produit"
+                         data-th-id="'img' + ${product.id} + '_' + ${product.producer.id}" style="height: 280px;">
                 </div>
             </div>
             <div class="panel panel-default">
                 <div class="panel-body text-center">
-                    <button type="button" class="btn btn-success">Mettre à jour le produit</button>
-                    <button type="button" class="btn btn-danger">Désactiver ce produit</button>
+                    <button type="button" class="btn btn-success"
+                            data-th-id="'btnUpdate_' + ${product.id}">Mettre à jour le produit</button>
+                    <button type="button" class="btn btn-danger"
+                            data-th-id="'btnDeactivate_' + ${product.id}">Désactiver ce produit</button>
                 </div>
             </div>
         </div>
+        <div data-th-include="admin/fragments/products/search/modal_upload :: modal"></div>
     </div>
     <div data-th-if="${result instanceof T(java.lang.String)}">
         Erreur : <span data-th-text="${result}"></span>
