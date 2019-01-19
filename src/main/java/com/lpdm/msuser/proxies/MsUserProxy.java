@@ -15,18 +15,18 @@ import java.util.Optional;
 @RibbonClient(name = "microservice-authentication")
 public interface MsUserProxy {
 
-    @GetMapping("/microservice-users/users/")
+    @GetMapping("/microservice-authentication/users/")
     List<AppUserBean> getAllUsers();
 
-    @GetMapping("/microservice-users/users/{id}")
+    @GetMapping("/microservice-authentication/users/{id}")
     AppUserBean getUserById(@PathVariable("id") int id);
 
-    @PostMapping("/microservice-users/users")
+    @PostMapping("/microservice-authentication/users")
     AppUserBean addUser(@RequestBody AppUserBean user);
 
-    @PostMapping("/microservice-users/roles")
+    @PostMapping("/microservice-authentication/roles")
     AppRoleBean addRole(@RequestBody AppRoleBean role);
 
-    @PostMapping("/microservice-users/users/get")
+    @PostMapping("/microservice-authentication/users/get")
     AppUserBean getUserByUsername(@RequestParam String username);
 }
