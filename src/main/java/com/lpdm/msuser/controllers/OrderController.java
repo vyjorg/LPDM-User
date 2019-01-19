@@ -73,9 +73,10 @@ public class OrderController {
 
         try {
             AppUserBean user = (AppUserBean) session.getAttribute("user");
+            order.setCustomer(user);
             order.setCustomerId(user.getId());
         }catch (NullPointerException e){
-            logger.info("L'utilisateur dpoit s'authentifier");
+            logger.info("L'utilisateur doit s'authentifier");
             return "identification/login";
         }
 
@@ -87,6 +88,8 @@ public class OrderController {
         order.setStatus(StatusEnum.PROCESSED);
         order.setOrderDate(LocalDateTime.now());
         order.setPayment(payment);
+
+        logger.info(order.toString());
 
         orderConfirmation = orderProxy.saveOrder(order);
         model.addAttribute("order", orderConfirmation);

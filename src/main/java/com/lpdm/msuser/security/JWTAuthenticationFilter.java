@@ -1,6 +1,6 @@
-/*
-package com.lpdm.msuser.security;
 
+package com.lpdm.msuser.security;
+/*
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lpdm.msuser.msauthentication.AppUserBean;
