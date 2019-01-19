@@ -30,5 +30,5 @@ public interface MsProductProxy {
     void updateStock(@RequestBody ProductBean product);
 
     @GetMapping(value = "${lpdm.product.name}/categories")
-    List<CategoryBean> findAllCotegories();
+    List<CategoryBean> findAllCategories();
 }

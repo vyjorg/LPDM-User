@@ -2,6 +2,7 @@ package com.lpdm.msuser.controllers.admin;
 
 import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchForm;
+import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.services.admin.AdminService;
 import feign.FeignException;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 @RestController
@@ -67,8 +69,10 @@ public class ProductAdminController {
         try{
             switch (searchForm.getSearchValue()){
                 case 1:
-                    if(Pattern.compile("^\\d+$").matcher(keyword).matches())
-                        result = adminService.findProductById(Integer.valueOf(keyword));
+                    if(Pattern.compile("^\\d+$").matcher(keyword).matches()) {
+                        result = new ArrayList<ProductBean>();
+                        ((ArrayList) result).add(adminService.findProductById(Integer.valueOf(keyword)));
+                    }
                     else result = 500;
                     break;
                 case 2:

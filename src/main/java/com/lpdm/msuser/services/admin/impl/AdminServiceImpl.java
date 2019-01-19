@@ -13,7 +13,6 @@ import com.lpdm.msuser.proxies.MsStoreProxy;
 import com.lpdm.msuser.services.admin.AdminService;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
-import com.netflix.discovery.shared.Applications;
 import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -115,7 +114,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<CategoryBean> findAllCategories() {
-        return productProxy.findAllCotegories();
+        return productProxy.findAllCategories();
     }
 
     @Override
