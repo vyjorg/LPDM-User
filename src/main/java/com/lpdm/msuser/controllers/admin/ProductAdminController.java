@@ -4,6 +4,8 @@ import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchForm;
 import com.lpdm.msuser.services.admin.AdminService;
 import feign.FeignException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +18,7 @@ import java.util.regex.Pattern;
 @RequestMapping("/admin/products")
 public class ProductAdminController {
 
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final AdminService adminService;
 
     @Autowired
@@ -58,6 +61,7 @@ public class ProductAdminController {
     public ModelAndView searchProductResult(
             @Valid @ModelAttribute("searchForm") SearchForm searchForm){
 
+        log.info("Key[" + searchForm.getSearchValue() + "] : " + searchForm.getKeyword());
         String keyword = searchForm.getKeyword();
         Object result = null;
         try{
@@ -67,10 +71,10 @@ public class ProductAdminController {
                         result = adminService.findProductById(Integer.valueOf(keyword));
                     else result = 500;
                     break;
-                    /*
                 case 2:
-                    result = adminService.findOrderByInvoiceReference(keyword);
+                    result = adminService.findAllOrdersByUserEmail(keyword);
                     break;
+                    /*
                 case 3:
                     result = adminService.findAllOrdersByUserEmail(keyword);
                     break;
@@ -79,12 +83,16 @@ public class ProductAdminController {
                     */
             }
         }
-        catch (FeignException e ){ result = e.status(); }
+        catch (FeignException e ){
+            log.warn(e.getMessage());
+            result = e.status();
+        }
 
         return new ModelAndView("/admin/fragments/products")
                 .addObject("pageTitle", "Search product")
                 .addObject("content", "searchPage")
                 .addObject("result", result)
-                .addObject("categories", adminService.findAllCategories());
+                .addObject("categories", adminService.findAllCategories())
+                .addObject("searchForm", new SearchForm());
     }
 }

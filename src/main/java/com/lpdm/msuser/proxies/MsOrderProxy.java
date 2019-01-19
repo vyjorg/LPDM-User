@@ -1,6 +1,7 @@
 package com.lpdm.msuser.proxies;
 
 import com.lpdm.msuser.model.admin.OrderStats;
+import com.lpdm.msuser.model.admin.SearchDates;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
 import feign.FeignException;
@@ -32,7 +33,7 @@ public interface MsOrderProxy {
     @PostMapping(value = "/ms-order/save", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     OrderBean saveOrder(@Valid @RequestBody OrderBean order);
 
-    @GetMapping(value = "/ms-order/by/customer/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "${lpdm.order.name}/orders/all/customer/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<OrderBean> findAllByUserId(@PathVariable("id") int id);
 
     @GetMapping(value = "/ms-order/orders/payments", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -49,6 +50,10 @@ public interface MsOrderProxy {
     @GetMapping(value = "${lpdm.order.name}/admin/orders/invoice/{ref}",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     OrderBean findByInvoiceReference(@PathVariable("ref") String ref);
+
+    @PostMapping(value = "${lpdm.order.name}/admin/orders/dates/between",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    List<OrderBean> findAllOrdersBetweenDates(@Valid @RequestBody SearchDates searchDates);
 
     @GetMapping(value = "${lpdm.order.name}/admin/orders/stats/year/{year}",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

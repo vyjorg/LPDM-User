@@ -2,6 +2,7 @@ package com.lpdm.msuser.services.admin.impl;
 
 import com.lpdm.msuser.model.Store;
 import com.lpdm.msuser.model.admin.OrderStats;
+import com.lpdm.msuser.model.admin.SearchDates;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
 import com.lpdm.msuser.msproduct.CategoryBean;
@@ -14,15 +15,20 @@ import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
 import com.netflix.discovery.shared.Applications;
 import feign.FeignException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class AdminServiceImpl implements AdminService {
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final MsOrderProxy orderProxy;
     private final MsProductProxy productProxy;
@@ -42,8 +48,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public OrderBean findOrderById(int id) throws FeignException {
-        return orderProxy.getOrderById(id);
+    public List<OrderBean> findOrderById(int id) throws FeignException {
+        List<OrderBean> orderList = new ArrayList<>();
+        orderList.add(orderProxy.getOrderById(id));
+        return orderList;
     }
 
     @Override
@@ -62,8 +70,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public OrderBean findOrderByInvoiceReference(String ref) {
-        return orderProxy.findByInvoiceReference(ref);
+    public List<OrderBean> findOrderByInvoiceReference(String ref) {
+        List<OrderBean> orderList = new ArrayList<>();
+        orderList.add(orderProxy.findByInvoiceReference(ref));
+        return orderList;
     }
 
     @Override
@@ -90,6 +100,12 @@ public class AdminServiceImpl implements AdminService {
             averageStats.getDataStats().put(entry.getKey(), average);
         }
         return averageStats;
+    }
+
+    @Override
+    public List<OrderBean> findAllOrdersBetweenTwoDates(SearchDates dates) {
+        log.info("Search dates : " + dates);
+        return orderProxy.findAllOrdersBetweenDates(dates);
     }
 
     @Override

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<div id="invoice" class="tab-pane fade" data-th-fragment="invoice">
+    <br>
+    <form method="post" data-th-action="@{/admin/orders/search}" data-th-object="${searchForm}">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" class="form-control" data-th-field="*{keyword}"
+                       placeholder="Saisir la référence de la facture" required>
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="submit">
+                        <span class="glyphicon glyphicon-search"></span>
+                        Rechercher
+                    </button>
+                </span>
+                <input type="hidden" name="searchValue" value="5">
+            </div>
+        </div>
+    </form>
+</div>
+</html>
