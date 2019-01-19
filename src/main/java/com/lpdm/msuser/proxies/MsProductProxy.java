@@ -15,45 +15,45 @@ import java.util.List;
 @RibbonClient(name = "ms-product")
 public interface MsProductProxy {
 
-    @GetMapping(value = "/products", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/ms-product/products", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<ProductBean> listProduct();
 
-    @GetMapping(value = "/products/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "ms-product/products/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ProductBean findProduct(@PathVariable int id);
 
-    @PostMapping(value = "/products", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "ms-product/products", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     void addProduct(@RequestBody ProductBean product);
 
-    @DeleteMapping(value = "/products/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @DeleteMapping(value = "ms-product/products/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     void deleteProduct(@PathVariable int id);
 
-    @PutMapping(value = "/products", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping(value = "ms-product/products", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     void updateProduct(@RequestBody ProductBean product);
 
-    @GetMapping(value = "/products/category/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "ms-product/products/category/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<ProductBean> listProductByCategory(@PathVariable int id);
 
-    @PostMapping(value = "/products/category", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "ms-product/products/category", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<ProductBean> listProductByCategory2(@RequestBody CategoryBean category);
 
-    @GetMapping(value = "/products/producer/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "ms-product/products/producer/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<ProductBean> listProductByProducerId(@PathVariable int id);
 
-    @GetMapping(value = "/products/name/{name}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "ms-product/products/name/{name}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<ProductBean> listProductByName(@PathVariable String name);
 
-    @GetMapping(value = "/categories", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "ms-product/categories", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<CategoryBean> listCategories();
 
-    @GetMapping(value = "/categories/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "ms-product/categories/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     CategoryBean category(@PathVariable int id);
 
-    @PostMapping(value = "/categories", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "ms-product/categories", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     void addCategory(@RequestBody CategoryBean category);
 
-    @DeleteMapping(value = "/categories/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @DeleteMapping(value = "ms-product/categories/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     void deleteCategory(@PathVariable int id);
 
-    @PutMapping(value = "/categories", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping(value = "ms-product/categories", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     void updateCategory(@RequestBody CategoryBean category);
 }
