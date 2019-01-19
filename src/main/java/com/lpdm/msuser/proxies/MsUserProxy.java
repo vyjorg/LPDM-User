@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @FeignClient(name = "zuul-server", url = "https://zuul.lpdm.kybox.fr")
@@ -29,4 +28,7 @@ public interface MsUserProxy {
 
     @PostMapping("/microservice-authentication/users/get")
     AppUserBean getUserByUsername(@RequestParam String username);
+
+    @GetMapping("/email/{email}")
+    AppUserBean getUserByEmail(@PathVariable String email);
 }

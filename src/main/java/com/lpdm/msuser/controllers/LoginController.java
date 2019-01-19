@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/identification")
@@ -63,7 +64,7 @@ public class LoginController {
         logger.info("Appel de msUserProxy pour l'email : " + user.getEmail());
 
 
-        AppUserBean appUser = msUserProxy.getUserByUsername(user.getEmail());
+        AppUserBean appUser = msUserProxy.getUserByEmail(user.getEmail());
 
         if (appUser == null){
             logger.info("Pas d'utilisateur trouvé");
