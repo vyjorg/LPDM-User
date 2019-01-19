@@ -23,12 +23,12 @@ public interface MsUserProxy {
     @PostMapping("/microservice-authentication/users")
     AppUserBean addUser(@RequestBody AppUserBean user);
 
-    @PostMapping("/microservice-authentication/roles")
+    @PostMapping("/microservice-authentication/roles/")
     AppRoleBean addRole(@RequestBody AppRoleBean role);
 
     @PostMapping("/microservice-authentication/users/get")
     AppUserBean getUserByUsername(@RequestParam String username);
 
-    @GetMapping("/microservice-authentication/email/{email}")
+    @GetMapping("/microservice-authentication/users/email/{email}")
     AppUserBean getUserByEmail(@PathVariable String email);
 }

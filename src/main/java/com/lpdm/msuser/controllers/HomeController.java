@@ -33,7 +33,7 @@ public class HomeController {
         try {
             AppUserBean user = (AppUserBean) session.getAttribute("user");
             logger.info(user.getEmail() + " identifié");
-            model.addAttribute("username", user.getFirstName());
+            model.addAttribute("username", user.getEmail());
         }catch (NullPointerException e){
             System.out.println("Pas d'utilisateur identifié");
         }

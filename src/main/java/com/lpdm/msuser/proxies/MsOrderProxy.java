@@ -30,7 +30,7 @@ public interface MsOrderProxy {
     @GetMapping(value = "/ms-order/orders/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     OrderBean getOrderById(@PathVariable("id") int id) throws FeignException;
 
-    @PostMapping(value = "/ms-order/save", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/ms-order/orders/save", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     OrderBean saveOrder(@Valid @RequestBody OrderBean order);
 
     @GetMapping(value = "${lpdm.order.name}/orders/all/customer/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
