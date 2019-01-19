@@ -115,7 +115,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<CategoryBean> findAllCategories() {
-        return productProxy.findAllCotegories();
+        return productProxy.listCategories();
     }
 
     @Override
