@@ -27,10 +27,6 @@ public class ProductController{
     @Autowired
     private SessionController sessionController;
 
-    public static List<OrderedProductBean> cart = new ArrayList<>();
-
-    public  static double cartTotal = 0;
-
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping("/{id}")

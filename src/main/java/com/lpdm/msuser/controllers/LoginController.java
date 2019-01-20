@@ -56,8 +56,8 @@ public class LoginController {
         } else if (user.getPassword().equals(appUser.getPassword())){
             logger.info("Entrée de l'utilisateur dans la session");
             session.setAttribute("user", appUser);
-            model.addAttribute("username", appUser.getFirstName());
             model.addAttribute("products", msProductProxy.listProduct());
+            sessionController.addSessionAttributes(session, model);
             return "home";
         } else {
             logger.info("Mot de passe incorrect: " + user.getPassword() + " " + appUser.getPassword());

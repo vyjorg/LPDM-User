@@ -25,7 +25,8 @@ public class SessionController {
         }catch (NullPointerException e){
             logger.info("Pas d'utilisateur identifié");
         }
-        model.addAttribute("cart", ProductController.cart);
+        model.addAttribute("cart", OrderController.cart);
+        model.addAttribute("total", OrderController.cartTotal);
 
     }
 }

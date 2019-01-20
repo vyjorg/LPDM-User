@@ -167,7 +167,7 @@ public class OrderController {
         model.addAttribute("product", product);
         model.addAttribute("products", msProductProxy.listProduct());
         model.addAttribute("total", cartTotal);
-
+        model.addAttribute("cart", cart);
         sessionController.addSessionAttributes(session, model);
 
         return "home";
