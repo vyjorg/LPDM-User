@@ -134,7 +134,6 @@ public class OrderController {
 
         model.addAttribute("product", product);
         model.addAttribute("products", msProductProxy.listProduct());
-        model.addAttribute("total", cartTotal);
 
         sessionController.addSessionAttributes(session, model);
 
@@ -147,29 +146,29 @@ public class OrderController {
         logger.info("Entrée dans addItem pour produit : " + productId);
 
         OrderedProductBean orderedProduct = null;
+        ProductBean product = null;
 
-        ProductBean product = msProductProxy.findProduct(productId);
+        product = msProductProxy.findProduct(productId);
 
-        for (OrderedProductBean item: cart) {
+        logger.info("product: " + product);
+
+        for (OrderedProductBean item : cart) {
             if (item.getProduct().getId() == productId) {
                 orderedProduct = item;
                 orderedProduct.setQuantity(orderedProduct.getQuantity() >= 1 ? orderedProduct.getQuantity() - 1 : 0);
-                if(orderedProduct.getQuantity() == 0)
+                if (orderedProduct.getQuantity() == 0)
                     cart.remove(orderedProduct);
                 break;
             }
         }
-
-        cartTotal = orderedProduct.getQuantity() > 0 ? cartTotal -= product.getPrice() : cartTotal;
+        logger.info("après la boucle");
+        if (orderedProduct != null)
+            cartTotal = orderedProduct.getQuantity() >= 0 ? cartTotal -= product.getPrice() : cartTotal;
 
         logger.info("total panier - :" + cartTotal);
 
-        model.addAttribute("product", product);
         model.addAttribute("products", msProductProxy.listProduct());
-        model.addAttribute("total", cartTotal);
-        model.addAttribute("cart", cart);
         sessionController.addSessionAttributes(session, model);
-
         return "home";
     }
 
