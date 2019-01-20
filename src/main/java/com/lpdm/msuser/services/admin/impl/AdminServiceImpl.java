@@ -1,19 +1,21 @@
 package com.lpdm.msuser.services.admin.impl;
 
+import com.lpdm.msuser.model.Storage;
 import com.lpdm.msuser.model.Store;
 import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchDates;
+import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
 import com.lpdm.msuser.msproduct.CategoryBean;
 import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.proxies.MsOrderProxy;
 import com.lpdm.msuser.proxies.MsProductProxy;
+import com.lpdm.msuser.proxies.MsStorageProxy;
 import com.lpdm.msuser.proxies.MsStoreProxy;
 import com.lpdm.msuser.services.admin.AdminService;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
-import com.netflix.discovery.shared.Applications;
 import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +32,7 @@ public class AdminServiceImpl implements AdminService {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
+    private final MsStorageProxy storageProxy;
     private final MsOrderProxy orderProxy;
     private final MsProductProxy productProxy;
     private final MsStoreProxy storeProxy;
@@ -39,12 +42,14 @@ public class AdminServiceImpl implements AdminService {
     public AdminServiceImpl(MsOrderProxy orderProxy,
                             MsProductProxy productProxy,
                             MsStoreProxy storeProxy,
+                            MsStorageProxy storageProxy,
                             @Qualifier("eurekaClient") EurekaClient discoveryClient) {
 
         this.orderProxy = orderProxy;
         this.productProxy = productProxy;
         this.storeProxy = storeProxy;
         this.discoveryClient = discoveryClient;
+        this.storageProxy = storageProxy;
     }
 
     @Override
@@ -115,7 +120,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<CategoryBean> findAllCategories() {
-        return productProxy.listCategories();
+        return productProxy.findAllCategories();
     }
 
     @Override
@@ -128,6 +133,25 @@ public class AdminServiceImpl implements AdminService {
     public OrderStats findOrderedProductsStatsByYearAndCategory(int year) {
 
         return orderProxy.findOrderedProductsStatsByYearAndCategory(year);
+    }
+
+    @Override
+    public String getUploadPictureForm(AppUserBean user) {
+
+        return storageProxy.getUploadForm(user);
+    }
+
+    @Override
+    public void updateProduct(ProductBean product) {
+
+        ProductBean oldProduct = productProxy.findProduct(product.getId());
+        product.setCategory(oldProduct.getCategory());
+        product.setListStock(oldProduct.getListStock());
+        if(product.getPicture() == null) product.setPicture(oldProduct.getPicture());
+        product.setProducerID(oldProduct.getProducerID());
+        product.setProducer(oldProduct.getProducer());
+        product.setDeactivate(oldProduct.isDeactivate());
+        productProxy.updateProduct(product);
     }
 
     @Override
@@ -144,5 +168,10 @@ public class AdminServiceImpl implements AdminService {
     public List<Application> findAllApps() throws FeignException {
 
         return discoveryClient.getApplications().getRegisteredApplications();
+    }
+
+    @Override
+    public Storage findLatestFileUploadedByOwnerId(int id) {
+        return storageProxy.getLatestFileUploadByOwner(id);
     }
 }

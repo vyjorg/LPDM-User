@@ -28,7 +28,7 @@ public class ProductBean {
 
     private Integer producerID;
 
-    private Optional<ProducerBean> producer;
+    private ProducerBean producer;
 
     public Integer getId() {
         return id;
@@ -102,11 +102,11 @@ public class ProductBean {
         this.producerID = producerID;
     }
 
-    public Optional<ProducerBean> getProducer() {
+    public ProducerBean getProducer() {
         return producer;
     }
 
-    public void setProducer(Optional<ProducerBean> producer) {
+    public void setProducer(ProducerBean producer) {
         this.producer = producer;
     }
 
@@ -116,5 +116,22 @@ public class ProductBean {
 
     public void setDeactivate(boolean deactivate) {
         this.deactivate = deactivate;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductBean{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category=" + category +
+                ", label='" + label + '\'' +
+                ", price=" + price +
+                ", tva=" + tva +
+                ", deactivate=" + deactivate +
+                ", listStock=" + listStock +
+                ", picture='" + picture + '\'' +
+                ", producerID=" + producerID +
+                ", producer=" + producer +
+                '}';
     }
 }
