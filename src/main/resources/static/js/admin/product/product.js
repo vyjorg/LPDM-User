@@ -1,24 +1,50 @@
+// Modals
 let modalUpload;
 let modalFormDiv;
+let modalResult;
+let modalResultSuccess;
+let modalResultError;
+
+// Form
 let inputId;
 let searchForm;
 let searchInput;
 let searchSelect;
+
+// Picture
 let currentPictureInput;
 let currentPicture;
+
+// Product
+let currentProduct;
 let currentProductId;
 
 $( document ).ready(function() {
 
+    // Update buttons
     let btnUpdate = $(".btn-success");
     let btnDeactivate = $(".btn-danger");
+    let btnActivate = $(".btn-info");
+
+    // Picture URL input
     let inputPic = $(":input[type=text][readonly='readonly']");
-    modalUpload = $("#modal_upload");
-    modalFormDiv = $("#uploadForm");
+
+    // Form
     searchForm = $("#mainSearchForm");
     searchInput = $("#mainSearchInput");
     searchSelect = $("#select");
 
+    // Modals
+    modalUpload = $("#modal_upload");
+    modalFormDiv = $("#uploadForm");
+    modalResult = $("#modal_result");
+    modalResultSuccess = $("#modal_result_body_success");
+    modalResultError = $("#modal_result_body_error");
+
+    // Dropdown
+    let btnDropdown = $("#btnMenuProducts");
+
+    // FocusIN picture URL input
     inputPic.focusin(function (e) {
         e.preventDefault();
         $(this).focusout();
@@ -28,20 +54,50 @@ $( document ).ready(function() {
         getUploadForm(inputId);
     });
 
+    // On modal upload picture close
     modalUpload.on('hidden.bs.modal', function () {
         modalFormDiv.empty();
         getLatestPicture();
         $("#mainSearchBtn").prop("disabled", false);
     });
 
+    // On modal result close
+    modalResult.on('hidden.bs.modal', function () {
+        window.location.href = "/admin/products/search/" + currentProductId;
+    });
+
     btnUpdate.on("click", function () {
         let btnId = $(this).attr("id");
         currentProductId = btnId.substr(btnId.indexOf("_") + 1, btnId.length);
-        updateProduct(currentProductId);
+        updateProduct(currentProductId, false);
     });
 
     btnDeactivate.on("click", function () {
-        alert("btn id : " + $(this).attr("id"));
+        let btnId = $(this).attr("id");
+        currentProductId = btnId.substr(btnId.indexOf("_") + 1, btnId.length);
+        alert("btn id : " + currentProductId);
+        updateProduct(currentProductId, true);
+    });
+
+    btnActivate.on("click", function () {
+        let btnId = $(this).attr("id");
+        currentProductId = btnId.substr(btnId.indexOf("_") + 1, btnId.length);
+        alert("btn id : " + currentProductId);
+        updateProduct(currentProductId, false);
+    });
+
+    $(".dropdown-menu li a").click(function(){
+
+        if(currentProductId != null) currentProduct.fadeOut(500);
+
+        btnDropdown.text($(this).text());
+        btnDropdown.val($(this).text());
+        btnDropdown.append("<span class='caret' style='margin-left: 10px;'></span>");
+
+        let currentId = $.trim($(this).attr("id"));
+        currentProductId = currentId.substr(currentId.indexOf("_") + 1, currentId.length);
+        currentProduct = $("#product_" + currentProductId);
+        currentProduct.delay(500).fadeIn();
     });
 });
 
@@ -50,7 +106,7 @@ function getUploadForm(id) {
     $.ajax({
         url: "/admin/products/upload",
         type: "post",
-        data: "id=" + id,
+        data: "id=" + id + "&restricted=true",
         success: function (data) {
             insertUploadForm(data);
         },
@@ -90,7 +146,7 @@ function displayUploadedPic(data){
     currentPicture.attr("src", data.url);
 }
 
-function updateProduct(id){
+function updateProduct(id, deactivate){
 
     let name = $("#name_" + id).val();
     let label = $("#label_" + id).val();
@@ -99,12 +155,15 @@ function updateProduct(id){
     let picture;
     if(currentPictureInput == null) picture = null;
     else picture = currentPictureInput.val();
+    let categorySelect = $("#categoryList_" + id + " option:selected");
+    let categoryValue = categorySelect.val();
+    categoryValue ++;
+    let categoryText = categorySelect.text();
 
-    /*
-    let jsonObj = "{'id': " + id + ", 'name': " + name + ", 'label': "
-                    + label + ", 'price': " + price + ", 'tva': "
-                    + tva + ", 'picture': " + picture + " }";
-                    */
+    let jsonCategory = {};
+    jsonCategory.id = categoryValue;
+    jsonCategory.name = categoryText;
+
     let jsonObj = {};
     jsonObj.id = id;
     jsonObj.name = name;
@@ -112,6 +171,8 @@ function updateProduct(id){
     jsonObj.tva = tva;
     jsonObj.price = price;
     jsonObj.picture = picture;
+    jsonObj.category = jsonCategory;
+    jsonObj.deactivate = deactivate;
 
     $.ajax({
         url: "/admin/products/update",
@@ -119,12 +180,26 @@ function updateProduct(id){
         data: JSON.stringify(jsonObj),
         dataType: "json",
         contentType: "application/json",
-        success: function (data) {
-            alert("response : " + data)
+        success: function () {
+            showUpdateResult(true);
         },
-        error: function (error) {
-            alert("ERROR : " + error);
+        error: function () {
+            showUpdateResult(false);
         }
     });
+}
+
+function showUpdateResult(success){
+
+    if(success){
+        modalResultSuccess.show();
+        modalResultError.hide();
+    }
+    else{
+        modalResultSuccess.hide();
+        modalResultError.show();
+    }
+
+    modalResult.modal();
 }
 
