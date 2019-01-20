@@ -1,5 +1,6 @@
 package com.lpdm.msuser.controllers;
 
+import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msorder.OrderedProductBean;
 import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.proxies.MsProductProxy;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +24,9 @@ public class ProductController{
     @Autowired
     private MsProductProxy msProductProxy;
 
+    @Autowired
+    private SessionController sessionController;
+
     public static List<OrderedProductBean> cart = new ArrayList<>();
 
     public  static double cartTotal = 0;
@@ -29,29 +34,32 @@ public class ProductController{
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping("/{id}")
-    public String productDescription(@PathVariable("id") int id, Model model){
+    public String productDescription(@PathVariable("id") int id, Model model, HttpSession session){
         ProductBean product = msProductProxy.findProduct(id);
         model.addAttribute("product", product);
+        sessionController.addSessionAttributes(session, model);
         return "products/productdescription";
     }
 
 
     @PostMapping(value = "/")
-    public String addProduct(@ModelAttribute ProductBean product){
+    public String addProduct(@ModelAttribute ProductBean product, Model model, HttpSession session){
 
         System.out.println(product.toString());
 
         msProductProxy.addProduct(product);
+        sessionController.addSessionAttributes(session, model);
 
         return "products/list";
     }
 
     @GetMapping("/list/{category}")
-    public String listProduct(Model model){
+    public String listProduct(Model model, HttpSession session){
         List<ProductBean> products = msProductProxy.listProduct();
         model.addAttribute("products", products);
         List<ProductBean> cats = msProductProxy.listProduct();
         model.addAttribute("cats", cats);
+        sessionController.addSessionAttributes(session, model);
         return "products/list";
     }
 

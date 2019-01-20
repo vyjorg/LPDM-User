@@ -32,16 +32,17 @@ public class OrderController {
     @Autowired
     MsProductProxy msProductProxy;
 
+    @Autowired
+    SessionController sessionController;
+
     org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public static List<OrderedProductBean> cart = new ArrayList<>();
 
     public  static double cartTotal = 0;
 
-
-
     @GetMapping("/{id}")
-    public String orderDescription(@PathVariable("id") int id, Model model){
+    public String orderDescription(@PathVariable("id") int id, Model model, HttpSession session){
 
         log.info("Demande de description du produit, appel duproxy des commandes pour obtenir la commande par l'id demandé dans le path");
 
@@ -52,14 +53,16 @@ public class OrderController {
         model.addAttribute("products", orderedProducts);
 
         log.info("Transfert des données de la commande vers la vue");
+        sessionController.addSessionAttributes(session, model);
 
         return "orders/orderdescription";
     }
 
     @RequestMapping("/payments")
-    public String getAllPayments(Model model) {
+    public String getAllPayments(Model model, HttpSession session) {
         List<PaymentBean> allPayments = orderProxy.getPaymentList();
         model.addAttribute("payments", allPayments);
+        sessionController.addSessionAttributes(session, model);
         return "orders/payments";
     }
 
@@ -95,11 +98,13 @@ public class OrderController {
         model.addAttribute("order", orderConfirmation);
         model.addAttribute("products", orderDetails);
 
+        sessionController.addSessionAttributes(session, model);
+
         return "orders/orderdescription";
     }
 
     @GetMapping("/{id}/add")
-    public String addItem(@PathVariable("id") int productId, Model model){
+    public String addItem(@PathVariable("id") int productId, Model model, HttpSession session){
 
         logger.info("Entrée dans addItem pour produit : " + productId);
 
@@ -128,15 +133,16 @@ public class OrderController {
 
 
         model.addAttribute("product", product);
-        model.addAttribute("cart", cart);
         model.addAttribute("products", msProductProxy.listProduct());
         model.addAttribute("total", cartTotal);
+
+        sessionController.addSessionAttributes(session, model);
 
         return "home";
     }
 
     @GetMapping("/{id}/sub")
-    public String subItem(@PathVariable("id") int productId, Model model){
+    public String subItem(@PathVariable("id") int productId, Model model, HttpSession session){
 
         logger.info("Entrée dans addItem pour produit : " + productId);
 
@@ -159,10 +165,10 @@ public class OrderController {
         logger.info("total panier - :" + cartTotal);
 
         model.addAttribute("product", product);
-        model.addAttribute("cart", cart);
         model.addAttribute("products", msProductProxy.listProduct());
         model.addAttribute("total", cartTotal);
 
+        sessionController.addSessionAttributes(session, model);
 
         return "home";
     }

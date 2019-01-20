@@ -1,5 +1,7 @@
 package com.lpdm.msuser.msauthentication;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -13,8 +15,11 @@ public class AppUserBean {
 
     private int id;
 
+    @NotNull
     private String email;
 
+    @NotNull
+    @Min(4)
     private String password;
 
     private Set<AppRoleBean> roles = new HashSet<>();

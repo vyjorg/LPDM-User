@@ -1,16 +1,17 @@
 package com.lpdm.msuser.controllers;
 
 import com.lpdm.msuser.msauthentication.AppUserBean;
+import com.lpdm.msuser.proxies.MsProductProxy;
 import com.lpdm.msuser.proxies.MsUserProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/identification")
@@ -21,40 +22,22 @@ public class LoginController {
     @Autowired
     private MsUserProxy msUserProxy;
 
+    @Autowired
+    private SessionController sessionController;
 
-   //public static AppUserBean getUser(HttpSession session){
-
-   //    Logger logger = LoggerFactory.getLogger(LoginController.class);
-
-   //    try {
-   //        AppUserBean user = (AppUserBean) session.getAttribute("user");
-   //        return user;
-   //    }catch (NullPointerException e){
-   //        logger.info("Pas d'utilisateur identifié");
-   //    }finally {
-   //        logger.info("Utilisateur null");
-   //        return null;
-   //    }
-
-   //}
+    @Autowired
+    MsProductProxy msProductProxy;
 
     @GetMapping("/login")
     public String loginForm(HttpSession session, Model model){
-
-        try {
-            AppUserBean user = (AppUserBean) session.getAttribute("user");
-            model.addAttribute("username", user.getFirstName());
-        }catch (NullPointerException e){
-            System.out.println("Pas d'utilisateur identifié");
-        }
-
-        logger.info("Essai d'affichage du formulaire de login");
+        logger.info("Affichage du formulaire de login");
+        sessionController.addSessionAttributes(session, model);
         return "identification/login";
     }
 
     @GetMapping("/registration")
-    public String registrationForm(){
-        logger.info("Essai d'affichage du formulaire d'enregistrement");
+    public String registrationForm(HttpSession session, Model model){
+        logger.info("Affichage du formulaire d'enregistrement");
         return "identification/registration";
     }
 
@@ -62,7 +45,6 @@ public class LoginController {
     public String login(@ModelAttribute AppUserBean user, Model model, HttpSession session){
         logger.info("Essai de login");
         logger.info("Appel de msUserProxy pour l'email : " + user.getEmail());
-
 
         AppUserBean appUser = msUserProxy.getUserByEmail(user.getEmail());
 
@@ -75,7 +57,7 @@ public class LoginController {
             logger.info("Entrée de l'utilisateur dans la session");
             session.setAttribute("user", appUser);
             model.addAttribute("username", appUser.getFirstName());
-
+            model.addAttribute("products", msProductProxy.listProduct());
             return "home";
         } else {
             logger.info("Mot de passe incorrect: " + user.getPassword() + " " + appUser.getPassword());
@@ -85,15 +67,28 @@ public class LoginController {
     }
 
     @PostMapping("/registration")
-    public void registration(@ModelAttribute AppUserBean user, @RequestParam String password2){
+    public String registration(@ModelAttribute AppUserBean user, @RequestParam String password2, Model model, HttpSession session, BindingResult bindingResult){
 
         logger.info("Essai de registration");
         logger.info("Utilisateur: " + user.getFirstName() + " " + user.getName() + " " + user.getEmail() + " " + user.getPassword());
-        if (user.getPassword().equals(password2)){
-            logger.info("Mot de passe similaires");
-        } else {
-            logger.info("erreur de mdp: " + password2);
-        }
 
+        if (bindingResult.hasErrors()) {
+            return "/identification/registration";
+        }
+        if (!user.getPassword().equals(password2)){
+            logger.info("erreur de mdp: " + password2);
+            model.addAttribute("error", "Les mots de passe saisis sont différents");
+        } else if (msUserProxy.getUserByEmail(user.getEmail()) != null) {
+            logger.info("L'utilisateur existe déjà");
+            model.addAttribute("error","L'utilisateur existe déjà");
+        }else if(user.getPassword().equals(password2)){
+            logger.info("Mot de passe similaires");
+            msUserProxy.addUser(user);
+            return "home";
+        }
+        sessionController.addSessionAttributes(session, model);
+
+        return "/identification/registration";
     }
+
 }

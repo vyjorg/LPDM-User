@@ -1,5 +1,6 @@
 package com.lpdm.msuser;
 
+import com.lpdm.msuser.controllers.SessionController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -21,5 +22,10 @@ public class MsUserApplication {
     public BCryptPasswordEncoder getBCPE(){
 	    return new BCryptPasswordEncoder();
     }
+
+	@Bean
+	public SessionController getSession(){
+		return new SessionController();
+	}
 
 }

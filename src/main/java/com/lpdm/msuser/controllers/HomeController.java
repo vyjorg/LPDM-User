@@ -20,26 +20,16 @@ public class HomeController {
     @Autowired
     MsProductProxy productProxy;
 
+    @Autowired
+    SessionController sessionController;
+
 
     @GetMapping("/")
     public String home(HttpSession session, Model model){
-
         logger.info("Entrée dans la méthode 'home'");
-
-       // AppUserBean appUser = LoginController.getUser(session);
-       // logger.info("username : " + appUser.getEmail());
-       // model.addAttribute("username", appUser.getFirstName());
-
-        try {
-            AppUserBean user = (AppUserBean) session.getAttribute("user");
-            logger.info(user.getEmail() + " identifié");
-            model.addAttribute("username", user.getEmail());
-        }catch (NullPointerException e){
-            System.out.println("Pas d'utilisateur identifié");
-        }
-
+        sessionController.addSessionAttributes(session,model);
         model.addAttribute("products", productProxy.listProduct());
-
         return "home";
     }
+
 }

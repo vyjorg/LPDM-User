@@ -20,7 +20,7 @@ public interface MsUserProxy {
     @GetMapping("/microservice-authentication/users/{id}")
     AppUserBean getUserById(@PathVariable("id") int id);
 
-    @PostMapping("/microservice-authentication/users")
+    @PostMapping("/microservice-authentication/users/")
     AppUserBean addUser(@RequestBody AppUserBean user);
 
     @PostMapping("/microservice-authentication/roles/")
