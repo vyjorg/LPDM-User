@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="product_data">
+    <ul class="list-group">
+        <li class="list-group-item" style="border: none;display: block;">
+            <div class="row">
+                <div class="col-sm-5 pull-right">
+                    <div class="input-group">
+                        <label for="categories" class="input-group-addon">
+                            Catégorie
+                        </label>
+                        <select class="form-control" id="categories" style="cursor: pointer;">
+                            <option value="" disabled selected>Sélectionner -></option>
+                            <option data-th-each="cat,status : ${categories}"
+                                    data-th-value="${status.index}"
+                                    data-th-text="${cat.name}">
+                            </option>
+                        </select>
+
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="button" tabindex="-1" disabled
+                                    data-toggle="tooltip" data-placement="left"
+                                    title="Sélectionner une catégorie" style="cursor: default;">
+                                <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item" style="height: 56px; border: none;">
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="name" class="input-group-addon" style="width: 140px;">
+                        Nom
+                    </label>
+                    <input type="text" class="form-control" id="name" data-th-field="*{name}">
+                    <div class="input-group-btn">
+                        <button class="btn btn-danger" type="button" tabindex="-1" disabled
+                                data-toggle="tooltip" data-placement="left"
+                                title="Saisir le nom du produit" style="cursor: default;">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item" style="height: 56px; border: none;">
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="label" class="input-group-addon" style="width: 140px;">
+                        Désignation
+                    </label>
+                    <input type="text" class="form-control" id="label" data-th-field="*{label}">
+                    <div class="input-group-btn">
+                        <button class="btn btn-danger" type="button" tabindex="-1" disabled
+                                data-toggle="tooltip" data-placement="left"
+                                title="Saisir la désignation du produit" style="cursor: default;">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item" style="height: 56px; border: none;">
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="price" class="input-group-addon" style="width: 140px;">
+                        Prix unitaire HT
+                    </label>
+                    <input type="text" class="form-control" id="price" data-th-field="*{price}">
+                    <div class="input-group-btn">
+                        <button class="btn btn-danger" type="button" tabindex="-1" disabled
+                                data-toggle="tooltip" data-placement="left"
+                                title="Saisir le prix HT du produit" style="cursor: default;">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item" style="height: 56px; border: none;">
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="tva" class="input-group-addon" style="width: 140px;">
+                        T.V.A %
+                    </label>
+                    <input type="text" class="form-control" id="tva" data-th-field="*{tva}">
+                    <div class="input-group-btn">
+                        <button class="btn btn-danger" type="button" tabindex="-1" disabled
+                                data-toggle="tooltip" data-placement="left"
+                                title="Saisir le % de T.V.A." style="cursor: default;">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item" style="height: 56px; border: none;">
+            <div class="form-group">
+                <div class="form-group">
+                    <div class="input-group">
+                        <label for="picture" class="input-group-addon" style="width: 140px;">
+                            Photo
+                        </label>
+                        <input type="text" class="form-control" id="picture" data-th-field="*{picture}" readonly>
+                        <div class="input-group-btn">
+                            <button class="btn btn-danger" type="button" tabindex="-1" disabled
+                                    data-toggle="tooltip" data-placement="left"
+                                    title="Cliquer pour sélectionner une image" style="cursor: default;">
+                                <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+</html>

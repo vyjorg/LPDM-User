@@ -4,11 +4,9 @@ import com.lpdm.msuser.model.Storage;
 import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchForm;
 import com.lpdm.msuser.model.admin.StorageUser;
-import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.services.admin.AdminService;
 import feign.FeignException;
-import org.apache.catalina.mbeans.UserMBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +25,7 @@ import java.util.regex.Pattern;
 @RequestMapping("/admin/products")
 public class ProductAdminController {
 
+    private final String ADMIN_PRODUCT_PAGE = "/admin/fragments/products";
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final AdminService adminService;
 
@@ -47,7 +46,7 @@ public class ProductAdminController {
         OrderStats catLastYear = adminService.findOrderedProductsStatsByYearAndCategory(date.getYear() - 1);
         OrderStats catAverage = adminService.getAverageStats(currentYear, lastYear);
 
-        return new ModelAndView("/admin/fragments/products")
+        return new ModelAndView(ADMIN_PRODUCT_PAGE)
                 .addObject("pageTitle", "Admin products")
                 .addObject("statsCurrentYear", currentYear)
                 .addObject("statsLastYear", lastYear)
@@ -63,7 +62,7 @@ public class ProductAdminController {
         ProductBean product = adminService.findProductById(id);
         List<ProductBean> result = new ArrayList<>();
         result.add(product);
-        return new ModelAndView("/admin/fragments/products")
+        return new ModelAndView(ADMIN_PRODUCT_PAGE)
                 .addObject("pageTitle", "Search product")
                 .addObject("content", "searchPage")
                 .addObject("result", result)
@@ -73,7 +72,7 @@ public class ProductAdminController {
 
     @GetMapping(value = {"/search", "/search/"})
     public ModelAndView searchProduct(){
-        return new ModelAndView("/admin/fragments/products")
+        return new ModelAndView(ADMIN_PRODUCT_PAGE)
                 .addObject("pageTitle", "Search product")
                 .addObject("content", "searchPage")
                 .addObject("searchForm", new SearchForm());
@@ -110,15 +109,7 @@ public class ProductAdminController {
                         }
                     }
                     else result = 500;
-                    log.info("[3] Result : " + result.toString());
                     break;
-                    /*
-                case 3:
-                    result = adminService.findAllOrdersByUserEmail(keyword);
-                    break;
-                case 4:
-                    result = adminService.findAllOrdersByUserLastName(keyword);
-                    */
             }
         }
         catch (FeignException e ){
@@ -126,7 +117,7 @@ public class ProductAdminController {
             result = e.status();
         }
 
-        return new ModelAndView("/admin/fragments/products")
+        return new ModelAndView(ADMIN_PRODUCT_PAGE)
                 .addObject("pageTitle", "Search product")
                 .addObject("content", "searchPage")
                 .addObject("result", result)
@@ -158,5 +149,14 @@ public class ProductAdminController {
         log.info("Product update : " + productBean.toString());
         adminService.updateProduct(productBean);
         return productBean;
+    }
+
+    @GetMapping(value = {"/add", "/add/"})
+    public ModelAndView addProduct(){
+        return new ModelAndView(ADMIN_PRODUCT_PAGE)
+                .addObject("pageTitle", "Add product")
+                .addObject("content", "addProduct")
+                .addObject("categories", adminService.findAllCategories())
+                .addObject("product", new ProductBean());
     }
 }

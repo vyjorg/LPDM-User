@@ -10,13 +10,10 @@
             <div data-th-replace="admin/fragments/products/nav :: nav"></div>
             <div class="col-sm-9 text-left">
                 <div data-th-if="${content=='searchPage'}">
-                    <div data-th-replace="admin/fragments/products/search :: search"></div>
+                    <div data-th-replace="admin/fragments/products/search/search :: search"></div>
                 </div>
-                <div data-th-if="${content=='updateOrder'}">
-                    page updateOrder
-                </div>
-                <div data-th-if="${content=='paymentsPage'}">
-                    <div data-th-replace="admin/fragments/orders/payments :: payments"></div>
+                <div data-th-if="${content=='addProduct'}">
+                    <div data-th-replace="admin/fragments/products/add/add :: add_product"></div>
                 </div>
                 <div data-th-if="${content=='stats'}">
                     <canvas id="myChart"></canvas>
