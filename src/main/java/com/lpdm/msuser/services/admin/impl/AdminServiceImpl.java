@@ -120,7 +120,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<CategoryBean> findAllCategories() {
-        return productProxy.findAllCategories();
+        return productProxy.listCategories();
     }
 
     @Override

@@ -31,6 +31,7 @@ $( document ).ready(function() {
     modalUpload.on('hidden.bs.modal', function () {
         modalFormDiv.empty();
         getLatestPicture();
+        $("#mainSearchBtn").prop("disabled", false);
     });
 
     btnUpdate.on("click", function () {

@@ -31,14 +31,14 @@
                             <div class="alert alert-info">
                                 <h4><i><b>Info producteur</b></i></h4>
                                 Nom : <span data-th-text="${product.producer.firstName}"></span>
-                                <span data-th-text="${product.producer.lastName}"></span><br>
+                                <span data-th-text="${product.producer.name}"></span><br>
                                 Address :<br>
                                 Email : <span data-th-text="${product.producer.email}"></span><br>
                                 Tel : <span data-th-text="${product.producer.tel}"></span>
                             </div>
                             <div class="input-group">
-                                <label for="name" class="input-group-addon">Catégorie</label>
-                                <select class="form-control">
+                                <label for="categoryList" class="input-group-addon">Catégorie</label>
+                                <select class="form-control" id="categoryList">
                                     <option data-th-each="cat,status : ${categories}"
                                             data-th-value="${status.index}"
                                             data-th-text="${cat.name}"
