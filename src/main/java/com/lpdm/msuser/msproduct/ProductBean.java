@@ -28,7 +28,7 @@ public class ProductBean {
 
     private Integer producerID;
 
-    private Optional<ProducerBean> producer;
+    private ProducerBean producer;
 
     public Integer getId() {
         return id;
@@ -102,11 +102,11 @@ public class ProductBean {
         this.producerID = producerID;
     }
 
-    public Optional<ProducerBean> getProducer() {
+    public ProducerBean getProducer() {
         return producer;
     }
 
-    public void setProducer(Optional<ProducerBean> producer) {
+    public void setProducer(ProducerBean producer) {
         this.producer = producer;
     }
 

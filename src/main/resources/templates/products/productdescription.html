@@ -28,7 +28,7 @@
         </tr>
         <tr>
             <td>Producteur</td>
-            <td th:text="${product.getProducer().get().getEmail()}"/>
+            <td th:text="${product.getProducer().getFirstName()} + ' ' + ${product.getProducer().getName()}"/>
         </tr>
         <tr>
             <td><b>Prix</b></td>
