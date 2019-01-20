@@ -28,7 +28,6 @@ public class HomeController {
     public String home(HttpSession session, Model model){
         logger.info("Entrée dans la méthode 'home'");
         sessionController.addSessionAttributes(session,model);
-        model.addAttribute("products", productProxy.listProduct());
         return "home";
     }
 

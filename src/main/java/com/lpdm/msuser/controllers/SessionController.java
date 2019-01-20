@@ -1,8 +1,10 @@
 package com.lpdm.msuser.controllers;
 
 import com.lpdm.msuser.msauthentication.AppUserBean;
+import com.lpdm.msuser.proxies.MsProductProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.ui.Model;
 
@@ -12,6 +14,9 @@ import javax.servlet.http.HttpSession;
 public class SessionController {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    MsProductProxy msProductProxy;
 
     @Bean
     public SessionController getSession(){
@@ -27,6 +32,7 @@ public class SessionController {
         }
         model.addAttribute("cart", OrderController.cart);
         model.addAttribute("total", OrderController.cartTotal);
+        model.addAttribute("products", msProductProxy.listProduct());
 
     }
 }

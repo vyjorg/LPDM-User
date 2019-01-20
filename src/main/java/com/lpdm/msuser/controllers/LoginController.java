@@ -56,7 +56,6 @@ public class LoginController {
         } else if (user.getPassword().equals(appUser.getPassword())){
             logger.info("Entrée de l'utilisateur dans la session");
             session.setAttribute("user", appUser);
-            model.addAttribute("products", msProductProxy.listProduct());
             sessionController.addSessionAttributes(session, model);
             return "home";
         } else {
@@ -84,6 +83,8 @@ public class LoginController {
         }else if(user.getPassword().equals(password2)){
             logger.info("Mot de passe similaires");
             msUserProxy.addUser(user);
+            session.setAttribute("user", user);
+            sessionController.addSessionAttributes(session, model);
             return "home";
         }
         sessionController.addSessionAttributes(session, model);
