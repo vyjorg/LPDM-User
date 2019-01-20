@@ -1,8 +1,10 @@
 package com.lpdm.msuser.services.admin;
 
+import com.lpdm.msuser.model.Storage;
 import com.lpdm.msuser.model.Store;
 import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchDates;
+import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
 import com.lpdm.msuser.msproduct.CategoryBean;
@@ -37,6 +39,8 @@ public interface AdminService {
     List<CategoryBean> findAllCategories();
     OrderStats findOrderedProductsStatsByYear(int year);
     OrderStats findOrderedProductsStatsByYearAndCategory(int year);
+    String getUploadPictureForm(AppUserBean user);
+    void updateProduct(ProductBean product);
 
     /**
      * Store
@@ -49,4 +53,8 @@ public interface AdminService {
      */
     List<Application> findAllApps() throws FeignException;
 
+    /**
+     * Storage
+     */
+    Storage findLatestFileUploadedByOwnerId(int id);
 }

@@ -117,4 +117,21 @@ public class ProductBean {
     public void setDeactivate(boolean deactivate) {
         this.deactivate = deactivate;
     }
+
+    @Override
+    public String toString() {
+        return "ProductBean{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category=" + category +
+                ", label='" + label + '\'' +
+                ", price=" + price +
+                ", tva=" + tva +
+                ", deactivate=" + deactivate +
+                ", listStock=" + listStock +
+                ", picture='" + picture + '\'' +
+                ", producerID=" + producerID +
+                ", producer=" + producer +
+                '}';
+    }
 }
