@@ -3,6 +3,7 @@ package com.lpdm.msuser.controllers.admin;
 import com.lpdm.msuser.model.Storage;
 import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchForm;
+import com.lpdm.msuser.model.admin.StorageUser;
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.services.admin.AdminService;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -56,6 +58,19 @@ public class ProductAdminController {
                 .addObject("content", "stats");
     }
 
+    @GetMapping(value = {"/search/{id}", "/search/{id}/"})
+    public ModelAndView searchProductById(@PathVariable int id){
+        ProductBean product = adminService.findProductById(id);
+        List<ProductBean> result = new ArrayList<>();
+        result.add(product);
+        return new ModelAndView("/admin/fragments/products")
+                .addObject("pageTitle", "Search product")
+                .addObject("content", "searchPage")
+                .addObject("result", result)
+                .addObject("categories", adminService.findAllCategories())
+                .addObject("searchForm", new SearchForm());
+    }
+
     @GetMapping(value = {"/search", "/search/"})
     public ModelAndView searchProduct(){
         return new ModelAndView("/admin/fragments/products")
@@ -73,6 +88,7 @@ public class ProductAdminController {
         Object result = null;
         try{
             switch (searchForm.getSearchValue()){
+                // Find product by id
                 case 1:
                     if(Pattern.compile("^\\d+$").matcher(keyword).matches()) {
                         result = new ArrayList<ProductBean>();
@@ -80,8 +96,21 @@ public class ProductAdminController {
                     }
                     else result = 500;
                     break;
+                // Find product by name
                 case 2:
-                    result = adminService.findAllOrdersByUserEmail(keyword);
+                    result = adminService.findProductsByName(keyword);
+                    break;
+                // Find by producer id
+                case 3 :
+                    if(Pattern.compile("^\\d+$").matcher(keyword).matches()) {
+                        result = new ArrayList<ProductBean>();
+                        ((ArrayList) result).addAll(adminService.findProductsByProducerId(Integer.valueOf(keyword)));
+                        if(((ArrayList) result).isEmpty()) {
+                            result = 204;
+                        }
+                    }
+                    else result = 500;
+                    log.info("[3] Result : " + result.toString());
                     break;
                     /*
                 case 3:
@@ -111,8 +140,9 @@ public class ProductAdminController {
     public String getUploadForm(@RequestParam Map<String, String> data){
 
         log.info("user bean = " + data.get("id"));
-        AppUserBean user = new AppUserBean();
+        StorageUser user = new StorageUser();
         user.setId(Integer.parseInt(data.get("id")));
+        user.setRestricted(Boolean.parseBoolean(data.get("restricted")));
         return adminService.getUploadPictureForm(user);
 
     }

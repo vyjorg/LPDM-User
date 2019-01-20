@@ -6,13 +6,13 @@
             <div class="alert alert-info">
                 <div class="dropdown">
                     <button class="btn btn-default dropdown-toggle" type="button"
-                            data-toggle="dropdown" id="btnMenuOrders">
+                            data-toggle="dropdown" id="btnMenuProducts">
                         Liste des produits
                         <span class="caret" style="margin-left: 10px;"></span>
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" style="height: auto; max-height: 200px; overflow-x: hidden;">
                         <li data-th-each="product,loop : ${result}">
-                            <a href="#" data-th-id="'ordermenu_' + ${order.id}">
+                            <a href="#" data-th-id="'ordermenu_' + ${product.id}">
                                 <span data-th-text="'ID ' + ${product.id} + ' - Nom : ' + ${product.name}"></span>
                             </a>
                         </li>
@@ -21,6 +21,9 @@
             </div>
         </div>
         <div data-th-each="product,status : ${result}" data-th-id="'product_' + ${product.id}" data-th-style="${#lists.size(result) > 1} ? 'display:none;'">
+            <div data-th-if="${product.deactivate}" class="alert alert-danger">
+                Ce produit est désactivé
+            </div>
             <ul class="list-group">
                 <li class="list-group-item" style="border: none;display: block;">
                     <div class="row">
@@ -37,8 +40,10 @@
                                 Tel : <span data-th-text="${product.producer.tel}"></span>
                             </div>
                             <div class="input-group">
-                                <label for="categoryList" class="input-group-addon">Catégorie</label>
-                                <select class="form-control" id="categoryList">
+                                <label data-th-for="'categoryList_' + ${product.id}" class="input-group-addon">
+                                    Catégorie
+                                </label>
+                                <select class="form-control" data-th-id="'categoryList_' + ${product.id}">
                                     <option data-th-each="cat,status : ${categories}"
                                             data-th-value="${status.index}"
                                             data-th-text="${cat.name}"
@@ -134,7 +139,10 @@
                     <div class="form-group">
                         <div class="form-group">
                             <div class="input-group">
-                                <label for="name" class="input-group-addon" style="width: 140px;">Photo</label>
+                                <label data-th-for="'pic' + ${status.index} + '_' + ${product.producer.id}"
+                                       class="input-group-addon" style="width: 140px;">
+                                    Photo
+                                </label>
                                 <input type="text" data-th-value="${product.picture}" class="form-control"
                                        data-th-id="'pic' + ${status.index} + '_' + ${product.producer.id}" readonly>
                                 <div class="input-group-btn">
@@ -157,23 +165,29 @@
             </div>
             <div class="panel panel-default">
                 <div class="panel-body text-center">
-                    <button type="button" class="btn btn-success"
-                            data-th-id="'btnUpdate_' + ${product.id}">Mettre à jour le produit</button>
-                    <button type="button" class="btn btn-danger"
-                            data-th-id="'btnDeactivate_' + ${product.id}">Désactiver ce produit</button>
+                    <div data-th-if="${product.deactivate == false}">
+                        <button type="button" class="btn btn-success"
+                                data-th-id="'btnUpdate_' + ${product.id}">Mettre à jour le produit</button>
+                        <button type="button" class="btn btn-danger"
+                                data-th-id="'btnDeactivate_' + ${product.id}">Désactiver ce produit</button>
+                    </div>
+                    <div data-th-if="${product.deactivate == true}">
+                        <button type="button" class="btn btn-info"
+                                data-th-id="'btnActivate_' + ${product.id}">Activer ce produit</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div data-th-include="admin/fragments/products/search/modal_upload :: modal"></div>
+        <div data-th-include="admin/fragments/products/update/modal_upload :: modal_upload"></div>
     </div>
     <div data-th-if="${result instanceof T(java.lang.String)}">
         Erreur : <span data-th-text="${result}"></span>
     </div>
     <div data-th-if="${result instanceof T(java.lang.Integer)}" class="alert alert-danger">
-            <span data-th-if="${result == 404}">
-                <i class="glyphicon glyphicon-remove" style="display:table-cell;"></i>
-                Aucun produit n'a été trouvé.
-            </span>
+        <span data-th-if="${result == 204}">
+            <i class="glyphicon glyphicon-remove" style="display:table-cell;"></i>
+            Aucun produit n'a été trouvé.
+        </span>
         <span data-th-if="${result == 500}">
                 <i class="glyphicon glyphicon-remove" style="display:table-cell;"></i>
                 La syntaxe de la requête est erronée ou le microservice est injoignable.
@@ -185,5 +199,6 @@
             <pre data-th-text="${result}"></pre>
         </div>
     </div>
+    <div data-th-include="admin/fragments/products/update/modal_result :: modal_result"></div>
 </div>
 </html>

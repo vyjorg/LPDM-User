@@ -4,6 +4,7 @@ import com.lpdm.msuser.model.Storage;
 import com.lpdm.msuser.model.Store;
 import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchDates;
+import com.lpdm.msuser.model.admin.StorageUser;
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
@@ -37,9 +38,11 @@ public interface AdminService {
      */
     ProductBean findProductById(int id);
     List<CategoryBean> findAllCategories();
+    List<ProductBean> findProductsByName(String name);
+    List<ProductBean> findProductsByProducerId(int id);
     OrderStats findOrderedProductsStatsByYear(int year);
     OrderStats findOrderedProductsStatsByYearAndCategory(int year);
-    String getUploadPictureForm(AppUserBean user);
+    String getUploadPictureForm(StorageUser user);
     void updateProduct(ProductBean product);
 
     /**

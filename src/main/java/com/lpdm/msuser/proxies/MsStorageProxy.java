@@ -1,7 +1,7 @@
 package com.lpdm.msuser.proxies;
 
 import com.lpdm.msuser.model.Storage;
-import com.lpdm.msuser.msauthentication.AppUserBean;
+import com.lpdm.msuser.model.admin.StorageUser;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
@@ -19,7 +19,7 @@ public interface MsStorageProxy {
     @PostMapping(value = "${lpdm.storage.name}/",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String getUploadForm(@RequestBody AppUserBean user);
+    String getUploadForm(@RequestBody StorageUser user);
 
     @GetMapping(value = "${lpdm.storage.name}/user/{id}/latest",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

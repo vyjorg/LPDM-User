@@ -4,7 +4,7 @@ import com.lpdm.msuser.model.Storage;
 import com.lpdm.msuser.model.Store;
 import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchDates;
-import com.lpdm.msuser.msauthentication.AppUserBean;
+import com.lpdm.msuser.model.admin.StorageUser;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
 import com.lpdm.msuser.msproduct.CategoryBean;
@@ -124,6 +124,16 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public List<ProductBean> findProductsByName(String name) {
+        return productProxy.listProductByName(name);
+    }
+
+    @Override
+    public List<ProductBean> findProductsByProducerId(int id) {
+        return productProxy.listProductByProducerId(id);
+    }
+
+    @Override
     public OrderStats findOrderedProductsStatsByYear(int year) {
 
         return orderProxy.findOrderedProductsStatsByYear(year);
@@ -136,7 +146,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public String getUploadPictureForm(AppUserBean user) {
+    public String getUploadPictureForm(StorageUser user) {
 
         return storageProxy.getUploadForm(user);
     }
@@ -145,12 +155,13 @@ public class AdminServiceImpl implements AdminService {
     public void updateProduct(ProductBean product) {
 
         ProductBean oldProduct = productProxy.findProduct(product.getId());
-        product.setCategory(oldProduct.getCategory());
         product.setListStock(oldProduct.getListStock());
         if(product.getPicture() == null) product.setPicture(oldProduct.getPicture());
-        product.setProducerID(oldProduct.getProducerID());
+        product.setProducerID(oldProduct.getProducer().getId());
         product.setProducer(oldProduct.getProducer());
-        product.setDeactivate(oldProduct.isDeactivate());
+
+        log.info("New Product : " + product.toString());
+
         productProxy.updateProduct(product);
     }
 
