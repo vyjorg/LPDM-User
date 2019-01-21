@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html data-layout-decorate="~{admin/layout}">
+<head>
+    <title data-th-text="${pageTitle}"></title>
+</head>
+<body>
+<div data-layout-fragment="content" style="margin-top: 80px;">
+    <div class="container-fluid text-center">
+        <div class="row content">
+            <div data-th-replace="admin/fragments/stocks/nav :: nav"></div>
+            <div class="col-sm-9 text-left">
+                <div data-th-if="${content=='searchStock'}">
+                    <div data-th-replace="admin/fragments/stocks/search/search :: search_stock"></div>
+                </div>
+                <div data-th-if="${content=='addStock'}">
+                    <div data-th-replace="admin/fragments/stocks/add/add :: add_stock"></div>
+                </div>
+                <div data-th-if="${content=='stats'}">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
