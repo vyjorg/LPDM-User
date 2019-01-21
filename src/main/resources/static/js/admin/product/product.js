@@ -75,14 +75,12 @@ $( document ).ready(function() {
     btnDeactivate.on("click", function () {
         let btnId = $(this).attr("id");
         currentProductId = btnId.substr(btnId.indexOf("_") + 1, btnId.length);
-        alert("btn id : " + currentProductId);
         updateProduct(currentProductId, true);
     });
 
     btnActivate.on("click", function () {
         let btnId = $(this).attr("id");
         currentProductId = btnId.substr(btnId.indexOf("_") + 1, btnId.length);
-        alert("btn id : " + currentProductId);
         updateProduct(currentProductId, false);
     });
 

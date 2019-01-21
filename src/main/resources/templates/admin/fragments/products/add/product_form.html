@@ -2,47 +2,10 @@
 <html>
 <div data-th-fragment="product_form">
     <form method="post" data-th-action="@{/admin/product/add}" data-th-object="${product}">
-        <div class="panel-group" id="accordion">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Fiche producteur</a>
-                    </h4>
-                </div>
-                <div id="collapse1" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div data-th-replace="admin/fragments/products/add/producer_data :: producer_data"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Fiche produit</a>
-                    </h4>
-                </div>
-                <div id="collapse2" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div data-th-replace="admin/fragments/products/add/product_data :: product_data"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Fiche stock</a>
-                    </h4>
-                </div>
-                <div id="collapse3" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div data-th-replace="admin/fragments/products/add/stock_data :: stock_data"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div data-th-replace="admin/fragments/products/add/product_data :: product_data"></div>
         <div class="panel panel-default">
             <div class="panel-body text-center">
-                <button class="btn btn-success" type="button" disabled>
+                <button class="btn btn-success" type="submit" id="btnAdd" disabled>
                     Ajouter le produit
                 </button>
             </div>

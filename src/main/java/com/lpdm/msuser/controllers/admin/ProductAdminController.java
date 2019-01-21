@@ -4,6 +4,7 @@ import com.lpdm.msuser.model.Storage;
 import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchForm;
 import com.lpdm.msuser.model.admin.StorageUser;
+import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.services.admin.AdminService;
 import feign.FeignException;
@@ -158,5 +159,21 @@ public class ProductAdminController {
                 .addObject("content", "addProduct")
                 .addObject("categories", adminService.findAllCategories())
                 .addObject("product", new ProductBean());
+    }
+
+    @PostMapping(value = {"/search/producer", "/search/producer/"})
+    public Object searchProducer(@Valid @ModelAttribute("searchProducer") SearchForm searchForm){
+
+        Object result = null;
+        switch (searchForm.getSearchValue()){
+            // Search by id
+            case 1:
+                break;
+            // Search by name
+            case 2:
+                break;
+        }
+
+        return result;
     }
 }
