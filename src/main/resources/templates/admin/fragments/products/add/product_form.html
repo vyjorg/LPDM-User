@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="product_form">
+    <form method="post" data-th-action="@{/admin/product/add}" data-th-object="${product}">
+        <div data-th-replace="admin/fragments/products/add/product_data :: product_data"></div>
+        <div class="panel panel-default">
+            <div class="panel-body text-center">
+                <button class="btn btn-success" type="submit" id="btnAdd" disabled>
+                    Ajouter le produit
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+</html>
