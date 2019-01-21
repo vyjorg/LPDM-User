@@ -1,5 +1,6 @@
 package com.lpdm.msuser.controllers;
 
+import com.lpdm.msuser.msauthentication.AppRoleBean;
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.proxies.MsProductProxy;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 public class SessionController {
@@ -24,6 +26,9 @@ public class SessionController {
     }
 
     public void addSessionAttributes(HttpSession session, Model model){
+
+        List<AppRoleBean> appRoleBeans;
+
         try {
             AppUserBean user = (AppUserBean) session.getAttribute("user");
             model.addAttribute("username", user.getFirstName());
