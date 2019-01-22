@@ -4,25 +4,31 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class StockBean {
-    private Integer id;
-    private Integer quantity;
+
+    private int id;
+    private int quantity;
     private LocalDate expireDate;
     private String packaging;
-    private Integer unitByPackage;
+    private int unitByPackage;
+    private int productId;
+    private String description;
 
-    public Integer getId() {
+    public StockBean() {
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -42,11 +48,40 @@ public class StockBean {
         this.packaging = packaging;
     }
 
-    public Integer getUnitByPackage() {
+    public int getUnitByPackage() {
         return unitByPackage;
     }
 
-    public void setUnitByPackage(Integer unitByPackage) {
+    public void setUnitByPackage(int unitByPackage) {
         this.unitByPackage = unitByPackage;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "StockBean{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                ", expireDate=" + expireDate +
+                ", packaging='" + packaging + '\'' +
+                ", unitByPackage=" + unitByPackage +
+                ", productId=" + productId +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

@@ -9,10 +9,8 @@ import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
 import com.lpdm.msuser.msproduct.CategoryBean;
 import com.lpdm.msuser.msproduct.ProductBean;
-import com.lpdm.msuser.proxies.MsOrderProxy;
-import com.lpdm.msuser.proxies.MsProductProxy;
-import com.lpdm.msuser.proxies.MsStorageProxy;
-import com.lpdm.msuser.proxies.MsStoreProxy;
+import com.lpdm.msuser.msproduct.StockBean;
+import com.lpdm.msuser.proxies.*;
 import com.lpdm.msuser.services.admin.AdminService;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
@@ -37,12 +35,14 @@ public class AdminServiceImpl implements AdminService {
     private final MsProductProxy productProxy;
     private final MsStoreProxy storeProxy;
     private final EurekaClient discoveryClient;
+    private final MsStockProxy stockProxy;
 
     @Autowired
     public AdminServiceImpl(MsOrderProxy orderProxy,
                             MsProductProxy productProxy,
                             MsStoreProxy storeProxy,
                             MsStorageProxy storageProxy,
+                            MsStockProxy stockProxy,
                             @Qualifier("eurekaClient") EurekaClient discoveryClient) {
 
         this.orderProxy = orderProxy;
@@ -50,6 +50,7 @@ public class AdminServiceImpl implements AdminService {
         this.storeProxy = storeProxy;
         this.discoveryClient = discoveryClient;
         this.storageProxy = storageProxy;
+        this.stockProxy = stockProxy;
     }
 
     @Override
@@ -184,5 +185,41 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Storage findLatestFileUploadedByOwnerId(int id) {
         return storageProxy.getLatestFileUploadByOwner(id);
+    }
+
+    @Override
+    public List<ProductBean> findStockById(int id) throws FeignException {
+
+        StockBean stock = stockProxy.findStockById(id);
+        ProductBean product = productProxy.findProduct(stock.getProductId());
+        List<ProductBean> productList = new ArrayList<>();
+        productList.add(product);
+
+        return productList;
+    }
+
+    @Override
+    public List<ProductBean> findStockByProductId(int id) {
+        ProductBean product = productProxy.findProduct(id);
+        List<ProductBean> productList = new ArrayList<>();
+        productList.add(product);
+        return productList;
+    }
+
+    @Override
+    public List<ProductBean> findStockByProductName(String name) {
+
+        return productProxy.listProductByName(name);
+    }
+
+    @Override
+    public void deleteStockById(int id) {
+
+        stockProxy.deleteStockById(id);
+    }
+
+    @Override
+    public StockBean updateStock(StockBean stock) {
+        return stockProxy.updateStock(stock);
     }
 }

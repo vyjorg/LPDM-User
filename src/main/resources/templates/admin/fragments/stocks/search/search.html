@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html>
 <div data-th-fragment="search_stock">
+    <script data-th-src="@{/js/admin/stock/stock.js}"></script>
     <div class="row">
         <div class="col-sm-12">
             <div data-th-replace="admin/fragments/stocks/search/search_form :: search_form"></div>
+            <div data-th-if="${result != null}">
+                <div data-th-replace="admin/fragments/stocks/search/result :: search_result(${result})"></div>
+            </div>
         </div>
     </div>
 </div>

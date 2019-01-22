@@ -10,6 +10,7 @@ import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
 import com.lpdm.msuser.msproduct.CategoryBean;
 import com.lpdm.msuser.msproduct.ProductBean;
+import com.lpdm.msuser.msproduct.StockBean;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
 import com.netflix.discovery.shared.Applications;
@@ -60,4 +61,13 @@ public interface AdminService {
      * Storage
      */
     Storage findLatestFileUploadedByOwnerId(int id);
+
+    /**
+     * Stock
+     */
+    List<ProductBean> findStockById(int id);
+    List<ProductBean> findStockByProductId(int id);
+    List<ProductBean> findStockByProductName(String name);
+    void deleteStockById(int id);
+    StockBean updateStock(StockBean stock);
 }
