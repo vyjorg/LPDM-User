@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html>
 <div data-th-fragment="add_stock">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">Ajout d'un nouveau stock</div>
-                <div class="panel-body">
-                </div>
-            </div>
-        </div>
+    <div data-th-replace="admin/fragments/stocks/add/add_search_product :: add_search_product"></div>
+    <div data-th-if="${result != null}">
+        <script data-th-src="@{/js/admin/stock/add_stock.js}"></script>
+        <div data-th-replace="admin/fragments/stocks/add/add_form :: add_form(${result})"></div>
     </div>
 </div>
 </html>

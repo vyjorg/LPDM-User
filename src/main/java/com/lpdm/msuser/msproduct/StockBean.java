@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public class StockBean {
 
-    private int id;
+    private Integer id;
     private int quantity;
     private LocalDate expireDate;
     private String packaging;
@@ -16,11 +16,11 @@ public class StockBean {
     public StockBean() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

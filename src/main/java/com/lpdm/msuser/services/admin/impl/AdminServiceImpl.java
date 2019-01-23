@@ -222,4 +222,9 @@ public class AdminServiceImpl implements AdminService {
     public StockBean updateStock(StockBean stock) {
         return stockProxy.updateStock(stock);
     }
+
+    @Override
+    public StockBean addNewStock(StockBean stock) {
+        return stockProxy.addNewStock(stock);
+    }
 }

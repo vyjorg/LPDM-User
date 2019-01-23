@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="add_form(result)">
+    <script data-th-src="@{/js/admin/moment.js}" charset="UTF-8"></script>
+    <div data-th-if="${result instanceof T(java.util.List)}">
+        <div data-th-if="${#lists.size(result)} > 1">
+            <div class="alert alert-info">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button"
+                            data-toggle="dropdown" id="btnMenuProducts">
+                        Liste des produits
+                        <span class="caret" style="margin-left: 10px;"></span>
+                    </button>
+                    <ul class="dropdown-menu" style="height: auto; max-height: 200px; overflow-x: hidden;">
+                        <li data-th-each="product,loop : ${result}">
+                            <a href="#" data-th-id="'productmenu_' + ${product.id}">
+                                <span data-th-text="'ID ' + ${product.id} + ' - Nom : ' + ${product.name}"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div data-th-each="product,status : ${result}" data-th-id="'product_' + ${product.id}" data-th-style="${#lists.size(result) > 1} ? 'display:none;'">
+            <div data-th-if="${product.deactivate}" class="alert alert-danger">
+                Ce produit est désactivé
+            </div>
+            <div class="row">
+                <div class="container-fluid col-sm-12">
+                    <div class="col-sm-4">
+                        <div class="alert alert-info">
+                            <h4><i><b>Info producteur</b></i></h4>
+                            Nom : <span data-th-text="${product.producer.firstName}"></span>
+                            <span data-th-text="${product.producer.name}"></span><br>
+                            Address :<br>
+                            Email : <span data-th-text="${product.producer.email}"></span><br>
+                            Tel : <span data-th-text="${product.producer.tel}"></span>
+                        </div>
+                        <div class="alert alert-warning">
+                            <h4><i><b>Info produit</b></i></h4>
+                            ID : <span data-th-id="${'product_' + product.id}" data-th-text="${product.id}"></span><br>
+                            Catégorie : <span data-th-text="${product.category.name}"></span><br>
+                            Nom : <span data-th-text="${product.name}"></span><br>
+                            Description : <span data-th-text="${product.label}"></span><br>
+                            Prix HT : <span data-th-text="${product.price}"></span><br>
+                            T.V.A. : <span data-th-text="${product.tva}"></span>
+                        </div>
+                        <div class="text-center">
+                            <img data-th-src="${product.picture}" class="img-thumbnail" alt="Photo du produit">
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    Saisir les informations requises à l'ajout d'un stock
+                                </h4>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="list-group">
+
+                                    <!-- Quantity -->
+
+                                    <li class="list-group-item" style="height: 56px; border: none;">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <label for="stock_quantity"
+                                                       class="input-group-addon"
+                                                       style="width: 140px;">
+                                                    Quantité
+                                                </label>
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="stock_quantity"
+                                                       value=""
+                                                       pattern="\d*">
+                                                <div class="input-group-btn">
+                                                    <button id="check_quantity"
+                                                            class="btn btn-danger"
+                                                            type="button"
+                                                            tabindex="-1"
+                                                            disabled data-toggle="tooltip"
+                                                            data-placement="left"
+                                                            title="Quantité disponible"
+                                                            style="cursor: default;">
+                                                        <span class="glyphicon glyphicon-check"
+                                                              aria-hidden="true"
+                                                              style="padding-left: 6px;">
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- Expire date -->
+
+                                    <li class="list-group-item" style="height: 56px; border: none;">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <label for="stock_expiredate"
+                                                       class="input-group-addon"
+                                                       style="width: 140px;">
+                                                    Date d'expiration
+                                                </label>
+                                                <input type="text"
+                                                       data-provide="datepicker"
+                                                       class="form-control"
+                                                       id="stock_expiredate"
+                                                       value=""
+                                                       readonly>
+                                                <div class="input-group-btn">
+                                                    <button id="check_date"
+                                                            class="btn btn-danger"
+                                                            type="button"
+                                                            tabindex="-1"
+                                                            data-toggle="tooltip"
+                                                            data-placement="left"
+                                                            title="Date d'expiration"
+                                                            style="cursor: default;"
+                                                            disabled>
+                                                        <span class="glyphicon glyphicon-check"
+                                                              aria-hidden="true"
+                                                              style="padding-left: 6px;">
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- Unit by package -->
+
+                                    <li class="list-group-item" style="height: 56px; border: none;">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <label for="stock_unitbypackage"
+                                                       class="input-group-addon"
+                                                       style="width: 140px;">
+                                                    Unités par colis
+                                                </label>
+                                                <input type="text" class="form-control"
+                                                       id="stock_unitbypackage"
+                                                       value=""
+                                                       pattern="\d*">
+                                                <div class="input-group-btn">
+                                                    <button id="check_unit"
+                                                            class="btn btn-danger"
+                                                            type="button"
+                                                            tabindex="-1"
+                                                            data-toggle="tooltip"
+                                                            data-placement="left"
+                                                            title="Nombre d'unités par colis"
+                                                            style="cursor: default;"
+                                                            disabled>
+                                                        <span class="glyphicon glyphicon-check"
+                                                              aria-hidden="true"
+                                                              style="padding-left: 6px;">
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- Packaging -->
+
+                                    <li class="list-group-item" style="height: 56px; border: none;">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <label for="stock_packaging"
+                                                       class="input-group-addon"
+                                                       style="width: 140px;">
+                                                    Packaging
+                                                </label>
+                                                <input type="text" class="form-control"
+                                                       id="stock_packaging"
+                                                       value="">
+                                                <div class="input-group-btn">
+                                                    <button id="check_packaging"
+                                                            class="btn btn-danger"
+                                                            type="button"
+                                                            tabindex="-1"
+                                                            data-toggle="tooltip"
+                                                            data-placement="left"
+                                                            title="Type d'emballage"
+                                                            style="cursor: default;"
+                                                            disabled>
+                                                        <span class="glyphicon glyphicon-check"
+                                                              aria-hidden="true"
+                                                              style="padding-left: 6px;">
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <!-- Description -->
+
+                                    <li class="list-group-item" style="height: 56px; border: none;">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <label for="stock_description"
+                                                       class="input-group-addon"
+                                                       style="width: 140px;">
+                                                    Infos
+                                                </label>
+                                                <input type="text" class="form-control"
+                                                       id="stock_description"
+                                                       value="">
+                                                <div class="input-group-btn">
+                                                    <button id="check_description"
+                                                            class="btn btn-danger"
+                                                            type="button"
+                                                            tabindex="-1"
+                                                            data-toggle="tooltip"
+                                                            data-placement="left"
+                                                            title="Information sur le stock"
+                                                            style="cursor: default;"
+                                                            disabled>
+                                                        <span class="glyphicon glyphicon-check"
+                                                              aria-hidden="true"
+                                                              style="padding-left: 6px;">
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <hr>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-success" id="btn_add" disabled>
+                                        Ajouter ce stock au produit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="panel panel-default">
+        <div class="panel-heading">Console</div>
+        <div class="panel-body">
+            <pre data-th-text="${result}"></pre>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modal_stock" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Information sur l'action réalisée</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="modal_result_body_success" class="alert alert-success">
+                        La mise à jour du stock a bien été effectuée.
+                    </div>
+                    <div id="modal_result_body_error" class="alert alert-danger">
+                        Une erreur s'est produite lors de la mise à jour...
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

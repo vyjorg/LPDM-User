@@ -108,4 +108,38 @@ public class StockAdminController {
                 .addObject("searchForm", new SearchForm())
                 .addObject("result", result);
     }
+
+    @PostMapping(value = {"/stocks/add/search", "stocks/add/search/"})
+    public ModelAndView stockAddSearchResult(@Valid @ModelAttribute("searchForm") SearchForm searchForm){
+
+        String keyword = searchForm.getKeyword();
+        int value = searchForm.getSearchValue();
+        Object result = null;
+
+        log.info("Key[" + value + "] : " + keyword);
+
+        switch (value){
+            // Search by product id
+            case 1:
+                result = adminService.findStockByProductId(Integer.parseInt(keyword));
+                break;
+            // Search by product name
+            case 2:
+                result = adminService.findStockByProductName(keyword);
+                break;
+        }
+
+        return new ModelAndView("admin/fragments/stocks")
+                .addObject("pageTitle", "Admin stocks")
+                .addObject("content", "addStock")
+                .addObject("searchForm", new SearchForm())
+                .addObject("result", result);
+    }
+
+    @PostMapping(value = {"/stocks/add", "/stocks/add/"})
+    public StockBean addNewStock(@Valid @RequestBody StockBean stock){
+
+        log.info("Stock : " + stock.toString());
+        return adminService.addNewStock(stock);
+    }
 }

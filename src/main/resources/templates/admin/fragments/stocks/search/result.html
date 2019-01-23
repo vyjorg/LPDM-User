@@ -115,7 +115,8 @@
                                                         <input type="text" data-th-value="${#temporals.format(stock.expireDate, 'dd/MM/yyyy')}"
                                                                data-provide="datepicker"
                                                                class="form-control"
-                                                               data-th-id="'expiredate_' + ${stock.id}">
+                                                               data-th-id="'expiredate_' + ${stock.id}"
+                                                               readonly>
                                                         <div class="input-group-btn">
                                                             <button class="btn btn-default" type="button" tabindex="-1" disabled
                                                                     data-toggle="tooltip" data-placement="left"

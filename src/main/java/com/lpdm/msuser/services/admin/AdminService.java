@@ -70,4 +70,5 @@ public interface AdminService {
     List<ProductBean> findStockByProductName(String name);
     void deleteStockById(int id);
     StockBean updateStock(StockBean stock);
+    StockBean addNewStock(StockBean stock);
 }

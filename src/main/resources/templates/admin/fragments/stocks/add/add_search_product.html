@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="add_search_product">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Recherche d'un produit lié à un nouveau stock
+        </div>
+        <div class="panel-body">
+            <form method="post" data-th-action="@{/admin/stocks/add/search}" data-th-object="${searchForm}"
+                  id="mainSearchForm">
+                <div class="form-group">
+                    <div class="label-control col-sm-3">
+                        <select class="form-control" id="select"
+                                data-th-field="*{searchValue}"
+                                style="cursor: pointer;">
+                            <option value="1">Identifiant du produit</option>
+                            <option value="2">Nom du produit</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" data-th-field="*{keyword}"
+                               placeholder="Saisir une recherche de produit" id="mainSearchInput" required>
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary" type="submit" id="mainSearchBtn">
+                                <span class="glyphicon glyphicon-search"></span>
+                                Rechercher
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</html>

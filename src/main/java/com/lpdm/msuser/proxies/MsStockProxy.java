@@ -19,4 +19,7 @@ public interface MsStockProxy {
 
     @PutMapping(value = "${lpdm.stock.name}/stocks")
     StockBean updateStock(@RequestBody StockBean stock);
+
+    @PostMapping(value = "${lpdm.stock.name}/stocks")
+    StockBean addNewStock(@RequestBody StockBean stock);
 }
