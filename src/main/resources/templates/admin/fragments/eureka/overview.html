@@ -69,5 +69,30 @@
             <pre data-th-text="${data}"></pre>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal_eureka" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Information sur l'action réalisée</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="modal_result_body_success" class="alert alert-success">
+                        La suppression de l'instance a bien été effectuée.
+                    </div>
+                    <div id="modal_result_body_error" class="alert alert-danger">
+                        Une erreur s'est produite lors de la suppression...
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </html>

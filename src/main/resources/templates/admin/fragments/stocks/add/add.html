@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="add_stock">
+    <div data-th-replace="admin/fragments/stocks/add/add_search_product :: add_search_product"></div>
+    <div data-th-if="${result != null}">
+        <script data-th-src="@{/js/admin/stock/add_stock.js}"></script>
+        <div data-th-replace="admin/fragments/stocks/add/add_form :: add_form(${result})"></div>
+    </div>
+</div>
+</html>

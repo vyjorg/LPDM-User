@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="search_result(result)">
+    <script data-th-src="@{/js/admin/moment.js}" charset="UTF-8"></script>
+    <div data-th-if="${result instanceof T(java.util.List)}">
+        <div data-th-if="${#lists.size(result)} > 1">
+            <div class="alert alert-info">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button"
+                            data-toggle="dropdown" id="btnMenuProducts">
+                        Liste des produits
+                        <span class="caret" style="margin-left: 10px;"></span>
+                    </button>
+                    <ul class="dropdown-menu" style="height: auto; max-height: 200px; overflow-x: hidden;">
+                        <li data-th-each="product,loop : ${result}">
+                            <a href="#" data-th-id="'productmenu_' + ${product.id}">
+                                <span data-th-text="'ID ' + ${product.id} + ' - Nom : ' + ${product.name}"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div data-th-each="product,status : ${result}" data-th-id="'product_' + ${product.id}" data-th-style="${#lists.size(result) > 1} ? 'display:none;'">
+            <div data-th-if="${product.deactivate}" class="alert alert-danger">
+                Ce produit est désactivé
+            </div>
+            <div class="row">
+                <div class="container-fluid col-sm-12">
+                    <div class="col-sm-4">
+                        <div class="alert alert-info">
+                            <h4><i><b>Info producteur</b></i></h4>
+                            Nom : <span data-th-text="${product.producer.firstName}"></span>
+                            <span data-th-text="${product.producer.name}"></span><br>
+                            Address :<br>
+                            Email : <span data-th-text="${product.producer.email}"></span><br>
+                            Tel : <span data-th-text="${product.producer.tel}"></span>
+                        </div>
+                        <div class="alert alert-warning">
+                            <h4><i><b>Info produit</b></i></h4>
+                            ID : <span data-th-text="${product.id}"></span><br>
+                            Catégorie : <span data-th-text="${product.category.name}"></span><br>
+                            Nom : <span data-th-text="${product.name}"></span><br>
+                            Description : <span data-th-text="${product.label}"></span><br>
+                            Prix HT : <span data-th-text="${product.price}"></span><br>
+                            T.V.A. : <span data-th-text="${product.tva}"></span>
+                        </div>
+                        <div class="text-center">
+                            <img data-th-src="${product.picture}" class="img-thumbnail" alt="Photo du produit">
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div data-th-if="${#lists.isEmpty(product.listStock)}">
+                            <div class="alert alert-danger">
+                                Aucun stock n'est disponible pour ce produit !
+                            </div>
+                        </div>
+                        <div class="panel-group" id="accordion">
+                            <div data-th-each="stock,loop : ${product.listStock}" class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse"
+                                           data-parent="#accordion"
+                                           data-th-text="'Stock ' + ${(loop.index) + 1}"
+                                           data-th-href="'#collapse' + ${(loop.index) + 1}">
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div data-th-id="'collapse' + ${(loop.index) + 1}"
+                                     class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul class="list-group">
+                                            <li class="list-group-item" style="height: 56px; border: none;">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <label data-th-for="'name_' + ${stock.id}" class="input-group-addon" style="width: 140px;">
+                                                            ID
+                                                        </label>
+                                                        <input type="text" data-th-value="${stock.id}" class="form-control"
+                                                               data-th-id="'name_' + ${stock.id}" disabled>
+                                                        <div class="input-group-btn">
+                                                            <button class="btn btn-default" type="button" tabindex="-1" disabled
+                                                                    data-toggle="tooltip" data-placement="left"
+                                                                    title="Identifiant du stock" style="cursor: default;">
+                                                                <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item" style="height: 56px; border: none;">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <label data-th-for="'quantity_' + ${stock.id}" class="input-group-addon" style="width: 140px;">
+                                                            Quantité
+                                                        </label>
+                                                        <input type="text" data-th-value="${stock.quantity}" class="form-control"
+                                                               data-th-id="'quantity_' + ${stock.id}">
+                                                        <div class="input-group-btn">
+                                                            <button class="btn btn-default" type="button" tabindex="-1" disabled
+                                                                    data-toggle="tooltip" data-placement="left"
+                                                                    title="Quantité disponible" style="cursor: default;">
+                                                                <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item" style="height: 56px; border: none;">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <label data-th-for="'expiredate_' + ${stock.id}" class="input-group-addon" style="width: 140px;">
+                                                            Date d'expiration
+                                                        </label>
+                                                        <input type="text" data-th-value="${#temporals.format(stock.expireDate, 'dd/MM/yyyy')}"
+                                                               data-provide="datepicker"
+                                                               class="form-control"
+                                                               data-th-id="'expiredate_' + ${stock.id}"
+                                                               readonly>
+                                                        <div class="input-group-btn">
+                                                            <button class="btn btn-default" type="button" tabindex="-1" disabled
+                                                                    data-toggle="tooltip" data-placement="left"
+                                                                    title="Date d'expiration" style="cursor: default;">
+                                                                <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item" style="height: 56px; border: none;">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <label data-th-for="'unitbypackage_' + ${stock.id}" class="input-group-addon" style="width: 140px;">
+                                                            Unités par colis
+                                                        </label>
+                                                        <input type="text" data-th-value="${stock.unitByPackage}" class="form-control"
+                                                               data-th-id="'unitbypackage_' + ${stock.id}">
+                                                        <div class="input-group-btn">
+                                                            <button class="btn btn-default" type="button" tabindex="-1" disabled
+                                                                    data-toggle="tooltip" data-placement="left"
+                                                                    title="Nombre d'unités par colis" style="cursor: default;">
+                                                                <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item" style="height: 56px; border: none;">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <label data-th-for="'packaging_' + ${stock.id}" class="input-group-addon" style="width: 140px;">
+                                                            Packaging
+                                                        </label>
+                                                        <input type="text" data-th-value="${stock.packaging}" class="form-control"
+                                                               data-th-id="'packaging_' + ${stock.id}">
+                                                        <div class="input-group-btn">
+                                                            <button class="btn btn-default" type="button" tabindex="-1" disabled
+                                                                    data-toggle="tooltip" data-placement="left"
+                                                                    title="Type d'emballage" style="cursor: default;">
+                                                                <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item" style="height: 56px; border: none;">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <label data-th-for="'description_' + ${stock.id}" class="input-group-addon" style="width: 140px;">
+                                                            Infos
+                                                        </label>
+                                                        <input type="text" data-th-value="${stock.description}" class="form-control"
+                                                               data-th-id="'description_' + ${stock.id}">
+                                                        <div class="input-group-btn">
+                                                            <button class="btn btn-default" type="button" tabindex="-1" disabled
+                                                                    data-toggle="tooltip" data-placement="left"
+                                                                    title="Information sur le stock" style="cursor: default;">
+                                                                <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <hr>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-success" data-th-id="'btn_success_' + ${stock.id}">
+                                                Mettre à jour ce stock
+                                            </button>
+                                            <button type="button" class="btn btn-danger" data-th-id="'btn_delete_' + ${stock.id}">
+                                                Supprimer ce stock
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="panel panel-default">
+        <div class="panel-heading">Console</div>
+        <div class="panel-body">
+            <pre data-th-text="${result}"></pre>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modal_stock" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Information sur l'action réalisée</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="modal_result_body_success" class="alert alert-success">
+                        La mise à jour du stock a bien été effectuée.
+                    </div>
+                    <div id="modal_result_body_error" class="alert alert-danger">
+                        Une erreur s'est produite lors de la mise à jour...
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
