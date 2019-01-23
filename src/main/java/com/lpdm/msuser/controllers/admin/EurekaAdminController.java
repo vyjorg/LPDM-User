@@ -1,11 +1,15 @@
 package com.lpdm.msuser.controllers.admin;
 
+import com.lpdm.msuser.model.admin.EurekaInstance;
 import com.lpdm.msuser.services.admin.AdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/admin/eureka")
@@ -34,10 +38,20 @@ public class EurekaAdminController {
     }
 
     @GetMapping(value = {"/unsubscribe", "/unsubscribe/"})
-    public ModelAndView unsubscribeApp(){
+    public ModelAndView unsubscribeList(){
         return new ModelAndView("admin/fragments/eureka")
                 .addObject("pageTitle", "Admin eureka")
                 .addObject("content", "unsubscribe")
                 .addObject("data", adminService.findAllApps());
+    }
+
+    @PostMapping(value = {"/unsubscribe", "/unsubscribe/"})
+    public String unsubscribeApp(@Valid @RequestBody EurekaInstance instance){
+
+        log.info("Unsubscribe Eureka instance: " + instance);
+
+        adminService.deleteInstance(instance.getAppId(), instance.getInstanceId());
+
+        return "ok";
     }
 }

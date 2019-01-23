@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <div data-th-fragment="unsubscribe">
+    <script data-th-src="@{/js/admin/eureka/unsubscribe.js}" charset="UTF-8"></script>
     <div class="row">
         <div class="col-sm-12">
             <div class="panel panel-default">
@@ -16,12 +17,12 @@
         <div data-th-each="ms,status : ${data}">
             <div class="input-group">
                 <label class="input-group-addon" data-th-for="${ms.name}">Microservice</label>
-                <label  data-th-id="${ms.name}" class="form-control" data-th-text="${ms.name}"></label>
+                <span data-th-id="${ms.name}" class="form-control" data-th-text="${ms.name}"></span>
             </div>
             <ul class="list-group">
                 <li class="list-group-item" data-th-each="inst : ${ms.getInstances()}">
                     <div class="input-group">
-                            <input type="text" class="form-control" data-th-value="${inst.instanceId}" readonly>
+                        <input type="text" class="form-control" data-th-value="${inst.instanceId}" readonly>
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-danger">
                                 <span class="glyphicon glyphicon-remove"></span>

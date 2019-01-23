@@ -56,6 +56,7 @@ public interface AdminService {
      * Eureka
      */
     List<Application> findAllApps() throws FeignException;
+    void deleteInstance(String appId, String instanceId);
 
     /**
      * Storage

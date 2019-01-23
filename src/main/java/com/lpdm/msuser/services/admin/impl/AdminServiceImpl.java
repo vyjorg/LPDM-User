@@ -1,5 +1,6 @@
 package com.lpdm.msuser.services.admin.impl;
 
+import com.lpdm.msuser.exception.EurekaInstanceNotFound;
 import com.lpdm.msuser.model.Storage;
 import com.lpdm.msuser.model.Store;
 import com.lpdm.msuser.model.admin.OrderStats;
@@ -12,8 +13,11 @@ import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.msproduct.StockBean;
 import com.lpdm.msuser.proxies.*;
 import com.lpdm.msuser.services.admin.AdminService;
+import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
+import com.netflix.discovery.shared.transport.EurekaHttpClient;
+import com.netflix.eureka.cluster.HttpReplicationClient;
 import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -180,6 +184,38 @@ public class AdminServiceImpl implements AdminService {
     public List<Application> findAllApps() throws FeignException {
 
         return discoveryClient.getApplications().getRegisteredApplications();
+    }
+
+    @Override
+    public void deleteInstance(String appId, String instanceId) {
+
+        Application app = discoveryClient.getApplication(appId);
+        if(app == null) throw new EurekaInstanceNotFound();
+        log.info("AppId : " + app.getName());
+        log.info("Instance list : " );
+        for(InstanceInfo inst : app.getInstances())
+            log.info(" - " + inst.getId());
+
+        InstanceInfo instance = app.getByInstanceId(instanceId);
+        if(instance == null) throw new EurekaInstanceNotFound();
+        log.info("InstanceId to remove : " + instance.getId());
+
+        instance.setIsDirty();
+
+        log.info("Instance status before : " + instance.getStatus().toString());
+        instance.setStatus(InstanceInfo.InstanceStatus.DOWN);
+        log.info("Instance status after : " + instance.getStatus().toString());
+
+        app.removeInstance(instance);
+        log.info("Instance removed");
+        for(InstanceInfo inst : app.getInstances())
+            log.info(" - " + inst.getId());
+
+        instance.setOverriddenStatus(InstanceInfo.InstanceStatus.DOWN);
+        app.removeInstance(instance);
+        log.info("Instance removed");
+        for(InstanceInfo inst : app.getInstances())
+            log.info(" - " + inst.getId());
     }
 
     @Override

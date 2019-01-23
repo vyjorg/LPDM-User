@@ -18,7 +18,7 @@ let modalResultError;
 // Date picker
 let datePickerInput;
 
-$( document ).ready(function() {
+$(document).ready(function() {
 
     // Buttons
     btnUpdate = $(":button.btn-success[type=button]");
