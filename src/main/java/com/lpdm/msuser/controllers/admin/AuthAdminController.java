@@ -76,4 +76,11 @@ public class AuthAdminController {
                 .addObject("result", result)
                 .addObject("searchForm", new SearchForm());
     }
+
+    @GetMapping(value = {"/add", "/add/"})
+    public ModelAndView addUser(){
+        return new ModelAndView("/admin/fragments/users")
+                .addObject("pageTitle", "Search user")
+                .addObject("content", "addPage");
+    }
 }
