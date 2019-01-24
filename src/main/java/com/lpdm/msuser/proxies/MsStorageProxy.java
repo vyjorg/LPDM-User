@@ -1,6 +1,6 @@
 package com.lpdm.msuser.proxies;
 
-import com.lpdm.msuser.model.Storage;
+import com.lpdm.msuser.model.storage.Storage;
 import com.lpdm.msuser.model.admin.StorageUser;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;

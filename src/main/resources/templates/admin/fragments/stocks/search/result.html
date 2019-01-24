@@ -201,12 +201,10 @@
         </div>
     </div>
     <br>
-    <div class="panel panel-default">
-        <div class="panel-heading">Console</div>
-        <div class="panel-body">
-            <pre data-th-text="${result}"></pre>
-        </div>
+    <div data-th-if="${result instanceof T(java.lang.Integer)}" class="alert alert-danger">
+        <div data-th-replace="/admin/fragments/errors :: errors"></div>
     </div>
+    <div data-th-replace="/admin/fragments/console :: console"></div>
     <!-- Modal -->
     <div class="modal fade" id="modal_stock" role="dialog">
         <div class="modal-dialog">

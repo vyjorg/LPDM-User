@@ -21,7 +21,7 @@ public interface MsAuthProxy {
             method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     AppUserBean findById(@PathVariable(value = "id") int id);
 
-    @RequestMapping(path = "${lpdm.auth.name}/users/name/{name}",
+    @RequestMapping(path = "${lpdm.auth.name}/users/username/{name}",
             method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<AppUserBean> findByLastName(@PathVariable(value = "name") String name);
 

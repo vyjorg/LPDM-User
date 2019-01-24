@@ -1,11 +1,12 @@
 package com.lpdm.msuser.services.admin.impl;
 
 import com.lpdm.msuser.exception.EurekaInstanceNotFound;
-import com.lpdm.msuser.model.Storage;
-import com.lpdm.msuser.model.Store;
+import com.lpdm.msuser.model.storage.Storage;
+import com.lpdm.msuser.model.store.Store;
 import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchDates;
 import com.lpdm.msuser.model.admin.StorageUser;
+import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
 import com.lpdm.msuser.msproduct.CategoryBean;
@@ -16,8 +17,6 @@ import com.lpdm.msuser.services.admin.AdminService;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
-import com.netflix.discovery.shared.transport.EurekaHttpClient;
-import com.netflix.eureka.cluster.HttpReplicationClient;
 import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +39,7 @@ public class AdminServiceImpl implements AdminService {
     private final MsStoreProxy storeProxy;
     private final EurekaClient discoveryClient;
     private final MsStockProxy stockProxy;
+    private final MsAuthProxy authProxy;
 
     @Autowired
     public AdminServiceImpl(MsOrderProxy orderProxy,
@@ -47,7 +47,8 @@ public class AdminServiceImpl implements AdminService {
                             MsStoreProxy storeProxy,
                             MsStorageProxy storageProxy,
                             MsStockProxy stockProxy,
-                            @Qualifier("eurekaClient") EurekaClient discoveryClient) {
+                            @Qualifier("eurekaClient") EurekaClient discoveryClient,
+                            MsAuthProxy authProxy) {
 
         this.orderProxy = orderProxy;
         this.productProxy = productProxy;
@@ -55,6 +56,7 @@ public class AdminServiceImpl implements AdminService {
         this.discoveryClient = discoveryClient;
         this.storageProxy = storageProxy;
         this.stockProxy = stockProxy;
+        this.authProxy = authProxy;
     }
 
     @Override
@@ -200,7 +202,7 @@ public class AdminServiceImpl implements AdminService {
         if(instance == null) throw new EurekaInstanceNotFound();
         log.info("InstanceId to remove : " + instance.getId());
 
-        instance.setIsDirty();
+        //instance.setIsDirty();
 
         log.info("Instance status before : " + instance.getStatus().toString());
         instance.setStatus(InstanceInfo.InstanceStatus.DOWN);
@@ -211,11 +213,23 @@ public class AdminServiceImpl implements AdminService {
         for(InstanceInfo inst : app.getInstances())
             log.info(" - " + inst.getId());
 
-        instance.setOverriddenStatus(InstanceInfo.InstanceStatus.DOWN);
+        instance.setOverriddenStatus(InstanceInfo.InstanceStatus.OUT_OF_SERVICE);
         app.removeInstance(instance);
         log.info("Instance removed");
         for(InstanceInfo inst : app.getInstances())
             log.info(" - " + inst.getId());
+
+        instance.setStatusWithoutDirty(InstanceInfo.InstanceStatus.OUT_OF_SERVICE);
+        app.removeInstance(instance);
+        log.info("Instance removed");
+        for(InstanceInfo inst : app.getInstancesAsIsFromEureka())
+            log.info(" - " + inst.getId());
+
+
+
+        discoveryClient.getApplicationInfoManager().refreshDataCenterInfoIfRequired();
+
+
     }
 
     @Override
@@ -262,5 +276,20 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public StockBean addNewStock(StockBean stock) {
         return stockProxy.addNewStock(stock);
+    }
+
+    @Override
+    public List<AppUserBean> findUserById(int id) {
+
+        AppUserBean user = authProxy.findById(id);
+        List<AppUserBean> userList = new ArrayList<>();
+        userList.add(user);
+
+        return userList;
+    }
+
+    @Override
+    public List<AppUserBean> findUserByLastName(String lastName) {
+        return authProxy.findByLastName(lastName);
     }
 }

@@ -128,4 +128,21 @@ public class AppUserBean {
     public void logout(){
 
     }
+
+    @Override
+    public String toString() {
+        return "AppUserBean{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                ", name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", tel='" + tel + '\'' +
+                ", birthday=" + birthday +
+                ", registrationDate=" + registrationDate +
+                ", addressId=" + addressId +
+                ", active=" + active +
+                '}';
+    }
 }

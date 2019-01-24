@@ -1,6 +1,6 @@
 package com.lpdm.msuser.proxies;
 
-import com.lpdm.msuser.model.Store;
+import com.lpdm.msuser.model.store.Store;
 import feign.FeignException;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;

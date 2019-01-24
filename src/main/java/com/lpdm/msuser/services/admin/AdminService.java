@@ -1,7 +1,7 @@
 package com.lpdm.msuser.services.admin;
 
-import com.lpdm.msuser.model.Storage;
-import com.lpdm.msuser.model.Store;
+import com.lpdm.msuser.model.storage.Storage;
+import com.lpdm.msuser.model.store.Store;
 import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchDates;
 import com.lpdm.msuser.model.admin.StorageUser;
@@ -11,12 +11,9 @@ import com.lpdm.msuser.msorder.PaymentBean;
 import com.lpdm.msuser.msproduct.CategoryBean;
 import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.msproduct.StockBean;
-import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
-import com.netflix.discovery.shared.Applications;
 import feign.FeignException;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface AdminService {
@@ -72,4 +69,10 @@ public interface AdminService {
     void deleteStockById(int id);
     StockBean updateStock(StockBean stock);
     StockBean addNewStock(StockBean stock);
+
+    /**
+     * Auth
+     */
+    List<AppUserBean> findUserById(int id);
+    List<AppUserBean> findUserByLastName(String lastName);
 }

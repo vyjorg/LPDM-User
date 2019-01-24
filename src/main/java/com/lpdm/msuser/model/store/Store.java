@@ -1,4 +1,4 @@
-package com.lpdm.msuser.model;
+package com.lpdm.msuser.model.store;
 
 public class Store {
 
