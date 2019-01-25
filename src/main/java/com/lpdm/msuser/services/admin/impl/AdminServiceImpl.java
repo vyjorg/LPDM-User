@@ -1,11 +1,14 @@
 package com.lpdm.msuser.services.admin.impl;
 
 import com.lpdm.msuser.exception.EurekaInstanceNotFound;
+import com.lpdm.msuser.model.location.Address;
+import com.lpdm.msuser.model.location.City;
 import com.lpdm.msuser.model.storage.Storage;
 import com.lpdm.msuser.model.store.Store;
 import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchDates;
 import com.lpdm.msuser.model.admin.StorageUser;
+import com.lpdm.msuser.msauthentication.AppRoleBean;
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
@@ -40,6 +43,7 @@ public class AdminServiceImpl implements AdminService {
     private final EurekaClient discoveryClient;
     private final MsStockProxy stockProxy;
     private final MsAuthProxy authProxy;
+    private final MsLocationProxy locationProxy;
 
     @Autowired
     public AdminServiceImpl(MsOrderProxy orderProxy,
@@ -47,8 +51,9 @@ public class AdminServiceImpl implements AdminService {
                             MsStoreProxy storeProxy,
                             MsStorageProxy storageProxy,
                             MsStockProxy stockProxy,
-                            @Qualifier("eurekaClient") EurekaClient discoveryClient,
-                            MsAuthProxy authProxy) {
+                            MsAuthProxy authProxy,
+                            MsLocationProxy locationProxy,
+                            @Qualifier("eurekaClient") EurekaClient discoveryClient) {
 
         this.orderProxy = orderProxy;
         this.productProxy = productProxy;
@@ -57,6 +62,7 @@ public class AdminServiceImpl implements AdminService {
         this.storageProxy = storageProxy;
         this.stockProxy = stockProxy;
         this.authProxy = authProxy;
+        this.locationProxy = locationProxy;
     }
 
     @Override
@@ -291,5 +297,30 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<AppUserBean> findUserByLastName(String lastName) {
         return authProxy.findByLastName(lastName);
+    }
+
+    @Override
+    public List<AppRoleBean> findAllUserRoles() {
+        return authProxy.findAllRoles();
+    }
+
+    @Override
+    public AppUserBean addNewUser(AppUserBean user) {
+        return authProxy.addNewUser(user);
+    }
+
+    @Override
+    public Address findAddressById(int id) {
+        return locationProxy.findAddressById(id);
+    }
+
+    @Override
+    public List<City> findCitiesByZipCode(String zipCode) {
+        return locationProxy.findCitiesByZipCode(zipCode);
+    }
+
+    @Override
+    public Address saveNewAddress(Address address) {
+        return locationProxy.saveNewAddress(address);
     }
 }

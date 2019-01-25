@@ -1,10 +1,13 @@
 package com.lpdm.msuser.services.admin;
 
+import com.lpdm.msuser.model.location.Address;
+import com.lpdm.msuser.model.location.City;
 import com.lpdm.msuser.model.storage.Storage;
 import com.lpdm.msuser.model.store.Store;
 import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchDates;
 import com.lpdm.msuser.model.admin.StorageUser;
+import com.lpdm.msuser.msauthentication.AppRoleBean;
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
@@ -75,4 +78,14 @@ public interface AdminService {
      */
     List<AppUserBean> findUserById(int id);
     List<AppUserBean> findUserByLastName(String lastName);
+    List<AppRoleBean> findAllUserRoles();
+    AppUserBean addNewUser(AppUserBean user);
+
+    /**
+     * Location
+     */
+
+    Address findAddressById(int id);
+    List<City> findCitiesByZipCode(String zipCode);
+    Address saveNewAddress(Address address);
 }

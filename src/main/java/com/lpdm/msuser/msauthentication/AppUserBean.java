@@ -3,35 +3,26 @@ package com.lpdm.msuser.msauthentication;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
 public class AppUserBean {
 
+    private int id;
+    private String email;
+    private String password;
+    private List<AppRoleBean> appRole;
+    private String name;
+    private String firstName;
+    private String tel;
+    private LocalDate birthday;
+    private LocalDateTime registrationDate;
+    private Integer addressId;
+    private Boolean active;
+
     public AppUserBean() {
     }
-
-    private int id;
-
-    private String email;
-
-    private String password;
-
-    private Set<AppRoleBean> roles = new HashSet<>();
-
-    private String name;
-
-    private String firstName;
-
-    private String tel;
-
-    private LocalDate birthday;
-
-    private LocalDateTime registrationDate;
-
-    private int addressId;
-
-    private Boolean active;
 
     public int getId() {
         return id;
@@ -57,12 +48,12 @@ public class AppUserBean {
         this.password = password;
     }
 
-    public Set<AppRoleBean> getRoles() {
-        return roles;
+    public List<AppRoleBean> getAppRole() {
+        return appRole;
     }
 
-    public void setRoles(Set<AppRoleBean> roles) {
-        this.roles = roles;
+    public void setAppRole(List<AppRoleBean> appRole) {
+        this.appRole = appRole;
     }
 
     public String getName() {
@@ -105,11 +96,11 @@ public class AppUserBean {
         this.registrationDate = registrationDate;
     }
 
-    public int getAddressId() {
+    public Integer getAddressId() {
         return addressId;
     }
 
-    public void setAddressId(int addressId) {
+    public void setAddressId(Integer addressId) {
         this.addressId = addressId;
     }
 
@@ -121,21 +112,13 @@ public class AppUserBean {
         this.active = active;
     }
 
-    public void login(){
-
-    }
-
-    public void logout(){
-
-    }
-
     @Override
     public String toString() {
         return "AppUserBean{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", roles=" + roles +
+                ", appRole=" + appRole +
                 ", name='" + name + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", tel='" + tel + '\'' +
