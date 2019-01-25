@@ -4,7 +4,7 @@ public class Address {
 
     private Integer id;
     private String streetName;
-    private Integer streetNumber;
+    private String streetNumber;
     private String complement;
     private City city;
 
@@ -27,11 +27,11 @@ public class Address {
         this.streetName = streetName;
     }
 
-    public Integer getStreetNumber() {
+    public String getStreetNumber() {
         return streetNumber;
     }
 
-    public void setStreetNumber(Integer streetNumber) {
+    public void setStreetNumber(String streetNumber) {
         this.streetNumber = streetNumber;
     }
 

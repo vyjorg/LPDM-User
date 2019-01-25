@@ -1,0 +1,142 @@
+// Button
+let btnUpdate;
+
+// Select
+let selectCity;
+let cityId;
+
+// User
+let userId;
+
+// Modal
+let modalResult;
+let modalResultSuccess;
+let modalResultError;
+
+$(document).ready(function() {
+
+    selectCity = null;
+    btnUpdate = $("#btnUpdate");
+    btnUpdate.on("click", function () {
+        updateAddress();
+    });
+
+    $(':input[id^="address"]').on("input paste", function () {
+        let btn = $(this).next("div").find("button");
+        if($(this).val() !== "") btn.attr("class", "btn btn-success");
+        else btn.attr("class", "btn btn-danger");
+        if(selectCity != null){
+            if(selectCity.value === "0") btn.attr("class", "btn btn-danger");
+        }
+
+        checkAllInputs();
+
+        userId = $(this).attr("id");
+        userId = userId.split("address")[1].split("_")[0];
+        selectCity = $("#address" + userId + "_cities");
+
+        if($(this).attr("id") === "address" + userId + "_zipCode"){
+            if($(this).val().length === 5) loadCities($(this).val());
+            else selectCity.prop("disabled", true);
+        }
+    });
+
+    modalResult = $("#modal");
+    modalResultSuccess = $("#modal_result_body_success");
+    modalResultError = $("#modal_result_body_error");
+});
+
+function checkAllInputs() {
+
+    let checkup = true;
+    $('[id^="check_"]').each(function(){
+        if($(this).attr("class") === "btn btn-danger") {
+            checkup = false;
+            return false;
+        }
+    });
+
+    if(checkup) btnUpdate.prop("disabled", false);
+    else btnUpdate.prop("disabled", true);
+}
+
+function loadCities(zipCode){
+
+    console.log("load cities for " + zipCode);
+
+    $.ajax({
+        url: "/admin/auth/search/address/cities",
+        type: "post",
+        data: "zipCode=" + zipCode,
+        success: function (data) {
+            console.log("Success msg : " + data);
+            displayCities(data);
+        },
+        error: function (data) {
+            console.log("Error msg : " + data);
+        }
+    });
+}
+
+function displayCities(data) {
+
+    console.log("display cities");
+
+    selectCity.find("option").remove();
+    selectCity.append("<option value='0' selected disabled>Sélectionner une ville</option>");
+
+    $(data).each(function (index, value) {
+        selectCity.append("<option value='" + value.id + "'>" + value.name + "</option>");
+    });
+
+    selectCity.prop("disabled", false);
+
+    selectCity.on("change", function () {
+        cityId = this.value;
+        console.log("selected value = " + cityId);
+    });
+}
+
+function updateAddress() {
+
+    let jsonCity = {};
+    jsonCity.id = cityId;
+
+    let jsonObj = {};
+    jsonObj.streetNumber = $("#address" + userId + "_streetNumber").val();
+    jsonObj.streetName = $("#address" + userId + "_streetName").val();
+    jsonObj.complement = $("#address" + userId + "_complement").val();
+    jsonObj.city = jsonCity;
+
+    console.log("Json : " + JSON.stringify(jsonObj));
+
+    $.ajax({
+        url: "/admin/auth/add/address",
+        type: "post",
+        data: JSON.stringify(jsonObj),
+        contentType: "application/json",
+        dataType : "json",
+        success: function (data) {
+            console.log("Success msg : " + JSON.stringify(data));
+            showUpdateResult(true);
+        },
+        error: function (data) {
+            console.log("Error msg : " + data);
+            showUpdateResult(false);
+        }
+    });
+}
+
+function showUpdateResult(success){
+
+    if(success){
+        modalResultSuccess.show();
+        modalResultError.hide();
+    }
+    else{
+        modalResultSuccess.hide();
+        modalResultError.show();
+    }
+
+    modalResult.modal();
+}

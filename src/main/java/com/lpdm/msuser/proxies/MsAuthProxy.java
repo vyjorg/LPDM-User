@@ -1,11 +1,13 @@
 package com.lpdm.msuser.proxies;
 
+import com.lpdm.msuser.msauthentication.AppRoleBean;
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -28,4 +30,12 @@ public interface MsAuthProxy {
     @RequestMapping(path = "${lpdm.auth.name}/users/email/{email}",
             method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     AppUserBean findByEmail(@PathVariable(value = "email") String name);
+
+    @RequestMapping(path = "${lpdm.auth.name}/roles/",
+            method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    List<AppRoleBean> findAllRoles();
+
+    @RequestMapping(path = "${lpdm.auth.name}/users/",
+            method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    AppUserBean addNewUser(@RequestBody AppUserBean user);
 }

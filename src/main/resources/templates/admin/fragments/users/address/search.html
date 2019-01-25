@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="search">
+    <div data-th-replace="/admin/fragments/users/address/form :: user_search_form"></div>
+    <br>
+    <div data-th-if="${result != null}">
+        <div data-th-replace="/admin/fragments/users/address/result :: user_search_result"></div>
+    </div>
+</div>
+</html>

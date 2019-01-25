@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="user_search_result">
+
+    <!-- Javascript file -->
+    <script data-th-src="@{/js/admin/user/address.js}" charset="UTF-8"></script>
+
+    <!-- Check if result object is an instance of List -->
+    <div data-th-if="${result instanceof T(java.util.List)}">
+
+        <!-- Display only if result size is > 1 -->
+        <div data-th-if="${#lists.size(result)} > 1">
+            <div class="alert alert-info">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button"
+                            data-toggle="dropdown" id="btnMenuUsers">
+                        Liste des utilisateurs
+                        <span class="caret" style="margin-left: 10px;"></span>
+                    </button>
+                    <ul class="dropdown-menu" style="height: auto; max-height: 200px; overflow-x: hidden;">
+                        <li data-th-each="user,loop : ${result}">
+                            <a href="#" data-th-id="'usermenu_' + ${user.id}">
+                                <span data-th-text="'ID ' + ${user.id} + ' - Nom : ' + ${user.name}"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div data-th-each="user,loop : ${result}" data-th-id="'user_' + ${user.id}" data-th-style="${#lists.size(result) > 1} ? 'display:none;'">
+            <div class="row" style="position:relative;">
+                <div class="col-sm-5">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <span style="font-size:16px">
+                                <b><i>Info utilisateur</i></b>
+                            </span>
+                        </div>
+                        <div class="panel-body">
+                            Nom : <span data-th-text="${user.name}"></span><br>
+                            Prénom : <span data-th-text="${user.firstName}"></span><br>
+                            E-mail : <span data-th-text="${user.email}"></span><br>
+                            Tel : <span data-th-text="${user.tel}"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-7" style="position: absolute; bottom: 0; right: 0;">
+                    <div data-th-if="${addressList[loop.index] == null}"
+                         class="alert alert-danger text-center">
+                        Aucune adresse n'est enregistrée pour cet utilisateur.
+                        <script data-th-inline="javascript">
+                            /*<![CDATA[*/
+                            let addressExist = false;
+                            /*]]>*/
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div data-th-replace="/admin/fragments/users/address/address_form.html :: address_form"></div>
+            <div class="alert text-center">
+                <button id="btnUpdate" type="button" class="btn btn-success" disabled>
+                    Mettre à jour l'adresse pour cet utilisateur
+                </button>
+            </div>
+        </div>
+    </div>
+    <div data-th-if="${result instanceof T(java.lang.Integer)}" class="alert alert-danger">
+        <div data-th-replace="/admin/fragments/errors :: errors"></div>
+    </div>
+    <div data-th-replace="/admin/fragments/console :: console"></div>
+    <div data-th-replace="/admin/fragments/modal :: modal"></div>
+</div>
+</html>

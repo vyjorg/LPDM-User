@@ -1,22 +1,34 @@
 package com.lpdm.msuser.msauthentication;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.HashSet;
-import java.util.Set;
-
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class AppRoleBean {
 
     private int id;
-
     private String roleName;
 
-    private Set<UserRolesBean> roles = new HashSet<>();
+    public AppRoleBean() {
+    }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    @Override
+    public String toString() {
+        return "AppRoleBean{" +
+                "id=" + id +
+                ", roleName='" + roleName + '\'' +
+                '}';
+    }
 }

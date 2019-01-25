@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <div data-th-fragment="address_form">
-    <div class="panel panel-info">
+    <div class="panel panel-default">
         <div class="panel-heading text-center">
             <b>Adresse de l'utilisateur</b>
         </div>
@@ -10,16 +10,19 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <div class="input-group">
-                            <label for="address_number" class="input-group-addon" style="width: 100px;">
+                            <label data-th-for="'address' + ${user.id} + '_streetNumber'"
+                                   class="input-group-addon" style="width: 104px;">
                                 Numéro
                             </label>
                             <input type="text"
                                    class="form-control"
-                                   id="address_number">
+                                   data-th-id="'address' + ${user.id} + '_streetNumber'"
+                                   data-th-value="${addressList[loop.index]?.streetNumber}">
                             <div class="input-group-btn">
                                 <button class="btn btn-danger"
                                         type="button"
                                         tabindex="-1"
+                                        id="check_number"
                                         data-toggle="tooltip"
                                         data-placement="left"
                                         title="Saisir un numéro de voie"
@@ -34,16 +37,19 @@
                 <div class="col-sm-8">
                     <div class="form-group">
                         <div class="input-group">
-                            <label for="address_streetName" class="input-group-addon" style="width: 100px;">
+                            <label data-th-for="'address' + ${user.id} + '_streetName'"
+                                   class="input-group-addon" style="width: 104px;">
                                 Voie
                             </label>
                             <input type="text"
                                    class="form-control"
-                                   id="address_streetName">
-                            <div class="input-group-btn">
+                                   data-th-id="'address' + ${user.id} + '_streetName'">
+                            <div class="input-group-btn"
+                                 data-th-value="${addressList[loop.index]?.streetName}">
                                 <button class="btn btn-danger"
                                         type="button"
                                         tabindex="-1"
+                                        id="check_streetName"
                                         data-toggle="tooltip"
                                         data-placement="left"
                                         title="Saisir un nom de voie"
@@ -58,16 +64,19 @@
             </div>
             <div class="form-group">
                 <div class="input-group">
-                    <label for="address_complement" class="input-group-addon" style="width: 120px;">
+                    <label data-th-for="'address' + ${user.id} + '_complement'"
+                           class="input-group-addon" style="width: 104px;">
                         Complément
                     </label>
                     <input type="text"
                            class="form-control"
-                           id="address_complement">
+                           data-th-id="'address' + ${user.id} + '_complement'"
+                           data-th-value="${addressList[loop.index]?.complement}">
                     <div class="input-group-btn">
                         <button class="btn btn-danger"
                                 type="button"
                                 tabindex="-1"
+                                id="check_complement"
                                 data-toggle="tooltip"
                                 data-placement="left"
                                 title="Saisir un complément de voie"
@@ -82,16 +91,19 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <div class="input-group">
-                            <label for="address_zipCode" class="input-group-addon" style="width: 100px;">
+                            <label data-th-for="'address' + ${user.id} + '_zipCode'"
+                                   class="input-group-addon" style="width: 104px;">
                                 Code postal
                             </label>
                             <input type="text"
                                    class="form-control"
-                                   id="address_zipCode">
+                                   data-th-id="'address' + ${user.id} + '_zipCode'"
+                                   data-th-value="${addressList[loop.index]?.city?.zipCode}">
                             <div class="input-group-btn">
                                 <button class="btn btn-danger"
                                         type="button"
                                         tabindex="-1"
+                                        id="check_zipCode"
                                         data-toggle="tooltip"
                                         data-placement="left"
                                         title="Saisir un code postal"
@@ -105,11 +117,17 @@
                 </div>
                 <div class="col-sm-8">
                     <div class="input-group">
-                        <label class="input-group-addon" style="width: 100px;">
+                        <label class="input-group-addon" style="width: 104px;">
                             Ville
                         </label>
-                        <select class="form-control" style="cursor: pointer;" disabled>
-                            <option value="" disabled selected>Sélectionner une ville</option>
+                        <select data-th-id="'address' + ${user.id} + '_cities'"
+                                class="form-control"
+                                style="cursor: pointer;"
+                                disabled>
+                            <option value=""
+                                    data-th-text="${addressList[loop.index]?.city?.name}"
+                                    disabled
+                                    selected></option>
                         </select>
                         <div class="input-group-btn">
                             <button class="btn btn-danger"

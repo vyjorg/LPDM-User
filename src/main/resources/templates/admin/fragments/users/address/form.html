@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="user_search_form">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Recherche d'un utilisateur</div>
+                <div class="panel-body">
+                    <form method="post" data-th-action="@{/admin/auth/search/address}" data-th-object="${searchForm}">
+                        <div class="form-group">
+                            <div class="label-control col-sm-3">
+                                <select class="form-control" id="select" data-th-field="*{searchValue}">
+                                    <option value="3">Identifiant</option>
+                                    <option value="4">Nom de famille</option>
+                                </select>
+                            </div>
+                            <div id="change_me" class="input-group">
+                                <input type="text" class="form-control" data-th-field="*{keyword}"
+                                       placeholder="Saisir une recherche d'un client" required>
+                                <span class="input-group-btn">
+                                <button class="btn btn-primary" type="submit">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                    Rechercher
+                                </button>
+                              </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
