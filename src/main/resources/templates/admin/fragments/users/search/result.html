@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="user_search_result">
+    <div data-th-if="${result instanceof T(java.util.List)}">
+        <div data-th-if="${#lists.size(result)} > 1">
+            <div class="alert alert-info">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button"
+                            data-toggle="dropdown" id="btnMenuUsers">
+                        Liste des utilisateurs
+                        <span class="caret" style="margin-left: 10px;"></span>
+                    </button>
+                    <ul class="dropdown-menu" style="height: auto; max-height: 200px; overflow-x: hidden;">
+                        <li data-th-each="user,loop : ${result}">
+                            <a href="#" data-th-id="'usermenu_' + ${user.id}">
+                                <span data-th-text="'ID ' + ${user.id} + ' - Nom : ' + ${user.name}"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div data-th-each="user,loop : ${result}">
+            <div class="row">
+                <div class="col-sm-12 alert">
+                    <div class="col-sm-2">
+                        <h2><b>ID </b><span data-th-text="${user.id}"></span></h2>
+                    </div>
+                    <div class="col-sm-4 alert alert-info">
+                        <div class="input-group">
+                            <label class="input-group-addon">
+                                Statut
+                            </label>
+                            <select class="form-control">
+                                <option value="1">Compte activé</option>
+                                <option value="2">Compte désactivé</option>
+                            </select>
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="button" tabindex="-1" disabled
+                                        data-toggle="tooltip" data-placement="left"
+                                        title="Sélectionner un statut" style="cursor: default;">
+                                    <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-5 alert alert-info">
+                        <div class="input-group">
+                            <label class="input-group-addon">
+                                Rôle de l'utilisateur
+                            </label>
+                            <select class="form-control">
+                                <option value="0">Un role</option>
+                                <option value="1">Un autre</option>
+                            </select>
+                            <!--
+                            <select class="form-control" data-th-id="'categoryList_' + ${product.id}">
+                                <option data-th-each="cat,status : ${categories}"
+                                        data-th-value="${status.index}"
+                                        data-th-text="${cat.name}"
+                                        data-th-selected="${cat.name == product.category.name}">
+                                </option>
+                            </select>
+                            -->
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="button" tabindex="-1" disabled
+                                        data-toggle="tooltip" data-placement="left"
+                                        title="Sélectionner un rôle" style="cursor: default;">
+                                    <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <ul class="list-group">
+
+                    <!-- User registration date -->
+
+                    <li class="list-group-item" style="height: 56px; border: none;">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label data-th-for="'registrationDate_' + ${user.id}" class="input-group-addon" style="width: 150px;">
+                                    Enregistré le
+                                </label>
+                                <input type="text" data-th-value="${user.registrationDate}" class="form-control"
+                                       data-th-id="'registrationDate_' + ${user.id}" disabled>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="button" tabindex="-1" disabled
+                                            data-toggle="tooltip" data-placement="left"
+                                            title="Vous n'avez rien à saisir" style="cursor: default;">
+                                        <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- User last name -->
+
+                    <li class="list-group-item" style="height: 56px; border: none;">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label data-th-for="'name_' + ${user.id}" class="input-group-addon" style="width: 150px;">
+                                    Nom
+                                </label>
+                                <input type="text" data-th-value="${user.name}" class="form-control"
+                                       data-th-id="'name_' + ${user.id}">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="button" tabindex="-1" disabled
+                                            data-toggle="tooltip" data-placement="left"
+                                            title="Saisir le nom de famille" style="cursor: default;">
+                                        <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- User first name -->
+
+                    <li class="list-group-item" style="height: 56px; border: none;">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label data-th-for="'firstname_' + ${user.id}" class="input-group-addon" style="width: 150px;">
+                                    Prénom
+                                </label>
+                                <input type="text" data-th-value="${user.firstName}" class="form-control"
+                                       data-th-id="'firstname_' + ${user.id}">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="button" tabindex="-1" disabled
+                                            data-toggle="tooltip" data-placement="left"
+                                            title="Saisir le prénom" style="cursor: default;">
+                                        <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- User email -->
+
+                    <li class="list-group-item" style="height: 56px; border: none;">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label data-th-for="'email_' + ${user.id}" class="input-group-addon" style="width: 150px;">
+                                    E-mail
+                                </label>
+                                <input type="text" data-th-value="${user.email}" class="form-control"
+                                       data-th-id="'email_' + ${user.id}">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="button" tabindex="-1" disabled
+                                            data-toggle="tooltip" data-placement="left"
+                                            title="Saisir une adresse e-mail" style="cursor: default;">
+                                        <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- User tel -->
+
+                    <li class="list-group-item" style="height: 56px; border: none;">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label data-th-for="'tel_' + ${user.id}" class="input-group-addon" style="width: 150px;">
+                                    Téléphone
+                                </label>
+                                <input type="text" data-th-value="${user.tel}" class="form-control"
+                                       data-th-id="'tel_' + ${user.id}">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="button" tabindex="-1" disabled
+                                            data-toggle="tooltip" data-placement="left"
+                                            title="Saisir un numéro de téléphone" style="cursor: default;">
+                                        <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- User birthday -->
+
+                    <li class="list-group-item" style="height: 56px; border: none;">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label data-th-for="'birthday_' + ${user.id}" class="input-group-addon" style="width: 150px;">
+                                    Date de naissance
+                                </label>
+                                <input type="text" data-th-value="${user.birthday}" class="form-control"
+                                       data-th-id="'birthday_' + ${user.id}">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="button" tabindex="-1" disabled
+                                            data-toggle="tooltip" data-placement="left"
+                                            title="Saisir un numéro de téléphone" style="cursor: default;">
+                                        <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <hr>
+
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div data-th-if="${result instanceof T(java.lang.Integer)}" class="alert alert-danger">
+        <div data-th-replace="/admin/fragments/errors :: errors"></div>
+    </div>
+    <div data-th-replace="/admin/fragments/console :: console"></div>
+</div>
+</html>

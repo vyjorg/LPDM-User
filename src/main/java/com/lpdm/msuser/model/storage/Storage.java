@@ -1,4 +1,4 @@
-package com.lpdm.msuser.model;
+package com.lpdm.msuser.model.storage;
 
 public class Storage {
 

@@ -1,6 +1,6 @@
 package com.lpdm.msuser.controllers.admin;
 
-import com.lpdm.msuser.model.Store;
+import com.lpdm.msuser.model.store.Store;
 import com.lpdm.msuser.model.admin.SearchForm;
 import com.lpdm.msuser.services.admin.AdminService;
 import feign.FeignException;
@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 @RestController

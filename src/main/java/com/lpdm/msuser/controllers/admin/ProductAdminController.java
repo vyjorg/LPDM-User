@@ -1,10 +1,9 @@
 package com.lpdm.msuser.controllers.admin;
 
-import com.lpdm.msuser.model.Storage;
+import com.lpdm.msuser.model.storage.Storage;
 import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchForm;
 import com.lpdm.msuser.model.admin.StorageUser;
-import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.services.admin.AdminService;
 import feign.FeignException;

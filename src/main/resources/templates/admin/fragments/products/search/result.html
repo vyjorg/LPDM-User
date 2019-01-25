@@ -50,7 +50,6 @@
                                             data-th-selected="${cat.name == product.category.name}">
                                     </option>
                                 </select>
-
                                 <div class="input-group-btn">
                                     <button class="btn btn-default" type="button" tabindex="-1" disabled
                                             data-toggle="tooltip" data-placement="left"
@@ -58,7 +57,6 @@
                                         <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
                                     </button>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -180,25 +178,10 @@
         </div>
         <div data-th-include="admin/fragments/products/update/modal_upload :: modal_upload"></div>
     </div>
-    <div data-th-if="${result instanceof T(java.lang.String)}">
-        Erreur : <span data-th-text="${result}"></span>
-    </div>
     <div data-th-if="${result instanceof T(java.lang.Integer)}" class="alert alert-danger">
-        <span data-th-if="${result == 204}">
-            <i class="glyphicon glyphicon-remove" style="display:table-cell;"></i>
-            Aucun produit n'a été trouvé.
-        </span>
-        <span data-th-if="${result == 500}">
-                <i class="glyphicon glyphicon-remove" style="display:table-cell;"></i>
-                La syntaxe de la requête est erronée ou le microservice est injoignable.
-            </span>
+        <div data-th-replace="/admin/fragments/errors :: errors"></div>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">Console</div>
-        <div class="panel-body">
-            <pre data-th-text="${result}"></pre>
-        </div>
-    </div>
+    <div data-th-replace="/admin/fragments/console :: console"></div>
     <div data-th-include="admin/fragments/products/update/modal_result :: modal_result"></div>
 </div>
 </html>

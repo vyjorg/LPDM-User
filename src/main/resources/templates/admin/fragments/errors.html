@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="errors">
+    <span data-th-if="${result == 400}">
+        <i class="glyphicon glyphicon-remove" style="display:table-cell;"></i>
+        La syntaxe de la requête est erronée : 400 Bad Request
+    </span>
+    <span data-th-if="${result == 403}">
+        <i class="glyphicon glyphicon-remove" style="display:table-cell;"></i>
+        L'accès à la ressource est interdite : 403 Forbidden
+    </span>
+    <span data-th-if="${result == 404}">
+        <i class="glyphicon glyphicon-remove" style="display:table-cell;"></i>
+        Aucune réponse n'a été trouvé : 404 Not found
+    </span>
+    <span data-th-if="${result == 500}">
+        <i class="glyphicon glyphicon-remove" style="display:table-cell;"></i>
+        La syntaxe de la requête est erronée : 500 Internal Server Error
+    </span>
+    <span data-th-if="${result == 503}">
+        <i class="glyphicon glyphicon-remove" style="display:table-cell;"></i>
+        Le microservice est injoignable : 503 Service Unavailable
+    </span>
+</div>
+</html>

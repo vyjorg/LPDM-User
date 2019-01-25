@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="add_form">
+    <div class="panel panel-default">
+        <div class="panel-heading">Ajout d'un nouvel utilisateur</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12 alert text-center">
+                    <div class="col-sm-5 alert alert-info">
+                        <div class="input-group">
+                            <label class="input-group-addon">
+                                Statut
+                            </label>
+                            <select class="form-control" style="cursor: pointer;">
+                                <option value="" disabled selected>Sélectionner un statut</option>
+                                <option value="1">Compte activé</option>
+                                <option value="2">Compte désactivé</option>
+                            </select>
+                            <div class="input-group-btn">
+                                <button class="btn btn-danger"
+                                        type="button" tabindex="-1"
+                                        data-toggle="tooltip"
+                                        data-placement="left"
+                                        title="Sélectionner un statut"
+                                        style="cursor: default;"
+                                        disabled>
+                                    <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-5 alert alert-info">
+                        <div class="input-group">
+                            <label class="input-group-addon">
+                                Rôle de l'utilisateur
+                            </label>
+                            <select class="form-control">
+                                <option value="" selected disabled>Choisir</option>
+                                <option value="1">Un autre</option>
+                            </select>
+                            <!--
+                            <select class="form-control" data-th-id="'categoryList_' + ${product.id}">
+                                <option data-th-each="cat,status : ${categories}"
+                                        data-th-value="${status.index}"
+                                        data-th-text="${cat.name}"
+                                        data-th-selected="${cat.name == product.category.name}">
+                                </option>
+                            </select>
+                            -->
+                            <div class="input-group-btn">
+                                <button class="btn btn-danger"
+                                        type="button"
+                                        tabindex="-1"
+                                        data-toggle="tooltip"
+                                        data-placement="left"
+                                        title="Sélectionner un rôle"
+                                        style="cursor: default;"
+                                        disabled>
+                                    <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <ul class="list-group">
+
+                    <!-- User last name -->
+
+                    <li class="list-group-item" style="height: 56px; border: none;">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label data-th-for="user_name" class="input-group-addon" style="width: 150px;">
+                                    Nom
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="user_lastName">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-danger"
+                                            type="button"
+                                            tabindex="-1"
+                                            data-toggle="tooltip"
+                                            data-placement="left"
+                                            title="Saisir le nom de famille"
+                                            style="cursor: default;"
+                                            disabled>
+                                        <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- User first name -->
+
+                    <li class="list-group-item" style="height: 56px; border: none;">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="user_firstname" class="input-group-addon" style="width: 150px;">
+                                    Prénom
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="user_firstName">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-danger"
+                                            type="button"
+                                            tabindex="-1"
+                                            data-toggle="tooltip"
+                                            data-placement="left"
+                                            title="Saisir le prénom"
+                                            style="cursor: default;"
+                                            disabled>
+                                        <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- User email -->
+
+                    <li class="list-group-item" style="height: 56px; border: none;">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="user_email" class="input-group-addon" style="width: 150px;">
+                                    E-mail
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="user_email">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-danger"
+                                            type="button"
+                                            tabindex="-1"
+                                            data-toggle="tooltip"
+                                            data-placement="left"
+                                            title="Saisir une adresse e-mail"
+                                            style="cursor: default;"
+                                            disabled>
+                                        <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- User tel -->
+
+                    <li class="list-group-item" style="height: 56px; border: none;">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="user_tel" class="input-group-addon" style="width: 150px;">
+                                    Téléphone
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="user_tel">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-danger"
+                                            type="button"
+                                            tabindex="-1"
+                                            data-toggle="tooltip"
+                                            data-placement="left"
+                                            title="Saisir un numéro de téléphone"
+                                            style="cursor: default;"
+                                            disabled>
+                                        <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- User birthday -->
+
+                    <li class="list-group-item" style="height: 56px; border: none;">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="user_birthday" class="input-group-addon" style="width: 150px;">
+                                    Date de naissance
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="user_birthday">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-danger"
+                                            type="button"
+                                            tabindex="-1"
+                                            data-toggle="tooltip"
+                                            data-placement="left"
+                                            title="Saisir un numéro de téléphone"
+                                            style="cursor: default;"
+                                            disabled>
+                                        <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- User password -->
+
+                    <li class="list-group-item" style="height: 56px; border: none;">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="user_password" class="input-group-addon" style="width: 150px;">
+                                    Mot de passe
+                                </label>
+                                <input type="password"
+                                       class="form-control"
+                                       id="user_password">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-danger"
+                                            type="button"
+                                            tabindex="-1"
+                                            data-toggle="tooltip"
+                                            data-placement="left"
+                                            title="Saisir un mot de passe"
+                                            style="cursor: default;"
+                                            disabled>
+                                        <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="alert alert-default text-center">
+                <button type="button" class="btn btn-success" id="btnAdd" disabled>
+                    Enregistrer en tant que nouvel utilisateur
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

@@ -28,6 +28,8 @@ public class OrderBean {
 
     private List<OrderedProductBean> orderedProducts;
 
+    private Coupon coupon;
+
     public int getId() {
         return id;
     }
@@ -108,6 +110,14 @@ public class OrderBean {
         this.orderedProducts = orderedProducts;
     }
 
+    public Coupon getCoupon() {
+        return coupon;
+    }
+
+    public void setCoupon(Coupon coupon) {
+        this.coupon = coupon;
+    }
+
     @Override
     public String toString() {
         return "OrderBean{" +
@@ -117,10 +127,11 @@ public class OrderBean {
                 ", status=" + status +
                 ", payment=" + payment +
                 ", storeId=" + storeId +
-                ", stores=" + store +
+                ", store=" + store +
                 ", customerId=" + customerId +
                 ", customer=" + customer +
                 ", orderedProducts=" + orderedProducts +
+                ", coupon=" + coupon +
                 '}';
     }
 }
