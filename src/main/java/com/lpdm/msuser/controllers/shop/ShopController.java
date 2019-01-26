@@ -25,6 +25,20 @@ public class ShopController {
 
         log.info("-> Home page");
         return new ModelAndView("shop/fragments/home");
-                //.addObject("productList", productService.findAllProducts());
+    }
+
+    @GetMapping(value = "/shop/products")
+    public ModelAndView productsPage(){
+
+        log.info("-> Products page");
+        return new ModelAndView("shop/fragments/products/index")
+                .addObject("productCategories", productService.findAllProductCategories());
+    }
+
+    @GetMapping(value = "/shop/account")
+    public ModelAndView accountPage(){
+
+        log.info("-> Account page");
+        return new ModelAndView("shop/fragments/account/index");
     }
 }
