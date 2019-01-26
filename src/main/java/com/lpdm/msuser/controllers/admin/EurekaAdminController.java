@@ -5,17 +5,19 @@ import com.lpdm.msuser.services.admin.AdminService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
+import static com.lpdm.msuser.utils.admin.ValueType.*;
+
 @RestController
-@RequestMapping("/admin/eureka")
+@RequestMapping(EUREKA_ADMIN_PATH)
 public class EurekaAdminController {
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
+    private Logger log = LoggerFactory.getLogger(this.getClass());
+
     private final AdminService adminService;
 
     @Autowired
@@ -23,26 +25,26 @@ public class EurekaAdminController {
         this.adminService = adminService;
     }
 
-    @GetMapping(value = {"", "/"})
+    @GetMapping(value = DEFAULT_PATH)
     public ModelAndView adminEureka(){
-        return new ModelAndView("admin/fragments/eureka")
-                .addObject("pageTitle", "Admin eureka");
+        return new ModelAndView(EUREKA_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, EUREKA_PAGE_TITLE);
     }
 
     @GetMapping(value = {"/overview", "/overview/"})
     public ModelAndView eurekaOverview(){
-        return new ModelAndView("admin/fragments/eureka")
-                .addObject("pageTitle", "Admin eureka")
-                .addObject("content", "overview")
-                .addObject("data", adminService.findAllApps());
+        return new ModelAndView(EUREKA_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, EUREKA_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, "overview")
+                .addObject(DATA, adminService.findAllApps());
     }
 
     @GetMapping(value = {"/unsubscribe", "/unsubscribe/"})
     public ModelAndView unsubscribeList(){
-        return new ModelAndView("admin/fragments/eureka")
-                .addObject("pageTitle", "Admin eureka")
-                .addObject("content", "unsubscribe")
-                .addObject("data", adminService.findAllApps());
+        return new ModelAndView(EUREKA_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, EUREKA_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, "unsubscribe")
+                .addObject(DATA, adminService.findAllApps());
     }
 
     @PostMapping(value = {"/unsubscribe", "/unsubscribe/"})

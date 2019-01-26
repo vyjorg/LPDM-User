@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
+import static com.lpdm.msuser.utils.admin.ValueType.*;
+
 @RestController
-@RequestMapping("/admin")
+@RequestMapping(STOCK_ADMIN_PATH)
 public class StockAdminController {
 
     private final AdminService adminService;
@@ -27,21 +27,21 @@ public class StockAdminController {
         this.adminService = adminService;
     }
 
-    @GetMapping(value = {"/stocks", "/stocks/"})
+    @GetMapping(value = DEFAULT_PATH)
     public ModelAndView adminStock(){
-        return new ModelAndView("admin/fragments/stocks")
-                .addObject("pageTitle", "Admin stocks");
+        return new ModelAndView(STOCK_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, STOCK_PAGE_TITLE);
     }
 
-    @GetMapping(value = {"/stocks/search", "/stocks/search/"})
+    @GetMapping(value = DEFAULT_SEARCH_PATH)
     public ModelAndView stockSearch(){
-        return new ModelAndView("admin/fragments/stocks")
-                .addObject("pageTitle", "Admin stocks")
-                .addObject("content", "searchStock")
-                .addObject("searchForm", new SearchForm());
+        return new ModelAndView(STOCK_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, STOCK_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_SEARCH_PAGE)
+                .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm());
     }
 
-    @PostMapping(value = {"/stocks/search", "stocks/search/"})
+    @PostMapping(value = DEFAULT_SEARCH_PATH)
     public ModelAndView stockSearchResult(@Valid @ModelAttribute("searchForm") SearchForm searchForm){
 
         String keyword = searchForm.getKeyword();
@@ -65,22 +65,22 @@ public class StockAdminController {
                 break;
         }
 
-        return new ModelAndView("admin/fragments/stocks")
-                .addObject("pageTitle", "Admin stocks")
-                .addObject("content", "searchStock")
-                .addObject("searchForm", new SearchForm())
-                .addObject("result", result);
+        return new ModelAndView(STOCK_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, STOCK_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_SEARCH_PAGE)
+                .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm())
+                .addObject(HTML_RESULT_OBJECT, result);
     }
 
-    @GetMapping(value = {"/stocks/add", "/stocks/add/"})
+    @GetMapping(value = {"/add", "/add/"})
     public ModelAndView addStock(){
-        return new ModelAndView("admin/fragments/stocks")
-                .addObject("pageTitle", "Admin stocks")
-                .addObject("content", "addStock")
-                .addObject("searchForm", new SearchForm());
+        return new ModelAndView(STOCK_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, STOCK_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, "addStock")
+                .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm());
     }
 
-    @PostMapping(value = {"/stocks/delete", "/stocks/delete/"})
+    @PostMapping(value = {"/delete", "/delete/"})
     public String deleteStock(@RequestParam Map<String, String> data){
 
         log.info("Stock id = " + data.get("stockId"));
@@ -89,7 +89,7 @@ public class StockAdminController {
         return "ok";
     }
 
-    @PostMapping(value = {"/stocks/update", "/stocks/update/"})
+    @PostMapping(value = {"/update", "/update/"})
     public StockBean updateStock(@RequestBody StockBean stock){
 
         log.info("Stock Json = " + stock);
@@ -97,19 +97,19 @@ public class StockAdminController {
         return adminService.updateStock(stock);
     }
 
-    @GetMapping(value = {"/stocks/search/product/{id}", "stocks/search/product/{id}/"})
+    @GetMapping(value = {"/search/product/{id}", "/search/product/{id}/"})
     public ModelAndView findStockById(@PathVariable int id){
 
         Object result = adminService.findStockByProductId(id);
 
-        return new ModelAndView("admin/fragments/stocks")
-                .addObject("pageTitle", "Admin stocks")
-                .addObject("content", "searchStock")
-                .addObject("searchForm", new SearchForm())
-                .addObject("result", result);
+        return new ModelAndView(STOCK_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, STOCK_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_SEARCH_PAGE)
+                .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm())
+                .addObject(HTML_RESULT_OBJECT, result);
     }
 
-    @PostMapping(value = {"/stocks/add/search", "stocks/add/search/"})
+    @PostMapping(value = {"/add/search", "/add/search/"})
     public ModelAndView stockAddSearchResult(@Valid @ModelAttribute("searchForm") SearchForm searchForm){
 
         String keyword = searchForm.getKeyword();
@@ -129,14 +129,14 @@ public class StockAdminController {
                 break;
         }
 
-        return new ModelAndView("admin/fragments/stocks")
-                .addObject("pageTitle", "Admin stocks")
-                .addObject("content", "addStock")
-                .addObject("searchForm", new SearchForm())
-                .addObject("result", result);
+        return new ModelAndView(STOCK_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, STOCK_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, "addStock")
+                .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm())
+                .addObject(HTML_RESULT_OBJECT, result);
     }
 
-    @PostMapping(value = {"/stocks/add", "/stocks/add/"})
+    @PostMapping(value = {"/add", "/add/"})
     public StockBean addNewStock(@Valid @RequestBody StockBean stock){
 
         log.info("Stock : " + stock.toString());

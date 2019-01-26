@@ -17,8 +17,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
+import static com.lpdm.msuser.utils.admin.ValueType.*;
+
 @RestController
-@RequestMapping("/admin/orders")
+@RequestMapping(ORDER_ADMIN_PATH)
 public class OrderAdminController {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
@@ -30,7 +32,7 @@ public class OrderAdminController {
         this.adminService = adminService;
     }
 
-    @GetMapping(value = {"", "/"})
+    @GetMapping(value = DEFAULT_PATH)
     public ModelAndView adminOrders(){
 
         LocalDate date = LocalDate.now();
@@ -38,25 +40,25 @@ public class OrderAdminController {
         OrderStats lastYear = adminService.findOrderStatsByYear(date.getYear() - 1);
         OrderStats average = adminService.getAverageStats(currentYear, lastYear);
 
-        return new ModelAndView("admin/fragments/orders")
-                .addObject("pageTitle","Admin orders")
+        return new ModelAndView(ORDER_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE,ORDER_PAGE_TITLE)
                 .addObject("statsCurrentYear", currentYear)
                 .addObject("statsLastYear", lastYear)
                 .addObject("statsAverageYear", average);
     }
 
-    @GetMapping(value = {"/search", "/search/"})
+    @GetMapping(value = DEFAULT_SEARCH_PATH)
     public ModelAndView searchOrder(){
-        return new ModelAndView("/admin/fragments/orders")
-                .addObject("pageTitle", "Search order")
-                .addObject("content", "searchPage")
-                .addObject("searchForm", new SearchForm())
+        return new ModelAndView(ORDER_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, ORDER_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_SEARCH_PAGE)
+                .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm())
                 .addObject("payments", adminService.findAllPayment())
                 .addObject("selectedTab", "order_id")
                 .addObject("statusList", StatusEnum.values());
     }
 
-    @PostMapping(value = {"/search", "/search/"})
+    @PostMapping(value = DEFAULT_SEARCH_PATH)
     public ModelAndView searchOrderResult(
             @Valid @ModelAttribute("searchForm") SearchForm searchForm){
 
@@ -116,11 +118,11 @@ public class OrderAdminController {
             result = e.status();
         }
 
-        return new ModelAndView("/admin/fragments/orders")
-                .addObject("pageTitle", "Search order")
-                .addObject("content", "searchPage")
-                .addObject("result", result)
-                .addObject("searchForm", new SearchForm())
+        return new ModelAndView(ORDER_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, ORDER_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_SEARCH_PAGE)
+                .addObject(HTML_RESULT_OBJECT, result)
+                .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm())
                 .addObject("payments", adminService.findAllPayment())
                 .addObject("selectedTab", selectedTab)
                 .addObject("statusList", StatusEnum.values());
@@ -129,9 +131,9 @@ public class OrderAdminController {
     @GetMapping(value = {"/payments", "/payments/"})
     public ModelAndView getAllPayments(){
 
-        return new ModelAndView("/admin/fragments/orders")
-                .addObject("pageTitle", "Search order")
-                .addObject("content", "paymentsPage")
-                .addObject("result", adminService.findAllPayment());
+        return new ModelAndView(ORDER_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, ORDER_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, "paymentsPage")
+                .addObject(HTML_RESULT_OBJECT, adminService.findAllPayment());
     }
 }

@@ -14,8 +14,10 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import static com.lpdm.msuser.utils.admin.ValueType.*;
+
 @RestController
-@RequestMapping("/admin")
+@RequestMapping(STORE_ADMIN_PATH)
 public class StoreAdminController {
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
@@ -27,21 +29,21 @@ public class StoreAdminController {
         this.adminService = adminService;
     }
 
-    @GetMapping(value = {"/stores", "/stores/"})
+    @GetMapping(value = DEFAULT_PATH)
     public ModelAndView adminStore(){
-        return new ModelAndView("admin/fragments/stores")
-                .addObject("pageTitle", "Admin stores");
+        return new ModelAndView(STORE_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, STORE_PAGE_TITLE);
     }
 
-    @GetMapping(value = {"/stores/search", "/stores/search/"})
+    @GetMapping(value = DEFAULT_SEARCH_PATH)
     public ModelAndView searchStore(){
-        return new ModelAndView("/admin/fragments/stores")
-                .addObject("pageTitle", "Search store")
-                .addObject("content", "searchPage")
-                .addObject("searchForm", new SearchForm());
+        return new ModelAndView(STORE_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, STORE_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_SEARCH_PAGE)
+                .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm());
     }
 
-    @PostMapping(value = {"/stores/search", "/stores/search/"})
+    @PostMapping(value = DEFAULT_SEARCH_PATH)
     public ModelAndView searchOrderResult(
             @Valid @ModelAttribute("searchForm") SearchForm searchForm){
 
@@ -63,18 +65,18 @@ public class StoreAdminController {
         }
         catch (FeignException e ){ result = e.status(); }
 
-        return new ModelAndView("/admin/fragments/stores")
-                .addObject("pageTitle", "Search store")
-                .addObject("content", "searchPage")
-                .addObject("result", result);
+        return new ModelAndView(STORE_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, STORE_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_SEARCH_PAGE)
+                .addObject(HTML_RESULT_OBJECT, result);
     }
 
-    @PostMapping(value = {"stores/update", "stores/update/"})
+    @PostMapping(value = {"/update", "/update/"})
     public ModelAndView updateStore(@Valid @RequestBody Store store){
 
-        return new ModelAndView("/admin/fragments/stores")
-                .addObject("pageTitle", "Search store")
-                .addObject("content", "searchPage")
-                .addObject("result", store);
+        return new ModelAndView(STORE_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, STORE_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_SEARCH_PAGE)
+                .addObject(HTML_RESULT_OBJECT, store);
     }
 }

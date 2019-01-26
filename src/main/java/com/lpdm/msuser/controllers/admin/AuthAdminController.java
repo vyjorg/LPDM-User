@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -23,10 +22,9 @@ import java.util.regex.Pattern;
 import static com.lpdm.msuser.utils.admin.ValueType.*;
 
 @RestController
-@RequestMapping(ADMIN_AUTH_PATH)
+@RequestMapping(AUTH_ADMIN_PATH)
 public class AuthAdminController {
 
-    private final String DEFAULT_PATH = "/admin/fragments/users/users";
     private Logger log = LoggerFactory.getLogger(this.getClass());
     private final AdminService adminService;
 
@@ -35,16 +33,16 @@ public class AuthAdminController {
         this.adminService = adminService;
     }
 
-    @GetMapping(value = {"", "/"})
+    @GetMapping(value = DEFAULT_PATH)
     public ModelAndView adminAuth(){
-        return new ModelAndView(DEFAULT_PATH)
-                .addObject(HTML_PAGE_TITLE, "Admin users");
+        return new ModelAndView(AUTH_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, AUTH_PAGE_TITLE);
     }
 
     @GetMapping(value = {"/search", "/search/"})
     public ModelAndView searchUser(){
-        return new ModelAndView(DEFAULT_PATH)
-                .addObject(HTML_PAGE_TITLE, "Search user")
+        return new ModelAndView(AUTH_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, AUTH_PAGE_TITLE)
                 .addObject(HTML_PAGE_CONTENT, "searchPage")
                 .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm());
     }
@@ -76,8 +74,8 @@ public class AuthAdminController {
             result = e.status();
         }
 
-        return new ModelAndView(DEFAULT_PATH)
-                .addObject(HTML_PAGE_TITLE, "Search user")
+        return new ModelAndView(AUTH_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, AUTH_PAGE_TITLE)
                 .addObject(HTML_PAGE_CONTENT, "searchPage")
                 .addObject(HTML_RESULT_OBJECT, result)
                 .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm())
@@ -86,8 +84,8 @@ public class AuthAdminController {
 
     @GetMapping(value = {"/add", "/add/"})
     public ModelAndView addUser(){
-        return new ModelAndView(DEFAULT_PATH)
-                .addObject(HTML_PAGE_TITLE, "Search user")
+        return new ModelAndView(AUTH_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, AUTH_PAGE_TITLE)
                 .addObject(HTML_PAGE_CONTENT, "addPage")
                 .addObject("roleList", adminService.findAllUserRoles());
     }
@@ -102,8 +100,8 @@ public class AuthAdminController {
 
     @GetMapping(value = {"/search/address", "/search/address/"})
     public ModelAndView searchUserForAddress(){
-        return new ModelAndView(DEFAULT_PATH)
-                .addObject(HTML_PAGE_TITLE, "Search user")
+        return new ModelAndView(AUTH_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, AUTH_PAGE_TITLE)
                 .addObject(HTML_PAGE_CONTENT, "searchAddressPage")
                 .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm());
     }
@@ -152,8 +150,8 @@ public class AuthAdminController {
             }
         }
 
-        return new ModelAndView(DEFAULT_PATH)
-                .addObject(HTML_PAGE_TITLE, "Search user")
+        return new ModelAndView(AUTH_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, AUTH_PAGE_TITLE)
                 .addObject(HTML_PAGE_CONTENT, "searchAddressPage")
                 .addObject(HTML_RESULT_OBJECT, result)
                 .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm())

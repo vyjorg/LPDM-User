@@ -21,12 +21,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import static com.lpdm.msuser.utils.admin.ValueType.*;
+
 @RestController
-@RequestMapping("/admin/products")
+@RequestMapping(PRODUCT_ADMIN_PATH)
 public class ProductAdminController {
 
-    private final String ADMIN_PRODUCT_PAGE = "/admin/fragments/products";
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
+    private Logger log = LoggerFactory.getLogger(this.getClass());
+
     private final AdminService adminService;
 
     @Autowired
@@ -34,7 +36,7 @@ public class ProductAdminController {
         this.adminService = adminService;
     }
 
-    @GetMapping(value = {"", "/"})
+    @GetMapping(value = DEFAULT_PATH)
     public ModelAndView adminProducts(){
 
         LocalDate date = LocalDate.now();
@@ -46,15 +48,15 @@ public class ProductAdminController {
         OrderStats catLastYear = adminService.findOrderedProductsStatsByYearAndCategory(date.getYear() - 1);
         OrderStats catAverage = adminService.getAverageStats(currentYear, lastYear);
 
-        return new ModelAndView(ADMIN_PRODUCT_PAGE)
-                .addObject("pageTitle", "Admin products")
+        return new ModelAndView(PRODUCT_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, PRODUCT_PAGE_TITLE)
                 .addObject("statsCurrentYear", currentYear)
                 .addObject("statsLastYear", lastYear)
                 .addObject("statsAverageYear", average)
                 .addObject("statsCatCurrentYear", catCurrentYear)
                 .addObject("statsCatLastYear", catLastYear)
                 .addObject("statsCatAverageYear", catAverage)
-                .addObject("content", "stats");
+                .addObject(HTML_PAGE_CONTENT, "stats");
     }
 
     @GetMapping(value = {"/search/{id}", "/search/{id}/"})
@@ -62,23 +64,23 @@ public class ProductAdminController {
         ProductBean product = adminService.findProductById(id);
         List<ProductBean> result = new ArrayList<>();
         result.add(product);
-        return new ModelAndView(ADMIN_PRODUCT_PAGE)
-                .addObject("pageTitle", "Search product")
-                .addObject("content", "searchPage")
-                .addObject("result", result)
+        return new ModelAndView(PRODUCT_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, PRODUCT_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_SEARCH_PAGE)
+                .addObject(HTML_RESULT_OBJECT, result)
                 .addObject("categories", adminService.findAllCategories())
-                .addObject("searchForm", new SearchForm());
+                .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm());
     }
 
-    @GetMapping(value = {"/search", "/search/"})
+    @GetMapping(value = DEFAULT_SEARCH_PATH)
     public ModelAndView searchProduct(){
-        return new ModelAndView(ADMIN_PRODUCT_PAGE)
-                .addObject("pageTitle", "Search product")
-                .addObject("content", "searchPage")
-                .addObject("searchForm", new SearchForm());
+        return new ModelAndView(PRODUCT_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, PRODUCT_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_SEARCH_PAGE)
+                .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm());
     }
 
-    @PostMapping(value = {"/search", "/search/"})
+    @PostMapping(value = DEFAULT_SEARCH_PATH)
     public ModelAndView searchProductResult(
             @Valid @ModelAttribute("searchForm") SearchForm searchForm){
 
@@ -117,12 +119,12 @@ public class ProductAdminController {
             result = e.status();
         }
 
-        return new ModelAndView(ADMIN_PRODUCT_PAGE)
-                .addObject("pageTitle", "Search product")
-                .addObject("content", "searchPage")
-                .addObject("result", result)
+        return new ModelAndView(PRODUCT_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, PRODUCT_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_SEARCH_PAGE)
+                .addObject(HTML_RESULT_OBJECT, result)
                 .addObject("categories", adminService.findAllCategories())
-                .addObject("searchForm", new SearchForm());
+                .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm());
     }
 
     @PostMapping(value = {"/upload", "/upload/"},
@@ -153,9 +155,9 @@ public class ProductAdminController {
 
     @GetMapping(value = {"/add", "/add/"})
     public ModelAndView addProduct(){
-        return new ModelAndView(ADMIN_PRODUCT_PAGE)
-                .addObject("pageTitle", "Add product")
-                .addObject("content", "addProduct")
+        return new ModelAndView(PRODUCT_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, PRODUCT_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, "addProduct")
                 .addObject("categories", adminService.findAllCategories())
                 .addObject("product", new ProductBean());
     }
