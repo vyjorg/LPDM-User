@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html data-layout-decorate="~{shop/layout}">
+<head>
+    <title>LPDM - Shop</title>
+</head>
+<body>
+<div data-layout-fragment="content" class="container-fluid">
+
+    <div data-th-if="${not #lists.isEmpty(productList)}">
+        <div class="container">
+            <div class="col-sm-4" data-th-each="product,loop : ${productList}">
+                <div class="panel panel-default">
+                    <div class="panel-heading" data-th-text="${product.name}">BLACK FRIDAY DEAL</div>
+                    <div class="panel-body">
+                        <img data-th-src="${product.picture}" class="img-responsive" align="image">
+                    </div>
+                    <div class="panel-footer">
+                        <span data-th-text="${product.name}"></span><br>
+                        <div class="alert alert-success" data-th-text="${product.price} + ' €'"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--
+    <div id="hot">
+        <div class="box py-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body text-center">
+                                Nouveau produits
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container text-center" style="clear: both;">
+            <div data-th-if="${not #lists.isEmpty(productList)}">
+                <div class="container">
+                    <div class="col-sm-4" data-th-each="product,loop : ${productList}">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-th-text="${product.name}">BLACK FRIDAY DEAL</div>
+                            <div class="panel-body">
+                                <img data-th-src="${product.picture}" class="img-responsive" align="image">
+                            </div>
+                            <div class="panel-footer">
+                                <span data-th-text="${product.name}"></span><br>
+                                <div class="alert alert-success" data-th-text="${product.price} + ' €'"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+</div>
+</body>
+</html>
