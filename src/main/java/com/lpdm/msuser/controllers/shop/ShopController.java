@@ -48,4 +48,11 @@ public class ShopController {
         log.info("-> Account page");
         return new ModelAndView("shop/fragments/account/account");
     }
+
+    @GetMapping(value = "/shop/cart")
+    public ModelAndView cartPage(){
+
+        log.info("-> Cart page");
+        return new ModelAndView("shop/fragments/cart/view");
+    }
 }
