@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html data-layout-decorate="~{shop/layout}" lang="fr">
 <head>
-    <title>LPDM - Produits</title>
+    <title>LPDM - Connexion</title>
 </head>
 <body>
 <div data-layout-fragment="content" style="padding-top: 10px;">
@@ -106,9 +106,11 @@
                         </ul>
                     </div>
                     <div class="alert alert-default text-center">
-                        <button type="submit" class="btn btn-success" id="btn_register" disabled>
-                            Créer mon compte
-                        </button>
+                        <form action="/shop/account">
+                            <button type="submit" class="btn btn-success" id="btn_register">
+                                Créer mon compte
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -186,9 +188,11 @@
                     </div>
                     <br>
                     <div class="alert alert-default text-center">
-                        <button type="submit" class="btn btn-success" id="btn_login" disabled>
-                            Connexion à mon compte
-                        </button>
+                        <form action="/shop/account">
+                            <button type="submit" class="btn btn-success" id="btn_login">
+                                Connexion à mon compte
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

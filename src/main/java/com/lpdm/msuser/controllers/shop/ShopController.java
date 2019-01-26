@@ -35,10 +35,17 @@ public class ShopController {
                 .addObject("productCategories", productService.findAllProductCategories());
     }
 
+    @GetMapping(value = "/shop/login")
+    public ModelAndView loginPage(){
+
+        log.info("-> Login page");
+        return new ModelAndView("shop/fragments/account/login");
+    }
+
     @GetMapping(value = "/shop/account")
     public ModelAndView accountPage(){
 
         log.info("-> Account page");
-        return new ModelAndView("shop/fragments/account/index");
+        return new ModelAndView("shop/fragments/account/account");
     }
 }
