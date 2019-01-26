@@ -24,7 +24,7 @@ public class ShopController {
     public ModelAndView homePage(){
 
         log.info("-> Home page");
-        return new ModelAndView("shop/fragments/home")
-                .addObject("productList", productService.findAllProducts());
+        return new ModelAndView("shop/fragments/home");
+                //.addObject("productList", productService.findAllProducts());
     }
 }

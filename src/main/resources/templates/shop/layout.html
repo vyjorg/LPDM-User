@@ -3,32 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin page</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Custom CSS for checkboxes -->
-    <link rel="stylesheet" data-th-href="@{/css/checkbox.css}">
-    <link rel="stylesheet" data-th-href="@{/css/shop/style.css}">
-
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/shop/style.css" type="text/css" media="all" data-th-src="@{/css/shop/style.css}">
+    <link rel="stylesheet" href="/css/shop/header/navbar.css" type="text/css" media="all">
+    <link rel="stylesheet" href="/css/shop/footer/footer.css" type="text/css" media="all">
 </head>
 
 <body>
 
 <!-- Main navigation menu -->
-
 <div data-th-replace="shop/fragments/header :: header"></div>
 
 <!-- Main content -->
-
-<div data-layout-fragment="content"></div>
-
+<div class="container shadow-box-8">
+    <div data-layout-fragment="content"></div>
+</div>
+<br>
 <!-- Footer -->
-<div data-th-replace="shop/fragments/footer :: footer"></div>
-
+<div class="container shadow-box-8">
+    <footer data-th-replace="shop/fragments/footer :: footer"></footer>
+</div>
+<br>
 </body>
 </html>

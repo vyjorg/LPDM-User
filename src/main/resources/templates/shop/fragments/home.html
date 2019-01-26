@@ -4,60 +4,77 @@
     <title>LPDM - Shop</title>
 </head>
 <body>
-<div data-layout-fragment="content" class="container-fluid">
+<div data-layout-fragment="content" style="padding: 20px;">
 
-    <div data-th-if="${not #lists.isEmpty(productList)}">
-        <div class="container">
-            <div class="col-sm-4" data-th-each="product,loop : ${productList}">
-                <div class="panel panel-default">
-                    <div class="panel-heading" data-th-text="${product.name}">BLACK FRIDAY DEAL</div>
-                    <div class="panel-body">
-                        <img data-th-src="${product.picture}" class="img-responsive" align="image">
-                    </div>
-                    <div class="panel-footer">
-                        <span data-th-text="${product.name}"></span><br>
-                        <div class="alert alert-success" data-th-text="${product.price} + ' €'"></div>
-                    </div>
-                </div>
-            </div>
+    <div class="text-center">
+        <h2>Nouveau produits disponibles</h2>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-4 shadow-box product">
+            <p class="">Lorem ipsum..</p>
+            <img src="https://cache.magazine-avantages.fr/data/photo/w1000_ci/1bj/calendrier-fruits-legumes.jpg"
+                 class="img-thumbnail"
+                 alt="Image">
+        </div>
+        <div class="col-sm-4 shadow-box product">
+            <p>Lorem ipsum..</p>
+            <img src="https://cache.magazine-avantages.fr/data/photo/w1000_ci/1bj/calendrier-fruits-legumes.jpg"
+                 class="img-thumbnail"
+                 alt="Image">
+        </div>
+        <div class="col-sm-4 shadow-box product">
+            <p>Lorem ipsum..</p>
+            <img src="https://cache.magazine-avantages.fr/data/photo/w1000_ci/1bj/calendrier-fruits-legumes.jpg"
+                 class="img-thumbnail"
+                 alt="Image">
+        </div>
+        <div class="col-sm-4 shadow-box product">
+            <p>Lorem ipsum..</p>
+            <img src="https://cache.magazine-avantages.fr/data/photo/w1000_ci/1bj/calendrier-fruits-legumes.jpg"
+                 class="img-thumbnail"
+                 alt="Image">
+        </div>
+        <div class="col-sm-4 shadow-box product">
+            <p>Lorem ipsum..</p>
+            <img src="https://cache.magazine-avantages.fr/data/photo/w1000_ci/1bj/calendrier-fruits-legumes.jpg"
+                 class="img-thumbnail"
+                 alt="Image">
+        </div>
+        <div class="col-sm-4 shadow-box product">
+            <p>Lorem ipsum..</p>
+            <img src="https://cache.magazine-avantages.fr/data/photo/w1000_ci/1bj/calendrier-fruits-legumes.jpg"
+                 class="img-thumbnail"
+                 alt="Image">
+        </div>
+    </div>
+    <br>
+    <hr>
+    <div class="text-center">
+        <h2>Meilleures ventes</h2>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-4 shadow-box">
+            <p>Lorem ipsum..</p>
+            <img src="https://cache.magazine-avantages.fr/data/photo/w1000_ci/1bj/calendrier-fruits-legumes.jpg"
+                 class="img-thumbnail"
+                 alt="Image">
+        </div>
+        <div class="col-sm-4 shadow-box">
+            <p>Lorem ipsum..</p>
+            <img src="https://cache.magazine-avantages.fr/data/photo/w1000_ci/1bj/calendrier-fruits-legumes.jpg"
+                 class="img-thumbnail"
+                 alt="Image">
+        </div>
+        <div class="col-sm-4 shadow-box">
+            <p>Lorem ipsum..</p>
+            <img src="https://cache.magazine-avantages.fr/data/photo/w1000_ci/1bj/calendrier-fruits-legumes.jpg"
+                 class="img-thumbnail"
+                 alt="Image">
         </div>
     </div>
 
-    <!--
-    <div id="hot">
-        <div class="box py-3">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-body text-center">
-                                Nouveau produits
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container text-center" style="clear: both;">
-            <div data-th-if="${not #lists.isEmpty(productList)}">
-                <div class="container">
-                    <div class="col-sm-4" data-th-each="product,loop : ${productList}">
-                        <div class="panel panel-default">
-                            <div class="panel-heading" data-th-text="${product.name}">BLACK FRIDAY DEAL</div>
-                            <div class="panel-body">
-                                <img data-th-src="${product.picture}" class="img-responsive" align="image">
-                            </div>
-                            <div class="panel-footer">
-                                <span data-th-text="${product.name}"></span><br>
-                                <div class="alert alert-success" data-th-text="${product.price} + ' €'"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    -->
 </div>
 </body>
 </html>
