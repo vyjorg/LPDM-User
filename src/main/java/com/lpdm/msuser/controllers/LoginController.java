@@ -43,26 +43,25 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(@ModelAttribute AppUserBean user, Model model, HttpSession session){
+
+        logger.info("appUser : " + user.toString());
+
         logger.info("Essai de login");
-        logger.info("Appel de msUserProxy pour l'email : " + user.getEmail());
+        AppUserBean appUser = msUserProxy.login(user);
+        logger.info("appUser : " + appUser.toString());
 
-        AppUserBean appUser = msUserProxy.getUserByEmail(user.getEmail());
-
-        if (appUser == null){
+        if (appUser.getId() == 0){
             logger.info("Pas d'utilisateur trouvé");
             model.addAttribute("error", "Cet utilisateur n'est pas enregistré");
             return "identification/login";
 
-        } else if (user.getPassword().equals(appUser.getPassword())){
+        } else {
+            logger.info("appUser : " + appUser.toString());
             logger.info("Entrée de l'utilisateur dans la session");
             session.setAttribute("user", appUser);
             sessionController.addSessionAttributes(session, model);
             return "home";
-        } else {
-            logger.info("Mot de passe incorrect: " + user.getPassword() + " " + appUser.getPassword());
-            return "identification/login";
         }
-
     }
 
     @PostMapping("/registration")

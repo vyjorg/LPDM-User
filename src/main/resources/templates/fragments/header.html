@@ -1,5 +1,10 @@
 <div th:fragment="header">
-    <header>
+     <header>
+
+
+
+
+
         <!-- col 1  -->
         <div class="row">
             <div class="col-md-3">
@@ -14,7 +19,14 @@
             <div class="col-md-2">
                 <a th:unless="${username}" href="/identification/login">Identification</a>
                 <h3 th:unless="!${username}" th:text="'Bienvenue, ' + ${username}"/>
+                <a th:unless="!${username}" href="/identification/logout">Déconnexion</a>
             </div>
         </div>
+
+
+
+
+
     </header>
+
 </div>
