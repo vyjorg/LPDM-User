@@ -59,59 +59,12 @@ public class ProductController{
         return "products/list";
     }
 
-   //@GetMapping("/{id}/add")
-   //public String addItem(@PathVariable("id") int productId, Model model){
-
-   //    logger.info("Entrée dans addItem pour produit : " + productId);
-
-   //    OrderedProductBean orderedProduct = null;
-
-   //    ProductBean product = msProductProxy.findProduct(productId);
-
-   //    for (OrderedProductBean item: cart) {
-   //        if (item.getProduct().getId() == productId) {
-   //            orderedProduct = item;
-   //            orderedProduct.setQuantity(orderedProduct.getQuantity() + 1);
-   //            break;
-   //        }
-   //    }
-
-   //    if (orderedProduct == null){
-   //        orderedProduct = new OrderedProductBean();
-   //        orderedProduct.setProduct(product);
-   //        orderedProduct.setQuantity(1);
-   //        cart.add(orderedProduct);
-   //    }
-
-
-
-  //     cartTotal += product.getPrice();
-
-  //     model.addAttribute("product", product);
-  //     model.addAttribute("cart", cart);
-  //     model.addAttribute("products", msProductProxy.listProduct());
-  //     model.addAttribute("total", cartTotal);
-
-
-  //     return "home";
-  // }
-
-    /*
-    @PostMapping("/")
-    public String addUser(@ModelAttribute AppUserBean user){
-
-        msUserProxy.addUser(user);
-
-        return "users/list";
+    @GetMapping("/emptycart")
+    public String emptyCart(HttpSession session, Model model){
+        sessionController.emptyCart();
+        sessionController.addSessionAttributes(session, model);
+        return "home";
     }
 
-
-    @PostMapping(value = "/products")
-    void addProduct(@RequestBody ProductBean product);
-
-   @PostMapping("/users")
-    void addUser(@RequestBody AppUserBean user);
-
-     */
 
 }

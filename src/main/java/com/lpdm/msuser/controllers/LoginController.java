@@ -91,4 +91,10 @@ public class LoginController {
         return "/identification/registration";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        sessionController.logout(session);
+        return "home";
+    }
+
 }

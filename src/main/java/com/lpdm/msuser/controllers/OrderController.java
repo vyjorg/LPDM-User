@@ -172,8 +172,7 @@ public class OrderController {
         return "home";
     }
 
-    public double getCartTotal(double price){
-        return cartTotal + price;
-    }
+
+
 
 }

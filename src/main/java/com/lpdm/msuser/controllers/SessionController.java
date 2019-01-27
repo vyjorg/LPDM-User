@@ -7,7 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -38,6 +40,20 @@ public class SessionController {
         model.addAttribute("cart", OrderController.cart);
         model.addAttribute("total", OrderController.cartTotal);
         model.addAttribute("products", msProductProxy.listProduct());
+
+    }
+
+    public void emptyCart(){
+        OrderController.cartTotal = 0;
+        OrderController.cart.clear();
+    }
+
+    public void logout(HttpSession session){
+
+       session.removeAttribute("user");
+        session.removeAttribute("cart");
+        session.removeAttribute("total");
+
 
     }
 }
