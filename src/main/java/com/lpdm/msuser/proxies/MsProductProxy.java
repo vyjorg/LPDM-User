@@ -15,18 +15,22 @@ import java.util.List;
 @RibbonClient(name = "ms-product")
 public interface MsProductProxy {
 
+    // Test OK
     @GetMapping(value = "/ms-product/products", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<ProductBean> listProduct();
 
+    // Test OK
     @GetMapping(value = "ms-product/products/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ProductBean findProduct(@PathVariable int id);
 
+    // Test OK
     @PostMapping(value = "ms-product/products", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    void addProduct(@RequestBody ProductBean product);
+    ProductBean addProduct(@RequestBody ProductBean product);
 
     @DeleteMapping(value = "ms-product/products/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     void deleteProduct(@PathVariable int id);
 
+    // Test OK
     @PutMapping(value = "ms-product/products", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     void updateProduct(@RequestBody ProductBean product);
 
@@ -56,4 +60,8 @@ public interface MsProductProxy {
 
     @PutMapping(value = "ms-product/categories", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     void updateCategory(@RequestBody CategoryBean category);
+
+
+
+
 }
