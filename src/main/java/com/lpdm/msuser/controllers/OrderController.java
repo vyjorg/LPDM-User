@@ -70,12 +70,9 @@ public class OrderController {
     public String saveOrder(Model model, HttpSession session){
 
         OrderBean order = new OrderBean();
-        OrderBean orderConfirmation = new OrderBean();
-        logger.info(" : "  );
         PaymentBean payment = orderProxy.getPaymentList().get(1);
 
         try {
-
             AppUserBean user = (AppUserBean) session.getAttribute("user");
             order.setCustomer(user);
             order.setCustomerId(user.getId());
@@ -90,7 +87,7 @@ public class OrderController {
         order.setOrderDate(LocalDateTime.now());
         order.setPayment(payment);
 
-        orderConfirmation = orderProxy.saveOrder(order);
+        OrderBean orderConfirmation = orderProxy.saveOrder(order);
 
         model.addAttribute("order", orderConfirmation);
         model.addAttribute("products", orderConfirmation.getOrderedProducts());
