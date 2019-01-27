@@ -71,10 +71,11 @@ public class OrderController {
 
         OrderBean order = new OrderBean();
         OrderBean orderConfirmation = new OrderBean();
-
+        logger.info(" : "  );
         PaymentBean payment = orderProxy.getPaymentList().get(1);
 
         try {
+
             AppUserBean user = (AppUserBean) session.getAttribute("user");
             order.setCustomer(user);
             order.setCustomerId(user.getId());
@@ -83,20 +84,16 @@ public class OrderController {
             return "identification/login";
         }
 
-        List<OrderedProductBean> orderDetails = new ArrayList<>();
-
-        orderDetails.addAll(cart);
         order.setTotal(cartTotal);
-        order.setOrderedProducts(orderDetails);
+        order.setOrderedProducts(cart);
         order.setStatus(StatusEnum.PROCESSED);
         order.setOrderDate(LocalDateTime.now());
         order.setPayment(payment);
 
-        logger.info(order.toString());
-
         orderConfirmation = orderProxy.saveOrder(order);
+
         model.addAttribute("order", orderConfirmation);
-        model.addAttribute("products", orderDetails);
+        model.addAttribute("products", orderConfirmation.getOrderedProducts());
 
         sessionController.addSessionAttributes(session, model);
 

@@ -37,11 +37,13 @@
             <th>Montant</th>
 
         </tr>
-        <tr th:each="product:${products}">
+        <tr th:each="product:${order.getOrderedProducts()}">
             <td><a th:value="${product.getProduct().getId()}" th:href="@{'/products/' + ${product.getProduct().getId()}}" th:text="${product.getProduct().getName()}"/>
             <td th:text="${product.getQuantity()}"/>
             <td th:text="${product.getProduct().getPrice()}"/>
             <td th:text="${product.getProduct().getPrice()} * ${product.getQuantity()}">
+
+            <h1>test</h1>
         </tr>
 
     </table>

@@ -1,10 +1,6 @@
 package com.lpdm.msuser.msproduct;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.lpdm.msuser.msauthentication.AppUserBean;
-
 import java.util.List;
-import java.util.Optional;
 
 public class ProductBean {
 
@@ -134,4 +130,22 @@ public class ProductBean {
                 ", producer=" + producer +
                 '}';
     }
+
+    /*
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category=" + category +
+                ", label='" + label + '\'' +
+                ", price=" + price +
+                ", tva=" + tva +
+                ", deactivate=" + deactivate +
+                ", listStock=" + listStock +
+                ", picture='" + picture + '\'' +
+                ", producerID=" + producerID +
+                ", producer=" + producer +
+                '}';
+     */
 }
