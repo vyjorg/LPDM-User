@@ -80,6 +80,7 @@ public interface AdminService {
     List<AppUserBean> findUserByLastName(String lastName);
     List<AppRoleBean> findAllUserRoles();
     AppUserBean addNewUser(AppUserBean user);
+    List<AppUserBean> findUserByEmail(String email);
 
     /**
      * Location

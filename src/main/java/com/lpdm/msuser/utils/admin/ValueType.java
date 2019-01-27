@@ -8,7 +8,10 @@ public class ValueType {
     public final static String HTML_PAGE_CONTENT = "content";
     public final static String HTML_PAGE_SEARCH_FORM = "searchForm";
     public final static String HTML_RESULT_OBJECT = "result";
+    public final static String HTML_DEFAULT_ADD_PAGE = "addPage";
     public final static String HTML_DEFAULT_SEARCH_PAGE = "searchPage";
+    public final static String HTML_DEFAULT_UPDATE_PAGE = "updatePage";
+    public final static String HTML_DEFAULT_ADDRESS_MANAGEMENT_PAGE = "addressManagement";
 
     public final static String DEFAULT_PATH = "/";
     public final static String DEFAULT_SEARCH_PATH = "/search";

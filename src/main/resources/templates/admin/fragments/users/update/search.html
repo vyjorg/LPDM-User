@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="fr">
+<div data-th-fragment="search">
+
+    <!-- User search form fragment -->
+    <div data-th-replace="/admin/fragments/users/update/form :: user_search_form"></div>
+    <br>
+
+    <!-- User search result fragment -->
+    <div data-th-if="${result != null}">
+        <div data-th-replace="/admin/fragments/users/update/result :: user_search_result"></div>
+    </div>
+</div>
+</html>

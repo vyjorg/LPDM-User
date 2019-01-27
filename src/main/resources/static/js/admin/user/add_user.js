@@ -60,7 +60,6 @@ $(document).ready(function() {
             window.location.href = "/admin/auth/add";
         }
     });
-
 });
 
 function checkAllInputs() {
@@ -93,7 +92,7 @@ function addNewUser() {
     jsonObj.birthday = moment($("#user_birthday").val(), "DD/MM/YYYY").format("YYYY-MM-DD");
     jsonObj.password = $("#user_password").val();
     jsonObj.active = status.val() === 1;
-    jsonObj.roles = roles;
+    jsonObj.appRole = roles;
 
     console.log("AppUser : " + JSON.stringify(jsonObj));
 

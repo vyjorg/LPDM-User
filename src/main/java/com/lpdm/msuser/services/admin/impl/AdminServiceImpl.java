@@ -310,6 +310,14 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public List<AppUserBean> findUserByEmail(String email) {
+
+        List<AppUserBean> userList = new ArrayList<>();
+        userList.add(authProxy.findByEmail(email));
+        return userList;
+    }
+
+    @Override
     public Address findAddressById(int id) {
         return locationProxy.findAddressById(id);
     }
