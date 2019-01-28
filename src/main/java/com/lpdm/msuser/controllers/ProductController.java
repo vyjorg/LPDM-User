@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,7 +28,7 @@ public class ProductController {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
-     * display the informations regarding the products(name, category, price, supplier, ...) and injects in the
+     * displays the informations regarding the products(name, category, price, supplier, ...) and injects in the
      * @param id
      * @param model
      * @param session
@@ -58,7 +59,7 @@ public class ProductController {
     }
 
     /**
-     * display the list of products
+     * displays the list of products
      * @param model
      * @param session
      * @return requested template
@@ -74,7 +75,7 @@ public class ProductController {
     }
 
     /**
-     * clear the cart and put the total back at 0,00
+     * clears the cart and put the total back at 0,00
      * @param session
      * @param model
      * @return
@@ -87,22 +88,34 @@ public class ProductController {
     }
 
     /**
-     * filter products by category and producer
+     * filters products by category and producer
      * @param category
      * @param producer
      * @param model
      * @return the template with matching products
      */
     @PostMapping("/sortbycatandprod")
-    public String filterProducts(@RequestParam String category, @RequestParam String producer, Model model) {
+    public String filterProducts(@RequestParam String category, @RequestParam String producer, Model model, HttpSession session) {
 
-        List<ProductBean> products = msProductProxy.listProductByCategory(Integer.parseInt(category));
+        logger.info("cat: " + category);
+        logger.info("producer: " + producer);
+        List<ProductBean> products = new ArrayList<>();
 
-        for(ProductBean product: products) {
-            if (product.getProducer().getId() != Integer.parseInt(producer))
-                products.remove(product);
+        if(!category.equals("0") && !producer.equals("0")) {
+            products = msProductProxy.listProductByProducerId(Integer.parseInt(producer));
+            products.removeIf(productBean -> productBean.getCategory().getId()!= Integer.parseInt(category));
+            logger.info("!category.equals(\"0\") && !producer.equals(\"0\"): " + products.toString());
+
+        }else if(producer.equals("0")) {
+            products = msProductProxy.listProductByCategory(Integer.parseInt(category));
+            logger.info("producer.equals(\"0\"): " + products.toString());
+
+        }else if(category.equals("0")) {
+            products = msProductProxy.listProductByProducerId(Integer.parseInt(producer));
+            logger.info("category.equals(\"0\"): " + products.toString());
         }
 
+        sessionController.addSessionAttributes(session, model);
         model.addAttribute("products", products);
 
         return "home";

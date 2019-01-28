@@ -1,20 +1,17 @@
 package com.lpdm.msuser.controllers;
 
-import com.lpdm.msuser.msauthentication.AppRoleBean;
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.proxies.MsProductProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
-
+/**
+ * Manage all sesssion information
+ */
 public class SessionController {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
