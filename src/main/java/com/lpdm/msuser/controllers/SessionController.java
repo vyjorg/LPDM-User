@@ -27,8 +27,6 @@ public class SessionController {
 
     public void addSessionAttributes(HttpSession session, Model model){
 
-        List<AppRoleBean> appRoleBeans;
-
         try {
             AppUserBean user = (AppUserBean) session.getAttribute("user");
             model.addAttribute("username", user.getFirstName());
@@ -38,6 +36,8 @@ public class SessionController {
         model.addAttribute("cart", OrderController.cart);
         model.addAttribute("total", OrderController.cartTotal);
         model.addAttribute("products", msProductProxy.listProduct());
+        model.addAttribute("categories", msProductProxy.listCategories());
 
+        //model.addAttribute("producers", )
     }
 }

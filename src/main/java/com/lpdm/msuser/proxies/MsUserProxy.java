@@ -4,6 +4,7 @@ import com.lpdm.msuser.msauthentication.AppRoleBean;
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,4 +32,10 @@ public interface MsUserProxy {
 
     @GetMapping("/microservice-authentication/users/email/{email}")
     AppUserBean getUserByEmail(@PathVariable String email);
+
+    @GetMapping(value = "/microservice-authentication/users/per_role/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    List<AppUserBean>getUsersByRole(@PathVariable("id") int id);
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    AppRoleBean getRoleById(@PathVariable("id") int id);
 }

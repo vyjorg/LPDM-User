@@ -1,7 +1,9 @@
 package com.lpdm.msuser.controllers;
 
 import com.lpdm.msuser.msauthentication.AppUserBean;
+import com.lpdm.msuser.msproduct.CategoryBean;
 import com.lpdm.msuser.proxies.MsProductProxy;
+import com.lpdm.msuser.proxies.MsUserProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -21,13 +24,17 @@ public class HomeController {
     MsProductProxy productProxy;
 
     @Autowired
-    SessionController sessionController;
+    MsUserProxy userProxy;
 
+    @Autowired
+    SessionController sessionController;
 
     @GetMapping("/")
     public String home(HttpSession session, Model model){
         logger.info("Entrée dans la méthode 'home'");
         sessionController.addSessionAttributes(session,model);
+        model.addAttribute("categories", productProxy.listCategories());
+        model.addAttribute("producers", userProxy.getUsersByRole(3));
         return "home";
     }
 

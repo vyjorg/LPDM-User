@@ -2,13 +2,18 @@ package com.lpdm.msuser.controllers;
 
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msorder.OrderedProductBean;
+import com.lpdm.msuser.msproduct.CategoryBean;
+import com.lpdm.msuser.msproduct.ProducerBean;
 import com.lpdm.msuser.msproduct.ProductBean;
+import com.lpdm.msuser.proxies.MsAuthProxy;
 import com.lpdm.msuser.proxies.MsProductProxy;
+import com.lpdm.msuser.proxies.MsUserProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -23,6 +28,9 @@ public class ProductController{
 
     @Autowired
     private MsProductProxy msProductProxy;
+
+    @Autowired
+    private MsUserProxy msUserProxy;
 
     @Autowired
     private SessionController sessionController;
@@ -57,6 +65,15 @@ public class ProductController{
         model.addAttribute("cats", cats);
         sessionController.addSessionAttributes(session, model);
         return "products/list";
+    }
+
+    @PostMapping("/sortbycatandprod")
+    public String sortProducts(@RequestParam String category, HttpSession session, Model model){
+
+        List<ProductBean> products = msProductProxy.listProductByCategory(Integer.parseInt(category));
+        logger.info("Products.size " + products.size());
+        model.addAttribute("products", products);
+        return "home";
     }
 
    //@GetMapping("/{id}/add")
