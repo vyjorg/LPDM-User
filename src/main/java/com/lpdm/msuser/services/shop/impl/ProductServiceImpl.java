@@ -1,5 +1,6 @@
 package com.lpdm.msuser.services.shop.impl;
 
+import com.lpdm.msuser.msproduct.CategoryBean;
 import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.proxies.MsProductProxy;
 import com.lpdm.msuser.services.shop.ProductService;
@@ -21,5 +22,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductBean> findAllProducts() {
         return productProxy.listProduct();
+    }
+
+    @Override
+    public List<CategoryBean> findAllProductCategories() {
+        return productProxy.listCategories();
     }
 }

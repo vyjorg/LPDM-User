@@ -12,6 +12,32 @@
 <section layout:fragment="content">
     <!-- INSERT CONTENT HERE -->
 
+    <form class= form-group th:action="@{/products/sortbycatandprod}" method="post">
+        <fieldset>
+            <div class="row">
+                <div class="col-sm-6">
+
+                <label>Par catégorie</label>
+                <select class="form-control" name="category">
+                    <option value="'0'"> -- </option>
+                    <option th:each="category:${categories}" th:value="${category.getId()}" th:text="${category.getName()}"/>
+                </select>
+                </div>
+                <div class="col-sm-6">
+                <label>Par producteur</label>
+                    <select class="form-control" name="producer">
+                        <option value="'0'"> -- </option>
+                        <option th:each="producer:${producers}" th:value="${producer.getId()}" th:text="${producer.getName()}"/>
+                    </select>
+                </div>
+            </div>
+
+            <br/>
+            <input class="form-control" type="submit" /><br/>
+
+        </fieldset>
+    </form>
+
     <div class="row">
         <div  th:each="product:${products}" class="col-md-4 item">
             <img th:src="${product.getPicture()}" class="product"/><br/>

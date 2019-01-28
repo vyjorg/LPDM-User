@@ -25,6 +25,34 @@ public class ShopController {
 
         log.info("-> Home page");
         return new ModelAndView("shop/fragments/home");
-                //.addObject("productList", productService.findAllProducts());
+    }
+
+    @GetMapping(value = "/shop/products")
+    public ModelAndView productsPage(){
+
+        log.info("-> Products page");
+        return new ModelAndView("shop/fragments/products/index")
+                .addObject("productCategories", productService.findAllProductCategories());
+    }
+
+    @GetMapping(value = "/shop/login")
+    public ModelAndView loginPage(){
+
+        log.info("-> Login page");
+        return new ModelAndView("shop/fragments/account/login");
+    }
+
+    @GetMapping(value = "/shop/account")
+    public ModelAndView accountPage(){
+
+        log.info("-> Account page");
+        return new ModelAndView("shop/fragments/account/account");
+    }
+
+    @GetMapping(value = "/shop/cart")
+    public ModelAndView cartPage(){
+
+        log.info("-> Cart page");
+        return new ModelAndView("shop/fragments/cart/view");
     }
 }

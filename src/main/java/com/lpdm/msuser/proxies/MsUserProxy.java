@@ -35,4 +35,10 @@ public interface MsUserProxy {
 
     @GetMapping("/microservice-authentication/users/email/{email}")
     AppUserBean getUserByEmail(@PathVariable String email);
+
+    @GetMapping(value = "/microservice-authentication/users/per_role/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    List<AppUserBean>getUsersByRole(@PathVariable("id") int id);
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    AppRoleBean getRoleById(@PathVariable("id") int id);
 }
