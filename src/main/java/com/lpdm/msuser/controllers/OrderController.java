@@ -41,6 +41,13 @@ public class OrderController {
 
     public  static double cartTotal = 0;
 
+    /**
+     * gets a targeted order from ms-order and displays its description
+     * @param id
+     * @param model
+     * @param session
+     * @return template with order details
+     */
     @GetMapping("/{id}")
     public String orderDescription(@PathVariable("id") int id, Model model, HttpSession session){
 
@@ -58,6 +65,12 @@ public class OrderController {
         return "orders/orderdescription";
     }
 
+    /**
+     * displays a list of payments
+     * @param model
+     * @param session
+     * @return the template with list of payments
+     */
     @RequestMapping("/payments")
     public String getAllPayments(Model model, HttpSession session) {
         List<PaymentBean> allPayments = orderProxy.getPaymentList();
@@ -66,6 +79,12 @@ public class OrderController {
         return "orders/payments";
     }
 
+    /**
+     * requests ms-order to persist an order made by authenticated user
+     * @param model
+     * @param session
+     * @return
+     */
     @GetMapping("/save")
     public String saveOrder(Model model, HttpSession session){
 
@@ -97,6 +116,13 @@ public class OrderController {
         return "orders/orderdescription";
     }
 
+    /**
+     * adds a targeted product in the cart and update the cart total
+     * @param productId
+     * @param model
+     * @param session
+     * @return template home template with updated information
+     */
     @GetMapping("/{id}/add")
     public String addItem(@PathVariable("id") int productId, Model model, HttpSession session){
 
@@ -134,6 +160,13 @@ public class OrderController {
         return "home";
     }
 
+    /**
+     * substracts a targeted product in the cart and update the cart total
+     * @param productId
+     * @param model
+     * @param session
+     * @return
+     */
     @GetMapping("/{id}/sub")
     public String subItem(@PathVariable("id") int productId, Model model, HttpSession session){
 

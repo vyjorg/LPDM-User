@@ -1,7 +1,5 @@
 package com.lpdm.msuser.controllers;
 
-import com.lpdm.msuser.msauthentication.AppUserBean;
-import com.lpdm.msuser.msproduct.CategoryBean;
 import com.lpdm.msuser.proxies.MsProductProxy;
 import com.lpdm.msuser.proxies.MsUserProxy;
 import org.slf4j.Logger;
@@ -12,8 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class HomeController {
@@ -29,6 +25,12 @@ public class HomeController {
     @Autowired
     SessionController sessionController;
 
+    /**
+     * displays home page
+     * @param session
+     * @param model
+     * @return
+     */
     @GetMapping("/")
     public String home(HttpSession session, Model model){
         logger.info("Entrée dans la méthode 'home'");

@@ -27,6 +27,11 @@ public class SessionController {
         return new SessionController();
     }
 
+    /**
+     * inserts all session data in the model
+     * @param session
+     * @param model
+     */
     public void addSessionAttributes(HttpSession session, Model model){
 
         try {
@@ -43,11 +48,18 @@ public class SessionController {
         //model.addAttribute("producers", )
     }
 
+    /**
+     * clears cart
+     */
     public void emptyCart(){
         OrderController.cartTotal = 0;
         OrderController.cart.clear();
     }
 
+    /**
+     * clear all session data
+     * @param session
+     */
     public void logout(HttpSession session){
 
        session.removeAttribute("user");

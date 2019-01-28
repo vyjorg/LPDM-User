@@ -20,6 +20,12 @@ public class UserController {
     @Autowired
     SessionController sessionController;
 
+    /**
+     * lists all users and their data
+     * @param model
+     * @param session
+     * @return template with list of users
+     */
     @GetMapping("/list")
     public String allUsers(Model model, HttpSession session){
         List<AppUserBean> appUsers = msUserProxy.getAllUsers();
@@ -28,6 +34,13 @@ public class UserController {
         return "users/list";
     }
 
+    /**
+     * displays the user information
+     * @param id
+     * @param model
+     * @param session
+     * @return user description
+     */
     @GetMapping("/{id}")
     public String userDescription(@PathVariable ("id") int id, Model model, HttpSession session){
         AppUserBean user = msUserProxy.getUserById(id);
@@ -36,6 +49,13 @@ public class UserController {
         return "users/userdescription";
     }
 
+    /**
+     * requests msUserProxy to persist a user in the DB
+     * @param user
+     * @param model
+     * @param session
+     * @return
+     */
     @PostMapping("/")
     public String addUser(@ModelAttribute AppUserBean user, Model model, HttpSession session){
         msUserProxy.addUser(user);

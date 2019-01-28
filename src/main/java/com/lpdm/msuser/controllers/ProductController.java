@@ -2,7 +2,6 @@ package com.lpdm.msuser.controllers;
 
 import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.proxies.MsProductProxy;
-import com.lpdm.msuser.proxies.MsUserProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +20,19 @@ public class ProductController {
     @Autowired
     private MsProductProxy msProductProxy;
 
-    @Autowired
-    private MsUserProxy msUserProxy;
 
     @Autowired
     private SessionController sessionController;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    /**
+     * display the informations regarding the products(name, category, price, supplier, ...) and injects in the
+     * @param id
+     * @param model
+     * @param session
+     * @return
+     */
     @GetMapping("/{id}")
     public String productDescription(@PathVariable("id") int id, Model model, HttpSession session) {
         ProductBean product = msProductProxy.findProduct(id);
@@ -37,11 +41,15 @@ public class ProductController {
         return "products/productdescription";
     }
 
-
+    /**
+     * sends product to ms-product
+     * @param product
+     * @param model
+     * @param session
+     * @return
+     */
     @PostMapping(value = "/")
     public String addProduct(@ModelAttribute ProductBean product, Model model, HttpSession session) {
-
-        System.out.println(product.toString());
 
         msProductProxy.addProduct(product);
         sessionController.addSessionAttributes(session, model);
@@ -49,6 +57,12 @@ public class ProductController {
         return "products/list";
     }
 
+    /**
+     * display the list of products
+     * @param model
+     * @param session
+     * @return requested template
+     */
     @GetMapping("/list/{category}")
     public String listProduct(Model model, HttpSession session) {
         List<ProductBean> products = msProductProxy.listProduct();
@@ -59,7 +73,12 @@ public class ProductController {
         return "products/list";
     }
 
-
+    /**
+     * clear the cart and put the total back at 0,00
+     * @param session
+     * @param model
+     * @return
+     */
     @GetMapping("/emptycart")
     public String emptyCart(HttpSession session, Model model) {
         sessionController.emptyCart();
@@ -67,12 +86,25 @@ public class ProductController {
         return "home";
     }
 
+    /**
+     * filter products by category and producer
+     * @param category
+     * @param producer
+     * @param model
+     * @return the template with matching products
+     */
     @PostMapping("/sortbycatandprod")
-    public String sortProducts(@RequestParam String category, Model model) {
+    public String filterProducts(@RequestParam String category, @RequestParam String producer, Model model) {
 
         List<ProductBean> products = msProductProxy.listProductByCategory(Integer.parseInt(category));
-        logger.info("Products.size " + products.size());
+
+        for(ProductBean product: products) {
+            if (product.getProducer().getId() != Integer.parseInt(producer))
+                products.remove(product);
+        }
+
         model.addAttribute("products", products);
+
         return "home";
     }
 }

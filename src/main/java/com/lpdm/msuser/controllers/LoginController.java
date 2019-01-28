@@ -28,6 +28,12 @@ public class LoginController {
     @Autowired
     MsProductProxy msProductProxy;
 
+    /**
+     * displays the login form
+     * @param session
+     * @param model
+     * @return template
+     */
     @GetMapping("/login")
     public String loginForm(HttpSession session, Model model){
         logger.info("Affichage du formulaire de login");
@@ -35,12 +41,25 @@ public class LoginController {
         return "identification/login";
     }
 
+    /**
+     * displays the registration form
+     * @param session
+     * @param model
+     * @return template
+     */
     @GetMapping("/registration")
     public String registrationForm(HttpSession session, Model model){
         logger.info("Affichage du formulaire d'enregistrement");
         return "identification/registration";
     }
 
+    /**
+     * requests ms-auth to identify a user and retrieve their information if password matches. save records in the session
+     * @param user
+     * @param model
+     * @param session
+     * @return home template if correct credentials
+     */
     @PostMapping("/login")
     public String login(@ModelAttribute AppUserBean user, Model model, HttpSession session){
 
@@ -64,6 +83,15 @@ public class LoginController {
         }
     }
 
+    /**
+     * sends information to ms-auth to persist a new user and open an account after password confirmation. Save records in the session
+     * @param user
+     * @param password2
+     * @param model
+     * @param session
+     * @param bindingResult
+     * @return home template
+     */
     @PostMapping("/registration")
     public String registration(@ModelAttribute AppUserBean user, @RequestParam String password2, Model model, HttpSession session, BindingResult bindingResult){
 
@@ -91,6 +119,11 @@ public class LoginController {
         return "/identification/registration";
     }
 
+    /**
+     * diconnects the user
+     * @param session
+     * @return home page template
+     */
     @GetMapping("/logout")
     public String logout(HttpSession session){
         sessionController.logout(session);
