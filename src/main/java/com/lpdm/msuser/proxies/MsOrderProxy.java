@@ -4,6 +4,8 @@ import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchDates;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
+import com.lpdm.msuser.msorder.PaypalUrl;
+import com.lpdm.msuser.msorder.SuccessUrl;
 import feign.FeignException;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -66,5 +68,9 @@ public interface MsOrderProxy {
     @GetMapping(value = "${lpdm.order.name}/admin/orderedproducts/stats/year/{year}/category",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     OrderStats findOrderedProductsStatsByYearAndCategory(@PathVariable("year") Integer year);
+
+    @PostMapping(value = "${lpdm.order.name}/orders/{id}/pay",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    PaypalUrl getPayPalUrl(@PathVariable("id") int id, @RequestBody SuccessUrl successUrl);
 
 }
