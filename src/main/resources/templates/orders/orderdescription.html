@@ -46,7 +46,7 @@
 
     </table>
 
-    <button type="submit" class="form-control btn-primary" th:href="@{'/confirmorder/' + ${order.getId()}">Valider la commande</button>
+    <a  class="form-control btn-primary" th:href="@{'/orders/confirmorder/' + ${order.getId()}}" th:text="'Valider la commande'"/>
 
 </section>
 

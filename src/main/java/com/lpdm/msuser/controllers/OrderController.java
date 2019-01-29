@@ -1,10 +1,7 @@
 package com.lpdm.msuser.controllers;
 
 import com.lpdm.msuser.msauthentication.AppUserBean;
-import com.lpdm.msuser.msorder.OrderBean;
-import com.lpdm.msuser.msorder.OrderedProductBean;
-import com.lpdm.msuser.msorder.PaymentBean;
-import com.lpdm.msuser.msorder.PaypalUrl;
+import com.lpdm.msuser.msorder.*;
 import com.lpdm.msuser.msorder.enumeration.StatusEnum;
 import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.proxies.MsOrderProxy;
@@ -16,10 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/orders")
@@ -200,23 +199,36 @@ public class OrderController {
         return "home";
     }
 
-    @GetMapping("/orders/paypalsuccess")
+    @GetMapping("/paypalsuccess")
     public String successPaypal(){
-        return "order/paypalsuccess";
+        return "orders/paypalsuccess";
     }
 
-    @GetMapping("/orders/paypalcancel")
+    @GetMapping("/paypalcancel")
     public String cancelPaypal(){
-        return "order/paypalcancel";
+        return "orders/paypalcancel";
     }
 
 
     @GetMapping("/confirmorder/{id}")
-    public String confirmOrder(@PathVariable("id") int id){
+    public String confirmOrder(@PathVariable("id") int id, HttpServletResponse response){
+
+        SuccessUrl successUrl = new SuccessUrl();
+        successUrl.setReturnUrl("https://lpdm.kybox.fr/orders/paypalsuccess");
+        successUrl.setCancelUrl("https://lpdm.kybox.fr/orders/paypalcancel");
+
+        PaypalUrl paypalUrl = orderProxy.getPayPalUrl(id, successUrl);
+
+        for (Map.Entry<String, String> header: paypalUrl.getHeaders().entrySet()) {
+            response.setHeader(header.getKey(), header.getValue());
+        }
 
 
-        return null;
+        return "redirect:" + paypalUrl.getRedirectUrl();
     }
+
+
+
 
 
 
