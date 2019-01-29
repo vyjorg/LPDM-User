@@ -4,6 +4,7 @@ import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.OrderedProductBean;
 import com.lpdm.msuser.msorder.PaymentBean;
+import com.lpdm.msuser.msorder.PaypalUrl;
 import com.lpdm.msuser.msorder.enumeration.StatusEnum;
 import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.proxies.MsOrderProxy;
@@ -197,6 +198,24 @@ public class OrderController {
         model.addAttribute("products", msProductProxy.listProduct());
         sessionController.addSessionAttributes(session, model);
         return "home";
+    }
+
+    @GetMapping("/orders/paypalsuccess")
+    public String successPaypal(){
+        return "order/paypalsuccess";
+    }
+
+    @GetMapping("/orders/paypalcancel")
+    public String cancelPaypal(){
+        return "order/paypalcancel";
+    }
+
+
+    @GetMapping("/confirmorder/{id}")
+    public String confirmOrder(@PathVariable("id") int id){
+
+
+        return null;
     }
 
 
