@@ -20,6 +20,8 @@ public class OrderedProductBean {
 
     private double price;
 
+    private double tax;
+
     public int getId() {
         return id;
     }
@@ -66,6 +68,14 @@ public class OrderedProductBean {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
     }
 
     @Override

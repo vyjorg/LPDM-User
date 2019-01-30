@@ -26,9 +26,13 @@ public class OrderBean {
 
     private AppUserBean customer;
 
-    private List<OrderedProductBean> orderedProducts;
-
     private Coupon coupon;
+
+    private Delivery delivery;
+
+    private double shippingCost;
+
+    private List<OrderedProductBean> orderedProducts;
 
     public int getId() {
         return id;
@@ -116,6 +120,22 @@ public class OrderBean {
 
     public void setCoupon(Coupon coupon) {
         this.coupon = coupon;
+    }
+
+    public Delivery getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+    }
+
+    public double getShippingCost() {
+        return shippingCost;
+    }
+
+    public void setShippingCost(double shippingCost) {
+        this.shippingCost = shippingCost;
     }
 
     @Override
