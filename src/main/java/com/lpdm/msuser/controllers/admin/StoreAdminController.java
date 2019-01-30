@@ -51,14 +51,14 @@ public class StoreAdminController {
         Object result = null;
         try{
             switch (searchForm.getSearchValue()){
-                case 1:
+                case SEARCH_STORE_BY_ID:
                     if(Pattern.compile("^\\d+$").matcher(keyword).matches()) {
                         result = new ArrayList<Store>();
                         ((ArrayList) result).add(adminService.findStoreById(Integer.valueOf(keyword)));
                     }
                     else result = 500;
                     break;
-                case 2:
+                case SEARCH_STORE_BY_NAME:
                     result = adminService.findStoreByName(keyword);
                     break;
             }

@@ -38,4 +38,9 @@ public interface MsAuthProxy {
     @RequestMapping(path = "${lpdm.auth.name}/users/",
             method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     AppUserBean addNewUser(@RequestBody AppUserBean user);
+
+    @RequestMapping(path = "${lpdm.auth.name}/roles/check/{userId}/{roleId}",
+            method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    AppUserBean findUserByIdAndRole(@PathVariable(value = "userId") int userId,
+                                    @PathVariable(value = "roleId") int roleId);
 }

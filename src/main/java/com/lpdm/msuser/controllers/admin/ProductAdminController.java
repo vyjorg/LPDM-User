@@ -89,20 +89,17 @@ public class ProductAdminController {
         Object result = null;
         try{
             switch (searchForm.getSearchValue()){
-                // Find product by id
-                case 1:
+                case SEARCH_PRODUCT_BY_ID:
                     if(Pattern.compile("^\\d+$").matcher(keyword).matches()) {
                         result = new ArrayList<ProductBean>();
                         ((ArrayList) result).add(adminService.findProductById(Integer.valueOf(keyword)));
                     }
                     else result = 500;
                     break;
-                // Find product by name
-                case 2:
+                case SEARCH_PRODUCT_BY_NAME:
                     result = adminService.findProductsByName(keyword);
                     break;
-                // Find by producer id
-                case 3 :
+                case SEARCH_PRODUCT_BY_PRODUCER_ID :
                     if(Pattern.compile("^\\d+$").matcher(keyword).matches()) {
                         result = new ArrayList<ProductBean>();
                         ((ArrayList) result).addAll(adminService.findProductsByProducerId(Integer.valueOf(keyword)));
@@ -157,24 +154,54 @@ public class ProductAdminController {
     public ModelAndView addProduct(){
         return new ModelAndView(PRODUCT_FRAGMENT_PATH)
                 .addObject(HTML_PAGE_TITLE, PRODUCT_PAGE_TITLE)
-                .addObject(HTML_PAGE_CONTENT, "addProduct")
-                .addObject("categories", adminService.findAllCategories())
-                .addObject("product", new ProductBean());
+                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_ADD_PAGE)
+                .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm());
+    }
+
+    @PostMapping(value = {"/add", "/add/"})
+    public ProductBean addNewProduct(@Valid @RequestBody ProductBean product){
+
+        log.info("Product : " + product);
+        return adminService.addNewProduct(product);
     }
 
     @PostMapping(value = {"/search/producer", "/search/producer/"})
     public Object searchProducer(@Valid @ModelAttribute("searchProducer") SearchForm searchForm){
 
+        Integer roleId = adminService.getProducerRoleId();
+
+
+        log.info("Key[" + searchForm.getSearchValue() + "] : " + searchForm.getKeyword());
+        String keyword = searchForm.getKeyword();
+        int searchValue = searchForm.getSearchValue();
         Object result = null;
-        switch (searchForm.getSearchValue()){
-            // Search by id
-            case 1:
-                break;
-            // Search by name
-            case 2:
-                break;
+
+        try{
+            switch (searchValue){
+                // Search by id
+                case 1:
+                    if(Pattern.compile("^\\d+$").matcher(keyword).matches()) {
+                        result = adminService.findUserByIdAndRole(Integer.parseInt(keyword), roleId);
+                        if(((List) result).isEmpty()) result = 404;
+                    }
+                    else result = 500;
+                    break;
+                // Search by name
+                case 2:
+                    break;
+            }
+        }
+        catch (FeignException e){
+            log.info(e.getMessage());
+            result = e.status();
         }
 
-        return result;
+        return new ModelAndView(PRODUCT_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, PRODUCT_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_ADD_PAGE)
+                .addObject(HTML_RESULT_OBJECT, result)
+                .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm())
+                .addObject("categories", adminService.findAllCategories())
+                .addObject("product", new ProductBean());
     }
 }

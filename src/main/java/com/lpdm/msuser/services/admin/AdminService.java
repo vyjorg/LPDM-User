@@ -45,6 +45,7 @@ public interface AdminService {
     OrderStats findOrderedProductsStatsByYearAndCategory(int year);
     String getUploadPictureForm(StorageUser user);
     void updateProduct(ProductBean product);
+    ProductBean addNewProduct(ProductBean product);
 
     /**
      * Store
@@ -80,6 +81,9 @@ public interface AdminService {
     List<AppUserBean> findUserByLastName(String lastName);
     List<AppRoleBean> findAllUserRoles();
     AppUserBean addNewUser(AppUserBean user);
+    List<AppUserBean> findUserByEmail(String email);
+    Integer getProducerRoleId();
+    List<AppUserBean> findUserByIdAndRole(int userId, int roleId);
 
     /**
      * Location

@@ -1,13 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <div data-th-fragment="user_search_result">
+
+    <!-- Adding the javascript files -->
     <script data-th-src="@{/js/admin/user/update_user.js}" charset="UTF-8"></script>
+    <script data-th-src="@{/js/admin/moment.js}" charset="UTF-8"></script>
+
+    <!-- Check that the result is an instance of the List class -->
     <div data-th-if="${result instanceof T(java.util.List)}">
+
+        <!--Adding a drop down menu if the result contains several items -->
         <div data-th-if="${#lists.size(result)} > 1">
             <div class="alert alert-info">
                 <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button"
-                            data-toggle="dropdown" id="btnMenuUsers">
+                    <button class="btn btn-default dropdown-toggle"
+                            type="button"
+                            data-toggle="dropdown"
+                            id="btnMenuUsers">
                         Liste des utilisateurs
                         <span class="caret" style="margin-left: 10px;"></span>
                     </button>
@@ -21,6 +30,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Loop over the result list -->
         <div data-th-each="user,loop : ${result}">
             <div class="row" style="display: flex; align-items: center;">
                 <div class="col-sm-12">
@@ -32,12 +43,12 @@
                             <label class="input-group-addon">
                                 Statut
                             </label>
-                            <select class="form-control">
+                            <select class="form-control" data-th-id="'user_status_' + ${user.id}">
                                 <option value="1" data-th-selected="${user.getActive() == true}">Compte activé</option>
                                 <option value="2" data-th-selected="${user.getActive() == false || user.getActive() == null}">Compte désactivé</option>
                             </select>
                             <div class="input-group-btn">
-                                <button class="btn btn-default" type="button" tabindex="-1" disabled
+                                <button class="btn btn-success" type="button" tabindex="-1" disabled
                                         data-toggle="tooltip" data-placement="left"
                                         title="Sélectionner un statut" style="cursor: default;">
                                     <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
@@ -53,19 +64,28 @@
                         <ul class="list-group">
 
                             <!-- User registration date -->
-
                             <li class="list-group-item" style="height: 56px; border: none;">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <label data-th-for="'registrationDate_' + ${user.id}" class="input-group-addon" style="width: 150px;">
+                                        <label data-th-for="'user_registrationDate_' + ${user.id}"
+                                               class="input-group-addon"
+                                               style="width: 150px;">
                                             Enregistré le
                                         </label>
-                                        <input type="text" data-th-value="${user.registrationDate}" class="form-control"
-                                               data-th-id="'registrationDate_' + ${user.id}" disabled>
+                                        <input type="text" data-th-value="${user.registrationDate}"
+                                               class="form-control"
+                                               data-th-id="'user_registrationDate_' + ${user.id}"
+                                               disabled>
                                         <div class="input-group-btn">
-                                            <button class="btn btn-default" type="button" tabindex="-1" disabled
-                                                    data-toggle="tooltip" data-placement="left"
-                                                    title="Vous n'avez rien à saisir" style="cursor: default;">
+                                            <button class="btn btn-success"
+                                                    type="button"
+                                                    tabindex="-1"
+                                                    id="check_user_registration"
+                                                    data-toggle="tooltip"
+                                                    data-placement="left"
+                                                    title="Vous n'avez rien à saisir"
+                                                    style="cursor: default;"
+                                                    disabled>
                                                 <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
                                             </button>
                                         </div>
@@ -74,19 +94,24 @@
                             </li>
 
                             <!-- User last name -->
-
                             <li class="list-group-item" style="height: 56px; border: none;">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <label data-th-for="'name_' + ${user.id}" class="input-group-addon" style="width: 150px;">
+                                        <label data-th-for="'user_name_' + ${user.id}" class="input-group-addon" style="width: 150px;">
                                             Nom
                                         </label>
                                         <input type="text" data-th-value="${user.name}" class="form-control"
-                                               data-th-id="'name_' + ${user.id}">
+                                               data-th-id="'user_name_' + ${user.id}">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-default" type="button" tabindex="-1" disabled
-                                                    data-toggle="tooltip" data-placement="left"
-                                                    title="Saisir le nom de famille" style="cursor: default;">
+                                            <button class="btn btn-default"
+                                                    type="button"
+                                                    tabindex="-1"
+                                                    id="check_user_name"
+                                                    data-toggle="tooltip"
+                                                    data-placement="left"
+                                                    title="Saisir le nom de famille"
+                                                    style="cursor: default;"
+                                                    disabled>
                                                 <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
                                             </button>
                                         </div>
@@ -95,19 +120,24 @@
                             </li>
 
                             <!-- User first name -->
-
                             <li class="list-group-item" style="height: 56px; border: none;">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <label data-th-for="'firstname_' + ${user.id}" class="input-group-addon" style="width: 150px;">
+                                        <label data-th-for="'user_firstname_' + ${user.id}" class="input-group-addon" style="width: 150px;">
                                             Prénom
                                         </label>
                                         <input type="text" data-th-value="${user.firstName}" class="form-control"
-                                               data-th-id="'firstname_' + ${user.id}">
+                                               data-th-id="'user_firstname_' + ${user.id}">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-default" type="button" tabindex="-1" disabled
-                                                    data-toggle="tooltip" data-placement="left"
-                                                    title="Saisir le prénom" style="cursor: default;">
+                                            <button class="btn btn-default"
+                                                    type="button"
+                                                    tabindex="-1"
+                                                    id="check_user_firstname"
+                                                    data-toggle="tooltip"
+                                                    data-placement="left"
+                                                    title="Saisir le prénom"
+                                                    style="cursor: default;"
+                                                    disabled>
                                                 <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
                                             </button>
                                         </div>
@@ -116,19 +146,24 @@
                             </li>
 
                             <!-- User email -->
-
                             <li class="list-group-item" style="height: 56px; border: none;">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <label data-th-for="'email_' + ${user.id}" class="input-group-addon" style="width: 150px;">
+                                        <label data-th-for="'user_email_' + ${user.id}" class="input-group-addon" style="width: 150px;">
                                             E-mail
                                         </label>
                                         <input type="text" data-th-value="${user.email}" class="form-control"
-                                               data-th-id="'email_' + ${user.id}">
+                                               data-th-id="'user_email_' + ${user.id}">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-default" type="button" tabindex="-1" disabled
-                                                    data-toggle="tooltip" data-placement="left"
-                                                    title="Saisir une adresse e-mail" style="cursor: default;">
+                                            <button class="btn btn-default"
+                                                    type="button"
+                                                    tabindex="-1"
+                                                    id="check_user_email"
+                                                    data-toggle="tooltip"
+                                                    data-placement="left"
+                                                    title="Saisir une adresse e-mail"
+                                                    style="cursor: default;"
+                                                    disabled>
                                                 <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
                                             </button>
                                         </div>
@@ -137,19 +172,23 @@
                             </li>
 
                             <!-- User tel -->
-
                             <li class="list-group-item" style="height: 56px; border: none;">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <label data-th-for="'tel_' + ${user.id}" class="input-group-addon" style="width: 150px;">
+                                        <label data-th-for="'user_tel_' + ${user.id}" class="input-group-addon" style="width: 150px;">
                                             Téléphone
                                         </label>
                                         <input type="text" data-th-value="${user.tel}" class="form-control"
-                                               data-th-id="'tel_' + ${user.id}">
+                                               data-th-id="'user_tel_' + ${user.id}">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-default" type="button" tabindex="-1" disabled
-                                                    data-toggle="tooltip" data-placement="left"
-                                                    title="Saisir un numéro de téléphone" style="cursor: default;">
+                                            <button class="btn btn-default"
+                                                    type="button" tabindex="-1"
+                                                    id="check_user_tel"
+                                                    data-toggle="tooltip"
+                                                    data-placement="left"
+                                                    title="Saisir un numéro de téléphone"
+                                                    style="cursor: default;"
+                                                    disabled>
                                                 <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
                                             </button>
                                         </div>
@@ -158,19 +197,26 @@
                             </li>
 
                             <!-- User birthday -->
-
                             <li class="list-group-item" style="height: 56px; border: none;">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <label data-th-for="'birthday_' + ${user.id}" class="input-group-addon" style="width: 150px;">
+                                        <label data-th-for="'user_birthday_' + ${user.id}" class="input-group-addon" style="width: 150px;">
                                             Date de naissance
                                         </label>
-                                        <input type="text" data-th-value="${user.birthday}" class="form-control"
-                                               data-th-id="'birthday_' + ${user.id}">
+                                        <input type="text" data-th-value="${user.birthday}"
+                                               class="form-control"
+                                               data-provide="datepicker"
+                                               data-th-id="'user_birthday_' + ${user.id}"
+                                               readonly>
                                         <div class="input-group-btn">
-                                            <button class="btn btn-default" type="button" tabindex="-1" disabled
+                                            <button class="btn btn-default"
+                                                    type="button"
+                                                    id="check_user_birthday"
+                                                    tabindex="-1"
                                                     data-toggle="tooltip" data-placement="left"
-                                                    title="Saisir un numéro de téléphone" style="cursor: default;">
+                                                    title="Saisir un numéro de téléphone"
+                                                    style="cursor: default;"
+                                                    disabled>
                                                 <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
                                             </button>
                                         </div>
@@ -178,7 +224,14 @@
                                 </div>
                             </li>
                         </ul>
+
+                        <!-- Hidden input for address id -->
+                        <input data-th-id="'user_address_' + ${user.id}"
+                               data-th-value="${user.addressId}"
+                               hidden>
                     </div>
+
+                    <!-- User roles -->
                     <div class="col-sm-4 pull-right alert text-center" style="">
                         <div class="panel panel-default">
                             <div class="panel-heading">Rôles de l'utilisateur</div>
@@ -186,6 +239,7 @@
                                 <div data-th-each="role,loop : ${roleList}"
                                      class="[ form-group ]">
                                     <input type="checkbox"
+                                           data-th-value="${role.id}"
                                            data-th-id="'checkbox' + ${loop.index} + '_' + ${user.id}"
                                            data-th-checked="${#strings.contains(
                                            #strings.toString(#lists.toList(user.appRole)),#strings.toString(role))}">
@@ -204,18 +258,31 @@
                             </div>
                         </div>
                     </div>
+                    <!-- ^^ End user's roles ^^ -->
                 </div>
             </div>
+
+            <!-- Adding the persistence button -->
             <div class="alert text-center">
-                <button type="button" class="btn btn-success">
+                <button type="button" class="btn btn-success" id="btnUpdate">
                     Enregistrer les informations sur l'utilisateur
                 </button>
             </div>
         </div>
+        <!-- ^^ End of the loop ^^ -->
+
     </div>
+    <!-- ^^ List check end ^^ -->
+
+    <!-- Check that the result is an instance of the Integer class -->
     <div data-th-if="${result instanceof T(java.lang.Integer)}" class="alert alert-danger">
         <div data-th-replace="/admin/fragments/errors :: errors"></div>
     </div>
+
+    <!-- Adding the console -->
     <div data-th-replace="/admin/fragments/console :: console"></div>
+
+    <!-- Adding the modal -->
+    <div data-th-replace="/admin/fragments/modal :: modal"></div>
 </div>
 </html>
