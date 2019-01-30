@@ -4,7 +4,6 @@ import com.lpdm.msuser.model.storage.Storage;
 import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchForm;
 import com.lpdm.msuser.model.admin.StorageUser;
-import com.lpdm.msuser.msauthentication.AppRoleBean;
 import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.services.admin.AdminService;
 import feign.FeignException;
@@ -90,20 +89,17 @@ public class ProductAdminController {
         Object result = null;
         try{
             switch (searchForm.getSearchValue()){
-                // Find product by id
-                case 1:
+                case SEARCH_PRODUCT_BY_ID:
                     if(Pattern.compile("^\\d+$").matcher(keyword).matches()) {
                         result = new ArrayList<ProductBean>();
                         ((ArrayList) result).add(adminService.findProductById(Integer.valueOf(keyword)));
                     }
                     else result = 500;
                     break;
-                // Find product by name
-                case 2:
+                case SEARCH_PRODUCT_BY_NAME:
                     result = adminService.findProductsByName(keyword);
                     break;
-                // Find by producer id
-                case 3 :
+                case SEARCH_PRODUCT_BY_PRODUCER_ID :
                     if(Pattern.compile("^\\d+$").matcher(keyword).matches()) {
                         result = new ArrayList<ProductBean>();
                         ((ArrayList) result).addAll(adminService.findProductsByProducerId(Integer.valueOf(keyword)));

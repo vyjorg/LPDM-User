@@ -42,7 +42,9 @@ public class StockAdminController {
     }
 
     @PostMapping(value = DEFAULT_SEARCH_PATH)
-    public ModelAndView stockSearchResult(@Valid @ModelAttribute("searchForm") SearchForm searchForm){
+    public ModelAndView stockSearchResult(
+            @Valid
+            @ModelAttribute(HTML_PAGE_SEARCH_FORM) SearchForm searchForm){
 
         String keyword = searchForm.getKeyword();
         int value = searchForm.getSearchValue();
@@ -51,16 +53,13 @@ public class StockAdminController {
         log.info("Key[" + value + "] : " + keyword);
 
         switch (value){
-            // Search by stock id
-            case 1:
+            case SEARCH_STOCK_BY_ID:
                 result = adminService.findStockById(Integer.parseInt(keyword));
                 break;
-            // Search by product id
-            case 2:
+            case SEARCH_STOCK_BY_PRODUCT_ID:
                 result = adminService.findStockByProductId(Integer.parseInt(keyword));
                 break;
-            // Search by product name
-            case 3:
+            case SEARCH_STOCK_BY_PRODUCT_NAME:
                 result = adminService.findStockByProductName(keyword);
                 break;
         }
@@ -119,12 +118,10 @@ public class StockAdminController {
         log.info("Key[" + value + "] : " + keyword);
 
         switch (value){
-            // Search by product id
-            case 1:
+            case SEARCH_STOCK_BY_PRODUCT_ID:
                 result = adminService.findStockByProductId(Integer.parseInt(keyword));
                 break;
-            // Search by product name
-            case 2:
+            case SEARCH_STOCK_BY_PRODUCT_NAME:
                 result = adminService.findStockByProductName(keyword);
                 break;
         }

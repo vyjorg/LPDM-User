@@ -54,17 +54,21 @@ public class AuthAdminController {
         int searchValue = searchForm.getSearchValue();
         String keyword = searchForm.getKeyword();
         Object result = null;
+
         try{
             switch (searchValue){
-                case 1:
+
+                case SEARCH_USER_BY_ID:
                     if(Pattern.compile("^\\d+$").matcher(keyword).matches())
                         result = adminService.findUserById(Integer.parseInt(keyword));
                     else result = 500;
                     break;
-                case 2:
+
+                case SEARCH_USER_BY_NAME:
                     result = adminService.findUserByLastName(keyword);
                     break;
-                case 3:
+
+                case SEARCH_USER_BY_EMAIL:
                     result = adminService.findUserByEmail(keyword);
                     break;
             }
@@ -119,19 +123,20 @@ public class AuthAdminController {
     public ModelAndView searchAddressResult(
             @Valid @ModelAttribute(HTML_PAGE_SEARCH_FORM) SearchForm searchForm){
 
+        int searchValue = searchForm.getSearchValue();
         String keyword = searchForm.getKeyword();
         Object result = null;
         try{
-            switch (searchForm.getSearchValue()){
-                // Search by user id
-                case 3:
+            switch (searchValue){
+
+                case SEARCH_USER_BY_ID:
                     log.info("Search user by ID");
                     if(Pattern.compile("^\\d+$").matcher(keyword).matches())
                         result = adminService.findUserById(Integer.parseInt(keyword));
                     else result = 500;
                     break;
-                // Search by user last name
-                case 4:
+
+                case SEARCH_USER_BY_NAME:
                     log.info("Search user by lastName");
                     result = adminService.findUserByLastName(keyword);
                     break;
@@ -178,7 +183,8 @@ public class AuthAdminController {
     public Address addNewAddress(@Valid @RequestBody Address address){
 
         log.info("Address : " + address);
-        Address addressSaved = adminService.saveNewAddress(address);
-        return addressSaved;
+        address = adminService.saveNewAddress(address);
+        log.info("Address save = " + address);
+        return address;
     }
 }
