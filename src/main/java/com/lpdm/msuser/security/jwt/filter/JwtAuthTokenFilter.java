@@ -9,7 +9,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -37,11 +36,14 @@ public class JwtAuthTokenFilter extends AbstractAuthenticationProcessingFilter {
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
 
-        log.info("Unsuccessful auth");
-        log.info("-> " + failed.getMessage());
+        log.warn("Authentication failed -> " + failed.getMessage());
         super.unsuccessfulAuthentication(request, response, failed);
     }
 
+    /**
+     * This method filters cookies to retrieve a token and validate the authentication.
+     * Otherwise a redirection to the login page is set in the HttpServletResponse.
+     */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response)
@@ -52,7 +54,6 @@ public class JwtAuthTokenFilter extends AbstractAuthenticationProcessingFilter {
         Cookie[] cookies = request.getCookies();
         if(cookies != null && cookies.length > 0){
             for(Cookie cookie : cookies){
-                log.info("Cookie : " + cookie.getName() + " -> " + cookie.getValue());
                 if (cookie.getName().equals(jwtConfig.getHeader())){
                     jwtCookie = cookie.getValue();
                     break;
@@ -66,14 +67,12 @@ public class JwtAuthTokenFilter extends AbstractAuthenticationProcessingFilter {
             return null;
         }
 
+        // Remove the prefix from the token
         String token = jwtCookie.replace(jwtConfig.getPrefix() + " ", "");
 
-        log.info("JWT : " + token);
         JwtAuthToken jwtAuthToken = new JwtAuthToken(token);
 
-        log.info("Authentication manager : " + authenticationManager.toString());
         return authenticationManager.authenticate(jwtAuthToken);
-        //return getAuthenticationManager().authenticate(jwtAuthToken);
     }
 
     @Override

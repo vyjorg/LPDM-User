@@ -30,6 +30,11 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         this.jwtDeniedHandler = jwtDeniedHandler;
     }
 
+    /**
+     * The main method of security configuration in which specify the URLs that require authentication
+     * @param http A HttpSecurity self injected
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 

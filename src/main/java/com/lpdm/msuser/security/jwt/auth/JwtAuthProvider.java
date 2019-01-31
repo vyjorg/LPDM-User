@@ -44,23 +44,22 @@ public class JwtAuthProvider extends AbstractUserDetailsAuthenticationProvider {
         JwtAuthToken jwtAuthToken = (JwtAuthToken) userPassAuthToken;
         String token = jwtAuthToken.getToken();
 
-        log.info("Retrieve user");
-        log.info("jwtAuthToken : " + jwtAuthToken);
-
+        // Check if the JWT is valide (with the secret signing key) and get the user data
         JwtUser jwtUser = jwtValidator.validate(token);
 
         if(jwtUser == null)
             throw new RuntimeException("Your token is not valid, do not play this game");
 
+        // Get the roles from the jwtUser to the security authorities
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(jwtUser.getRole()));
-                //AuthorityUtils.commaSeparatedStringToAuthorityList(jwtUser.getRole());
 
-        JwtUserDetails jwtUserDetails = new JwtUserDetails(jwtUser.getId(), jwtUser.getUserName(), token, grantedAuthorities);
-
-        log.info("JwtUserDetails = " + jwtUserDetails);
-
-        return jwtUserDetails;
+        // Return the custom UserDetails implemented class
+        return new JwtUserDetails(
+                jwtUser.getId(),
+                jwtUser.getUserName(),
+                token, jwtUser.isActive(),
+                grantedAuthorities);
     }
 
     @Override

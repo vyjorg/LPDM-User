@@ -21,30 +21,35 @@ public class JwtValidator {
         this.jwtAuthConfig = jwtAuthConfig;
     }
 
-    public JwtUser validate(String token){
-
-        log.info("Jwt validator");
-        log.info("Token : " + token);
-        log.info("Secret : " + jwtAuthConfig.getSecret());
+    /**
+     * This method checks the JWT integrity with the signing key retrieves user data
+     * @param token The JWT config params
+     */
+    public JwtUser validate(String token) {
 
         JwtUser jwtUser = null;
 
+        // Remove the token prefix
         token = token.replace(jwtAuthConfig.getPrefix() + " ", "");
 
         try{
 
+            // Parse the claims with the signing key
             Claims tokenBody = Jwts.parser()
                     .setSigningKey(jwtAuthConfig.getSecret())
                     .parseClaimsJws(token).getBody();
 
+            // Build the jwtUser with the token data
             jwtUser = new JwtUser();
             jwtUser.setUserName(tokenBody.getSubject());
             jwtUser.setId((Integer) tokenBody.get("id"));
             jwtUser.setRole(String.valueOf(tokenBody.get("role")));
-
-            log.info("JwtUser : " + jwtUser);
         }
-        catch (Exception e) { log.warn(e.getMessage()); }
+        catch (Exception e) {
+
+            // Thrown if the token is corrupt
+            log.warn(e.getMessage());
+        }
 
         return jwtUser;
     }

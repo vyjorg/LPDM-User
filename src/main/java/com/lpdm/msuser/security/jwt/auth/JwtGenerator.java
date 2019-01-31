@@ -20,6 +20,10 @@ public class JwtGenerator {
 
     private final JwtAuthConfig jwtConfig;
 
+    /**
+     * Generate the token with the jwtUser data and the secret signing key
+     * @param jwtConfig The token config params
+     */
     @Autowired
     public JwtGenerator(JwtAuthConfig jwtConfig) {
         this.jwtConfig = jwtConfig;
@@ -27,12 +31,12 @@ public class JwtGenerator {
 
     public String generate(JwtUser jwtUser){
 
-        log.info("Generate token with the signing key : " + jwtConfig.getSecret());
-
+        // Set the claims
         Claims claims = Jwts.claims().setSubject(jwtUser.getUserName());
         claims.put("id", jwtUser.getId());
         claims.put("role", jwtUser.getRole());
 
+        // Build the token
         String token = Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(Date.from(Instant.now()))
@@ -40,6 +44,7 @@ public class JwtGenerator {
                 .signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret())
                 .compact();
 
+        // Return the correctly formatted JWT
         return jwtConfig.getPrefix() + " " + token;
     }
 }

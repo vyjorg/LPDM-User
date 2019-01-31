@@ -10,14 +10,17 @@ public class JwtUserDetails implements UserDetails {
     private int id;
     private String username;
     private String token;
+    private boolean active;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public JwtUserDetails(int id, String username, String token,
+    public JwtUserDetails(int id, String username, String token, boolean active,
                           Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.token = token;
+        this.active = active;
         this.authorities = authorities;
+
     }
 
     public int getId() {
@@ -38,6 +41,14 @@ public class JwtUserDetails implements UserDetails {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
@@ -66,7 +77,7 @@ public class JwtUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return active;
     }
 
     @Override

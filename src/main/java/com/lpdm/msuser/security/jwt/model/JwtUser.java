@@ -5,6 +5,7 @@ public class JwtUser {
     private int id;
     private String userName;
     private String role;
+    private boolean active;
 
     public JwtUser() {
     }
@@ -33,12 +34,21 @@ public class JwtUser {
         this.role = role;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     @Override
     public String toString() {
         return "JwtUser{" +
                 "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", role='" + role + '\'' +
+                ", active=" + active +
                 '}';
     }
 }

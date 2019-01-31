@@ -3,9 +3,6 @@ package com.lpdm.msuser.security.cookie;
 import com.lpdm.msuser.security.jwt.auth.JwtValidator;
 import com.lpdm.msuser.security.jwt.config.JwtAuthConfig;
 import com.lpdm.msuser.security.jwt.model.JwtUser;
-import io.jsonwebtoken.Jwts;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +21,11 @@ public class CookieDecoder {
         CookieDecoder.jwtValidator = jwtValidator;
     }
 
+    /**
+     * Static method for retrieving user data from the JWT in the request header
+     * @param request The HttpServletRequest of the controller
+     * @return The user data, otherwise null
+     */
     public static JwtUser getJwtUser(HttpServletRequest request){
 
         if(request == null) return null;

@@ -3,7 +3,9 @@ package com.lpdm.msuser.controllers;
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.proxies.MsProductProxy;
 import com.lpdm.msuser.proxies.MsUserProxy;
+import com.lpdm.msuser.security.cookie.CookieAppender;
 import com.lpdm.msuser.security.jwt.auth.JwtGenerator;
+import com.lpdm.msuser.security.jwt.auth.JwtUserBuilder;
 import com.lpdm.msuser.security.jwt.config.JwtAuthConfig;
 import com.lpdm.msuser.security.jwt.model.JwtUser;
 import feign.FeignException;
@@ -107,21 +109,9 @@ public class LoginController {
             //session.setAttribute("user", appUser);
             //sessionController.addSessionAttributes(session, model);
 
-            /* USER FOUND, NOW GENERATE THE JWT USER */
-            JwtUser jwtUser = new JwtUser();
-            jwtUser.setId(appUser.getId());
-            jwtUser.setUserName(appUser.getFirstName());
-            jwtUser.setRole(appUser.getAppRole().get(0).getRoleName());
-
-            /* GENERATE THE TOKEN WITH THE JWT USER DATA */
-            String token = jwtGenerator.generate(jwtUser);
-            logger.info("Token = " + token);
-
-            Cookie cookie = new Cookie(jwtAuthConfig.getHeader(), token);
-            cookie.setHttpOnly(true);
-            cookie.setPath("/");
-            response.addCookie(cookie);
-
+            /* USER FOUND, NOW GENERATE THE JWT USER AND INJECT IT TO A COOKIE*/
+            JwtUser jwtUser = JwtUserBuilder.build(appUser);
+            CookieAppender.addToken(jwtGenerator.generate(jwtUser), response);
 
             return "redirect:/";
         }
