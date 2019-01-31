@@ -3,6 +3,10 @@ package com.lpdm.msuser.controllers;
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.proxies.MsProductProxy;
 import com.lpdm.msuser.proxies.MsUserProxy;
+import com.lpdm.msuser.security.jwt.JwtGenerator;
+import com.lpdm.msuser.security.jwt.config.JwtAuthConfig;
+import com.lpdm.msuser.security.jwt.model.JwtUser;
+import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +15,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/identification")
 public class LoginController {
+
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -28,6 +35,15 @@ public class LoginController {
     @Autowired
     MsProductProxy msProductProxy;
 
+    private final JwtAuthConfig jwtAuthConfig;
+    private final JwtGenerator jwtGenerator;
+
+    @Autowired
+    public LoginController(JwtGenerator jwtGenerator, JwtAuthConfig jwtAuthConfig) {
+        this.jwtGenerator = jwtGenerator;
+        this.jwtAuthConfig = jwtAuthConfig;
+    }
+
     /**
      * displays the login form
      * @param session
@@ -37,8 +53,10 @@ public class LoginController {
     @GetMapping("/login")
     public String loginForm(HttpSession session, Model model){
         logger.info("Affichage du formulaire de login");
-        sessionController.addSessionAttributes(session, model);
-        return "identification/login";
+        //sessionController.addSessionAttributes(session, model);
+        //return "identification/login";
+        model.addAttribute("appUser", new AppUserBean());
+        return "shop/fragments/account/login";
     }
 
     /**
@@ -57,28 +75,59 @@ public class LoginController {
      * requests ms-auth to identify a user and retrieve their information if password matches. save records in the session
      * @param user
      * @param model
-     * @param session
+
      * @return home template if correct credentials
      */
     @PostMapping("/login")
-    public String login(@ModelAttribute AppUserBean user, Model model, HttpSession session){
+    public String login(@ModelAttribute AppUserBean user, Model model, HttpServletResponse response) {
 
         logger.info("appUser : " + user.toString());
-
         logger.info("Essai de login");
-        AppUserBean appUser = msUserProxy.login(user);
+
+        AppUserBean appUser = null;
+
+        try{ appUser = msUserProxy.login(user); }
+        catch (FeignException e){
+
+            logger.warn(e.getMessage());
+            model.addAttribute("error", "Cet utilisateur n'est pas enregistré");
+            return "identification/login";
+        }
+
         logger.info("appUser : " + appUser.toString());
 
         if (appUser.getId() == 0){
             logger.info("Pas d'utilisateur trouvé");
-            model.addAttribute("error", "Cet utilisateur n'est pas enregistré");
+
             return "identification/login";
 
         } else {
             logger.info("appUser : " + appUser.toString());
             logger.info("Entrée de l'utilisateur dans la session");
-            session.setAttribute("user", appUser);
-            sessionController.addSessionAttributes(session, model);
+            //session.setAttribute("user", appUser);
+            //sessionController.addSessionAttributes(session, model);
+
+            /* USER FOUND, NOW GENERATE THE JWT USER */
+            JwtUser jwtUser = new JwtUser();
+            jwtUser.setId(appUser.getId());
+            jwtUser.setUserName(appUser.getName());
+            jwtUser.setRole(appUser.getAppRole().get(0).getRoleName());
+
+            /* GENERATE THE TOKEN WITH THE JWT USER DATA */
+            String token = jwtGenerator.generate(jwtUser);
+            logger.info("Token = " + token);
+
+            Cookie cookie = new Cookie(jwtAuthConfig.getHeader(), token);
+            cookie.setHttpOnly(true);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+
+            /* SET THE HEADER ON THE SERVLET RESPONSE */
+            /*
+            response.setHeader(jwtAuthConfig.getHeader(),
+                    jwtAuthConfig.getPrefix() + " " + token);
+                    */
+
             return "home";
         }
     }

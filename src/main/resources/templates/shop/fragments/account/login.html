@@ -124,76 +124,81 @@
                     <p>Connectez-vous en un instant à votre compte !</p>
                     <h6>Si vous avez des questions, n'hésitez pas à <a href="#">nous contacter</a></h6>
                     <br>
-                    <div class="row">
-                        <ul class="list-group">
+                    <form data-th-object="${appUser}" method="post" data-th-action="@{/identification/login}">
+                        <div class="row">
 
-                            <!-- User email -->
+                            <ul class="list-group">
 
-                            <li class="list-group-item" style="height: 56px; border: none;">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <label for="user_email" class="input-group-addon" style="width: 150px;">
-                                            E-mail
-                                        </label>
-                                        <input type="email"
-                                               class="form-control"
-                                               id="login_email"
-                                               required>
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-danger"
-                                                    id="check_login_email"
-                                                    type="button"
-                                                    tabindex="-1"
-                                                    data-toggle="tooltip"
-                                                    data-placement="left"
-                                                    title="Saisir une adresse e-mail"
-                                                    style="cursor: default;"
-                                                    disabled>
-                                                <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
-                                            </button>
+                                <!-- User email -->
+
+                                <li class="list-group-item" style="height: 56px; border: none;">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label for="login_email" class="input-group-addon" style="width: 150px;">
+                                                E-mail
+                                            </label>
+                                            <input type="email"
+                                                   class="form-control"
+                                                   id="login_email"
+                                                   data-th-field="*{email}"
+                                                   required>
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-danger"
+                                                        id="check_login_email"
+                                                        type="button"
+                                                        tabindex="-1"
+                                                        data-toggle="tooltip"
+                                                        data-placement="left"
+                                                        title="Saisir une adresse e-mail"
+                                                        style="cursor: default;"
+                                                        disabled>
+                                                    <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
 
-                            <!-- User password -->
+                                <!-- User password -->
 
-                            <li class="list-group-item" style="height: 56px; border: none;">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <label for="user_password" class="input-group-addon" style="width: 150px;">
-                                            Mot de passe
-                                        </label>
-                                        <input type="password"
-                                               class="form-control"
-                                               id="login_password"
-                                               required>
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-danger"
-                                                    id="check_login_password"
-                                                    type="button"
-                                                    tabindex="-1"
-                                                    data-toggle="tooltip"
-                                                    data-placement="left"
-                                                    title="Saisir un mot de passe"
-                                                    style="cursor: default;"
-                                                    disabled>
-                                                <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
-                                            </button>
+                                <li class="list-group-item" style="height: 56px; border: none;">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label for="login_password" class="input-group-addon" style="width: 150px;">
+                                                Mot de passe
+                                            </label>
+                                            <input type="password"
+                                                   class="form-control"
+                                                   id="login_password"
+                                                   data-th-field="*{password}"
+                                                   required>
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-danger"
+                                                        id="check_login_password"
+                                                        type="button"
+                                                        tabindex="-1"
+                                                        data-toggle="tooltip"
+                                                        data-placement="left"
+                                                        title="Saisir un mot de passe"
+                                                        style="cursor: default;"
+                                                        disabled>
+                                                    <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <br>
-                    <div class="alert alert-default text-center">
-                        <form action="/shop/account">
-                            <button type="submit" class="btn btn-success" id="btn_login">
-                                Connexion à mon compte
-                            </button>
-                        </form>
-                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <br>
+                        <div class="alert alert-default text-center">
+                            <form action="/shop/account">
+                                <button type="submit" class="btn btn-success" id="btn_login">
+                                    Connexion à mon compte
+                                </button>
+                            </form>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

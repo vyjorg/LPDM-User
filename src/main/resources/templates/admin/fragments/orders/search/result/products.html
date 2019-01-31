@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <div data-th-fragment="products(order, total)">
     <div class="panel-group">
         <div class="panel panel-info">
@@ -21,7 +21,7 @@
                     </thead>
                     <tbody>
                     <tr data-th-each="orderedProduct : ${order.orderedProducts}">
-                        <td data-th-text="${orderedProduct.product.name}"></td>
+                        <td data-th-text="${orderedProduct.product.userName}"></td>
                         <td data-th-text="${orderedProduct.product.price}" class="text-center"></td>
                         <td data-th-text="${orderedProduct.quantity}" class="text-center"></td>
                         <td data-th-text="${orderedProduct.product.tva}+' %'" class="text-center"> <span> %</span></td>

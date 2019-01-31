@@ -27,14 +27,13 @@ public class HomeController {
 
     /**
      * displays home page
-     * @param session
      * @param model
      * @return
      */
     @GetMapping("/")
-    public String home(HttpSession session, Model model){
+    public String home(Model model){
         logger.info("Entrée dans la méthode 'home'");
-        sessionController.addSessionAttributes(session,model);
+        //sessionController.addSessionAttributes(session,model);
         model.addAttribute("categories", productProxy.listCategories());
         model.addAttribute("producers", userProxy.getUsersByRole(3));
         return "home";
