@@ -1,5 +1,6 @@
 package com.lpdm.msuser.security.jwt.filter;
 
+import com.lpdm.msuser.security.cookie.CookieRemover;
 import com.lpdm.msuser.security.jwt.config.JwtAuthConfig;
 import com.lpdm.msuser.security.jwt.model.JwtAuthToken;
 import org.slf4j.Logger;
@@ -16,6 +17,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
+
+import static com.lpdm.msuser.utils.shop.ValueType.USER_ACCOUNT_LOCKED;
 
 
 public class JwtAuthTokenFilter extends AbstractAuthenticationProcessingFilter {
@@ -37,7 +41,13 @@ public class JwtAuthTokenFilter extends AbstractAuthenticationProcessingFilter {
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
 
         log.warn("Authentication failed -> " + failed.getMessage());
-        super.unsuccessfulAuthentication(request, response, failed);
+
+        CookieRemover.remove(response);
+
+        if(failed.getMessage().equals(USER_ACCOUNT_LOCKED))
+            response.sendRedirect("/identification/login?error=" + URLEncoder.encode("Compte utilisateur désactivé", "UTF-8"));
+        else  response.sendRedirect("/identification/login?error=" + failed.getMessage());
+
     }
 
     /**
@@ -63,7 +73,15 @@ public class JwtAuthTokenFilter extends AbstractAuthenticationProcessingFilter {
 
         if(jwtCookie == null || !jwtCookie.startsWith(jwtConfig.getPrefix())) {
             log.warn("JWT Token is missing !");
-            response.sendRedirect("/identification/login");
+            log.info("PathInfo" + request.getPathInfo());
+            log.info("PathTranslated" + request.getPathTranslated());
+            log.info("RequestURL" + request.getRequestURL().toString());
+
+            String urlRequest = request.getRequestURL().toString();
+            String param = urlRequest.substring(urlRequest.lastIndexOf("/") + 1);
+            log.info("Param = " + param);
+
+            response.sendRedirect("/identification/login?page=" + param);
             return null;
         }
 

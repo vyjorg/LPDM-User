@@ -7,6 +7,7 @@ import com.lpdm.msuser.security.cookie.CookieAppender;
 import com.lpdm.msuser.security.jwt.auth.JwtGenerator;
 import com.lpdm.msuser.security.jwt.auth.JwtUserBuilder;
 import com.lpdm.msuser.security.jwt.config.JwtAuthConfig;
+import com.lpdm.msuser.security.jwt.model.JwtRedirect;
 import com.lpdm.msuser.security.jwt.model.JwtUser;
 import feign.FeignException;
 import org.slf4j.Logger;
@@ -53,23 +54,26 @@ public class LoginController {
      * @return template
      */
     @GetMapping("/login")
-    public String loginForm(HttpSession session, Model model){
+    public String loginForm(@RequestParam(required = false) String page, Model model){
         logger.info("Affichage du formulaire de login");
+        logger.info("-> Path = " + page);
         //sessionController.addSessionAttributes(session, model);
         //return "identification/login";
+        if(page != null) model.addAttribute("redirect", new JwtRedirect(page));
         model.addAttribute("appUser", new AppUserBean());
         return "shop/fragments/account/login";
     }
 
     /**
      * displays the registration form
-     * @param session
      * @param model
      * @return template
      */
     @GetMapping("/registration")
-    public String registrationForm(HttpSession session, Model model){
+    public String registrationForm(Model model){
         logger.info("Affichage du formulaire d'enregistrement");
+
+
         return "identification/registration";
     }
 
@@ -81,8 +85,11 @@ public class LoginController {
      * @return home template if correct credentials
      */
     @PostMapping("/login")
-    public String login(@ModelAttribute AppUserBean user, Model model, HttpServletResponse response) {
+    public String login(@ModelAttribute AppUserBean user,
+                        @ModelAttribute JwtRedirect redirect,
+                        Model model, HttpServletResponse response) {
 
+        logger.info("Redirect value = " + redirect.getPath());
         logger.info("appUser : " + user.toString());
         logger.info("Essai de login");
 
@@ -113,7 +120,8 @@ public class LoginController {
             JwtUser jwtUser = JwtUserBuilder.build(appUser);
             CookieAppender.addToken(jwtGenerator.generate(jwtUser), response);
 
-            return "redirect:/";
+            if(redirect.getPath() != null) return "redirect:/" + redirect.getPath();
+            else return "redirect:/";
         }
     }
 

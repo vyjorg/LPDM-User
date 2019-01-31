@@ -124,7 +124,8 @@
                     <p>Connectez-vous en un instant à votre compte !</p>
                     <h6>Si vous avez des questions, n'hésitez pas à <a href="#">nous contacter</a></h6>
                     <br>
-                    <form data-th-object="${appUser}" method="post" data-th-action="@{/identification/login}">
+                    <form method="post" data-th-action="@{/identification/login}">
+                        <input data-th-if="${redirect != null}" type="hidden" data-th-field="${redirect.path}">
                         <div class="row">
 
                             <ul class="list-group">
@@ -140,7 +141,7 @@
                                             <input type="email"
                                                    class="form-control"
                                                    id="login_email"
-                                                   data-th-field="*{email}"
+                                                   data-th-field="${appUser.email}"
                                                    required>
                                             <div class="input-group-btn">
                                                 <button class="btn btn-danger"
@@ -170,7 +171,7 @@
                                             <input type="password"
                                                    class="form-control"
                                                    id="login_password"
-                                                   data-th-field="*{password}"
+                                                   data-th-field="${appUser.password}"
                                                    required>
                                             <div class="input-group-btn">
                                                 <button class="btn btn-danger"
@@ -202,6 +203,31 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div data-th-if="${param.error != null}">
+        <!-- Modal -->
+        <div id="errorModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><b><i>Erreur</i></b></h4>
+                    </div>
+                    <div class="modal-body alert-danger">
+                        <p><span data-th-text="${param.error[0]}"></span></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script data-th-inline="javascript">
+            $('.modal').modal('show');
+        </script>
     </div>
 </div>
 </body>

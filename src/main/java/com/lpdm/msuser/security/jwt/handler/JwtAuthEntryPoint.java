@@ -1,5 +1,7 @@
 package com.lpdm.msuser.security.jwt.handler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -12,12 +14,11 @@ import java.io.IOException;
 @Component
 public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
 
-    /**
-     * Set here the redirection page to the login form if the user is not authenticated
-     */
-    @Override
-    public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+    private Logger log = LoggerFactory.getLogger(this.getClass());
 
-        httpServletResponse.sendRedirect("/identification/login");
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
+
+        log.info("Entry point");
     }
 }
