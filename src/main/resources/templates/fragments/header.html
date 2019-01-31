@@ -1,4 +1,4 @@
-<div th:fragment="header">
+<div data-th-fragment="header">
      <header>
 
 
@@ -17,9 +17,15 @@
             </div>
             <!-- col 3  -->
             <div class="col-md-2">
+                <div data-th-if="${userData != null}">
+                    <h3>Bonjour <span data-th-text="${userData.userName}"></span></h3>
+                </div>
+                <a data-th-if="${userData == null}" href="/identification/login">Identification</a>
+                <!--
                 <a th:unless="${username}" href="/identification/login">Identification</a>
                 <h3 th:unless="!${username}" th:text="'Bienvenue, ' + ${username}"/>
                 <a th:unless="!${username}" href="/identification/logout">Déconnexion</a>
+                -->
             </div>
         </div>
 

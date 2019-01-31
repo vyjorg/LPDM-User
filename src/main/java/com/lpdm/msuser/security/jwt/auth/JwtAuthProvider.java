@@ -1,4 +1,4 @@
-package com.lpdm.msuser.security.jwt;
+package com.lpdm.msuser.security.jwt.auth;
 
 import com.lpdm.msuser.security.jwt.model.JwtAuthToken;
 import com.lpdm.msuser.security.jwt.model.JwtUser;

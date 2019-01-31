@@ -1,8 +1,8 @@
 package com.lpdm.msuser.security.jwt.config;
 
-import com.lpdm.msuser.security.jwt.JwtAuthProvider;
+import com.lpdm.msuser.security.jwt.auth.JwtAuthProvider;
 import com.lpdm.msuser.security.jwt.handler.JwtSuccessHandler;
-import com.lpdm.msuser.security.jwt.JwtValidator;
+import com.lpdm.msuser.security.jwt.auth.JwtValidator;
 import com.lpdm.msuser.security.jwt.filter.JwtAuthTokenFilter;
 import org.apache.tomcat.util.http.LegacyCookieProcessor;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;

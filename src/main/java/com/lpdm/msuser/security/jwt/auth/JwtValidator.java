@@ -1,4 +1,4 @@
-package com.lpdm.msuser.security.jwt;
+package com.lpdm.msuser.security.jwt.auth;
 
 import com.lpdm.msuser.security.jwt.config.JwtAuthConfig;
 import com.lpdm.msuser.security.jwt.model.JwtUser;
@@ -29,6 +29,8 @@ public class JwtValidator {
 
         JwtUser jwtUser = null;
 
+        token = token.replace(jwtAuthConfig.getPrefix() + " ", "");
+
         try{
 
             Claims tokenBody = Jwts.parser()
@@ -42,7 +44,7 @@ public class JwtValidator {
 
             log.info("JwtUser : " + jwtUser);
         }
-        catch (Exception e) { log.error(e.getMessage()); }
+        catch (Exception e) { log.warn(e.getMessage()); }
 
         return jwtUser;
     }

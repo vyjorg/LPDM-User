@@ -3,7 +3,7 @@ package com.lpdm.msuser.controllers;
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.proxies.MsProductProxy;
 import com.lpdm.msuser.proxies.MsUserProxy;
-import com.lpdm.msuser.security.jwt.JwtGenerator;
+import com.lpdm.msuser.security.jwt.auth.JwtGenerator;
 import com.lpdm.msuser.security.jwt.config.JwtAuthConfig;
 import com.lpdm.msuser.security.jwt.model.JwtUser;
 import feign.FeignException;
@@ -29,8 +29,8 @@ public class LoginController {
     @Autowired
     private MsUserProxy msUserProxy;
 
-    @Autowired
-    private SessionController sessionController;
+    //@Autowired
+    //private SessionController sessionController;
 
     @Autowired
     MsProductProxy msProductProxy;
@@ -110,7 +110,7 @@ public class LoginController {
             /* USER FOUND, NOW GENERATE THE JWT USER */
             JwtUser jwtUser = new JwtUser();
             jwtUser.setId(appUser.getId());
-            jwtUser.setUserName(appUser.getName());
+            jwtUser.setUserName(appUser.getFirstName());
             jwtUser.setRole(appUser.getAppRole().get(0).getRoleName());
 
             /* GENERATE THE TOKEN WITH THE JWT USER DATA */
@@ -122,13 +122,8 @@ public class LoginController {
             cookie.setPath("/");
             response.addCookie(cookie);
 
-            /* SET THE HEADER ON THE SERVLET RESPONSE */
-            /*
-            response.setHeader(jwtAuthConfig.getHeader(),
-                    jwtAuthConfig.getPrefix() + " " + token);
-                    */
 
-            return "home";
+            return "redirect:/";
         }
     }
 
@@ -160,10 +155,10 @@ public class LoginController {
             logger.info("Mot de passe similaires");
             msUserProxy.addUser(user);
             session.setAttribute("user", user);
-            sessionController.addSessionAttributes(session, model);
+            //sessionController.addSessionAttributes(session, model);
             return "home";
         }
-        sessionController.addSessionAttributes(session, model);
+        //sessionController.addSessionAttributes(session, model);
 
         return "/identification/registration";
     }
@@ -175,7 +170,7 @@ public class LoginController {
      */
     @GetMapping("/logout")
     public String logout(HttpSession session){
-        sessionController.logout(session);
+        //sessionController.logout(session);
         return "home";
     }
 
