@@ -22,7 +22,7 @@
                                 <button class="btn btn-danger"
                                         type="button"
                                         tabindex="-1"
-                                        id="check_number"
+                                        data-th-id="'check_number_' + ${user.id}"
                                         data-toggle="tooltip"
                                         data-placement="left"
                                         title="Saisir un numéro de voie"
@@ -43,13 +43,14 @@
                             </label>
                             <input type="text"
                                    class="form-control"
-                                   data-th-id="'address' + ${user.id} + '_streetName'">
+                                   data-th-id="'address' + ${user.id} + '_streetName'"
+                                   data-th-value="${addressList[loop.index]?.streetName}">
                             <div class="input-group-btn"
                                  data-th-value="${addressList[loop.index]?.streetName}">
                                 <button class="btn btn-danger"
                                         type="button"
                                         tabindex="-1"
-                                        id="check_streetName"
+                                        data-th-id="'check_streetName_' + ${user.id}"
                                         data-toggle="tooltip"
                                         data-placement="left"
                                         title="Saisir un nom de voie"
@@ -76,7 +77,7 @@
                         <button class="btn btn-danger"
                                 type="button"
                                 tabindex="-1"
-                                id="check_complement"
+                                data-th-id="'check_complement_' + ${user.id}"
                                 data-toggle="tooltip"
                                 data-placement="left"
                                 title="Saisir un complément de voie"
@@ -103,7 +104,7 @@
                                 <button class="btn btn-danger"
                                         type="button"
                                         tabindex="-1"
-                                        id="check_zipCode"
+                                        data-th-id="'check_zipCode_' + ${user.id}"
                                         data-toggle="tooltip"
                                         data-placement="left"
                                         title="Saisir un code postal"
@@ -132,6 +133,7 @@
                         <div class="input-group-btn">
                             <button class="btn btn-danger"
                                     type="button" tabindex="-1"
+                                    data-th-id="'check_city_' + ${user.id}"
                                     data-toggle="tooltip"
                                     data-placement="left"
                                     title="Sélectionner un statut"

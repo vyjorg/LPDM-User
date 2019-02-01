@@ -23,7 +23,7 @@
                     <ul class="dropdown-menu" style="height: auto; max-height: 200px; overflow-x: hidden;">
                         <li data-th-each="user,loop : ${result}">
                             <a href="#" data-th-id="'usermenu_' + ${user.id}">
-                                <span data-th-text="'ID ' + ${user.id} + ' - Nom : ' + ${user.name}"></span>
+                                <span data-th-text="'ID ' + ${user.id} + ' - ' + ${user.firstName} + ' ' + ${user.name}"></span>
                             </a>
                         </li>
                     </ul>
@@ -32,7 +32,9 @@
         </div>
 
         <!-- Loop over the result list -->
-        <div data-th-each="user,loop : ${result}">
+        <div data-th-each="user,loop : ${result}"
+             data-th-id="'user_' + ${user.id}"
+             data-th-style="${#lists.size(result) > 1} ? 'display:none;'">
             <div class="row" style="display: flex; align-items: center;">
                 <div class="col-sm-12">
                     <div class="col-sm-2">
@@ -72,7 +74,8 @@
                                                style="width: 150px;">
                                             Enregistré le
                                         </label>
-                                        <input type="text" data-th-value="${user.registrationDate}"
+                                        <input type="text"
+                                               data-th-value="${#temporals.format(user.registrationDate, 'dd/MM/yyyy HH:MM:ss')}"
                                                class="form-control"
                                                data-th-id="'user_registrationDate_' + ${user.id}"
                                                disabled>
@@ -80,7 +83,7 @@
                                             <button class="btn btn-success"
                                                     type="button"
                                                     tabindex="-1"
-                                                    id="check_user_registration"
+                                                    data-th-id="'check_user_registration_' + ${user.id}"
                                                     data-toggle="tooltip"
                                                     data-placement="left"
                                                     title="Vous n'avez rien à saisir"
@@ -106,7 +109,7 @@
                                             <button class="btn btn-default"
                                                     type="button"
                                                     tabindex="-1"
-                                                    id="check_user_name"
+                                                    data-th-id="'check_user_name_' + ${user.id}"
                                                     data-toggle="tooltip"
                                                     data-placement="left"
                                                     title="Saisir le nom de famille"
@@ -132,7 +135,7 @@
                                             <button class="btn btn-default"
                                                     type="button"
                                                     tabindex="-1"
-                                                    id="check_user_firstname"
+                                                    data-th-id="'check_user_firstname_' + ${user.id}"
                                                     data-toggle="tooltip"
                                                     data-placement="left"
                                                     title="Saisir le prénom"
@@ -158,7 +161,7 @@
                                             <button class="btn btn-default"
                                                     type="button"
                                                     tabindex="-1"
-                                                    id="check_user_email"
+                                                    data-th-id="'check_user_email_' + ${user.id}"
                                                     data-toggle="tooltip"
                                                     data-placement="left"
                                                     title="Saisir une adresse e-mail"
@@ -183,7 +186,7 @@
                                         <div class="input-group-btn">
                                             <button class="btn btn-default"
                                                     type="button" tabindex="-1"
-                                                    id="check_user_tel"
+                                                    data-th-id="'check_user_tel_' + ${user.id}"
                                                     data-toggle="tooltip"
                                                     data-placement="left"
                                                     title="Saisir un numéro de téléphone"
@@ -203,7 +206,8 @@
                                         <label data-th-for="'user_birthday_' + ${user.id}" class="input-group-addon" style="width: 150px;">
                                             Date de naissance
                                         </label>
-                                        <input type="text" data-th-value="${user.birthday}"
+                                        <input type="text"
+                                               data-th-value="${#temporals.format(user.birthday, 'dd/MM/yyyy')}"
                                                class="form-control"
                                                data-provide="datepicker"
                                                data-th-id="'user_birthday_' + ${user.id}"
@@ -211,7 +215,7 @@
                                         <div class="input-group-btn">
                                             <button class="btn btn-default"
                                                     type="button"
-                                                    id="check_user_birthday"
+                                                    data-th-id="'check_user_birthday_' + ${user.id}"
                                                     tabindex="-1"
                                                     data-toggle="tooltip" data-placement="left"
                                                     title="Saisir un numéro de téléphone"
@@ -264,7 +268,7 @@
 
             <!-- Adding the persistence button -->
             <div class="alert text-center">
-                <button type="button" class="btn btn-success" id="btnUpdate">
+                <button type="button" class="btn btn-success" data-th-id="'btnUpdate_' + ${user.id}">
                     Enregistrer les informations sur l'utilisateur
                 </button>
             </div>
