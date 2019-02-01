@@ -1,4 +1,4 @@
-$( document ).ready(function() {
+$(document).ready(function() {
 
     $("#li_" + selectedTab).addClass("active");
     $("#" + selectedTab).addClass("active in");

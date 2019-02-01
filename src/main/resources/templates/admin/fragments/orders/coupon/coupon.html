@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<div data-th-fragment="coupon">
+    <script data-th-src="@{/js/admin/order/coupon.js}"></script>
+    <div class="panel panel-default">
+        <div class="panel-heading">Ajouter un nouveau code promotionnel</div>
+        <div class="panel-body">
+            <form>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Description</th>
+                        <th class="text-center">Montant</th>
+                        <th class="text-center">Actif</th>
+                        <th class="text-center">Code</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <label>
+                                <input type="text"
+                                       id="coupon_desc"
+                                       class="form-control">
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                <input type="text"
+                                       id="coupon_amount"
+                                       class="form-control">
+                            </label>
+                        </td>
+                        <td>
+                            <div class="[ form-group ]">
+                                <input type="checkbox"
+                                       value="active"
+                                       id="coupon_active">
+                                <div class="[ btn-group ]">
+                                    <label for="coupon_active"
+                                           class="[ btn btn-default ]">
+                                        <span class="[ glyphicon glyphicon-ok ]"></span>
+                                        <span> </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <label>
+                                <input type="text"
+                                       id="coupon_code"
+                                       class="form-control">
+                            </label>
+                        </td>
+                        <td>
+                            <button type="button"
+                                    id="btnAddCoupon"
+                                    class="btn btn-success">
+                                Ajouter
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+    <div data-th-if="${couponList == null}" class="alert alert-warning">
+        Aucun code promotionnel n'a été trouvé
+    </div>
+    <table data-th-if="${couponList != null}" class="table table-hover">
+        <thead>
+        <tr>
+            <th>Description</th>
+            <th class="text-center">Montant</th>
+            <th class="text-center">Actif</th>
+            <th class="text-center">Modifier</th>
+            <th class="text-center">Supprimer</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="coupon : ${couponList}">
+            <td style="vertical-align: middle;">
+                <input type="text"
+                       data-th-id="'coupon_desc_' + ${coupon.id}"
+                       data-th-value="${coupon.description}"
+                       class="form-control">
+            </td>
+            <td class="text-center"
+                style="vertical-align: middle;">
+                <input type="text"
+                       data-th-id="'coupon_amount_' + ${coupon.id}"
+                       data-th-value="${coupon.amount}"
+                       class="form-control">
+            </td>
+            <td class="text-center"
+                style="vertical-align: middle;">
+                <div class="[ form-group ]" style="margin-bottom: 0;">
+                    <input type="checkbox"
+                           value="active"
+                           data-th-checked="${coupon.active}"
+                           data-th-id="'coupon_active_' + ${coupon.id}">
+                    <div class="[ btn-group ]">
+                        <label data-th-for="'coupon_active_' + ${coupon.id}"
+                               class="[ btn btn-default ]">
+                            <span class="[ glyphicon glyphicon-ok ]"></span>
+                            <span> </span>
+                        </label>
+                    </div>
+                </div>
+            </td>
+            <td class="text-center">
+                <button type="button"
+                        class="btn btn-info"
+                        data-th-id="'btn_update_' + ${coupon.id}">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </button>
+            </td>
+            <td class="text-center">
+                <button type="button"
+                        class="btn btn-danger"
+                        data-th-id="'btn_delete_' + ${coupon.id}">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Adding the modal -->
+    <div data-th-replace="/admin/fragments/modal :: modal"></div>
+</div>
+</html>

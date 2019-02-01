@@ -9,6 +9,7 @@ import com.lpdm.msuser.model.admin.SearchDates;
 import com.lpdm.msuser.model.admin.StorageUser;
 import com.lpdm.msuser.msauthentication.AppRoleBean;
 import com.lpdm.msuser.msauthentication.AppUserBean;
+import com.lpdm.msuser.msorder.Coupon;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
 import com.lpdm.msuser.msproduct.CategoryBean;
@@ -46,6 +47,14 @@ public interface AdminService {
     String getUploadPictureForm(StorageUser user);
     void updateProduct(ProductBean product);
     ProductBean addNewProduct(ProductBean product);
+
+    /**
+     * Coupon
+     */
+    List<Coupon> findAllCoupons();
+    Coupon addNewCoupon(Coupon coupon);
+    Coupon updateCoupon(Coupon coupon);
+    boolean deleteCoupon(Coupon coupon);
 
     /**
      * Store

@@ -16,7 +16,7 @@ public class ProductBean {
 
     private double price;
 
-    private double tva;
+    private double tax;
 
     private boolean deactivate;
 
@@ -68,12 +68,12 @@ public class ProductBean {
         this.price = price;
     }
 
-    public double getTva() {
-        return tva;
+    public double getTax() {
+        return tax;
     }
 
-    public void setTva(double tva) {
-        this.tva = tva;
+    public void setTax(double tax) {
+        this.tax = tax;
     }
 
     public List<StockBean> getListStock() {
@@ -124,7 +124,7 @@ public class ProductBean {
                 ", category=" + category +
                 ", label='" + label + '\'' +
                 ", price=" + price +
-                ", tva=" + tva +
+                ", tax=" + tax +
                 ", deactivate=" + deactivate +
                 ", listStock=" + listStock +
                 ", picture='" + picture + '\'' +
