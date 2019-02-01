@@ -39,12 +39,12 @@ public interface MsUserProxy {
     @GetMapping(value = "/microservice-authentication/users/per_role/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<AppUserBean>getUsersByRole(@PathVariable("id") int id);
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/microservice-authentication/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     AppRoleBean getRoleById(@PathVariable("id") int id);
 
-    @PutMapping("/{id)")
+    @PutMapping(value = "/microservice-authentication/users/updateuser", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     AppUserBean updateAppUser(@RequestBody AppUserBean user);
 
-    @PutMapping(value = "/password/{id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Boolean updatePassword(@PathVariable("id") int id, @RequestParam String oldPassword, @RequestParam String newPassword);
+    @PutMapping(value = "/microservice-authentication/password/{id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    Boolean updatePassword(@PathVariable("id") int id, @RequestParam String oldPassword, @RequestParam String newPassword);
 }

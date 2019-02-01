@@ -65,18 +65,17 @@ public class LoginController {
 
         logger.info("appUser : " + user.toString());
 
-        logger.info("Essai de login");
+        logger.info("trying to login");
         AppUserBean appUser = msUserProxy.login(user);
-        logger.info("appUser : " + appUser.toString());
 
         if (appUser.getId() == 0){
-            logger.info("Pas d'utilisateur trouvé");
+            logger.info("No user found");
             model.addAttribute("error", "Cet utilisateur n'est pas enregistré");
             return "identification/login";
 
         } else {
             logger.info("appUser : " + appUser.toString());
-            logger.info("Entrée de l'utilisateur dans la session");
+            logger.info("Entering user in session");
             session.setAttribute("user", appUser);
             sessionController.addSessionAttributes(session, model);
             return "home";
@@ -103,12 +102,12 @@ public class LoginController {
         }
         if (!user.getPassword().equals(password2)){
             logger.info("erreur de mdp: " + password2);
-            model.addAttribute("error", "Les mots de passe saisis sont différents");
+            model.addAttribute("error", "Les mots de passe sont différents");
         } else if (msUserProxy.getUserByEmail(user.getEmail()) != null) {
-            logger.info("L'utilisateur existe déjà");
+            logger.info("User already exists");
             model.addAttribute("error","L'utilisateur existe déjà");
         }else if(user.getPassword().equals(password2)){
-            logger.info("Mot de passe similaires");
+            logger.info("Passwords match!");
             msUserProxy.addUser(user);
             session.setAttribute("user", user);
             sessionController.addSessionAttributes(session, model);
@@ -150,8 +149,10 @@ public class LoginController {
 
 
     @PostMapping(value = "/edit")
-    public String changeProfile(@ModelAttribute AppUserBean user, Model model, HttpSession session){
-        AppUserBean appUser = msUserProxy.updateAppUser(user);
+    public String changeProfile(@ModelAttribute AppUserBean userToUpdate, Model model, HttpSession session){
+        logger.info("changeProfile userToUpdate" + userToUpdate.toString());
+
+        AppUserBean appUser = msUserProxy.updateAppUser(userToUpdate);
         model.addAttribute("user", appUser);
         sessionController.addSessionAttributes(session, model);
         return "users/profile";

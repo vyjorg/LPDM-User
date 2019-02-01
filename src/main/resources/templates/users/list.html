@@ -10,12 +10,15 @@
 
 <section layout:fragment="content">
     <!-- INSERT CONTENT HERE -->
-    <table class="table">
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
         <tr>
+            <th>Id Utilisateur</th>
             <th>Email utilisateur</th>
             <th>Prénom</th>
-            <th>Mot de Passe</th>
+            <th>Nom de famille</th>
         </tr>
+        </thead>
         <tr th:each = "user:${users}">
             <td><a th:href="@{'/users/'+ ${user.getId()}}" th:value="${user.getId()}" th:text="${user.getId()}"/></td>
             <td th:text="${user.getEmail()}"/>

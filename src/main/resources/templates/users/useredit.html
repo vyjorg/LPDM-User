@@ -12,11 +12,12 @@
 
 <section layout:fragment="content">
 
-<form class="form-group" th:action="@{/identification/edit}" method="post">
+<form class="form-group" th:action="@{/identification/edit}" method="post" th:object="${usertoUpdate}">
+    <input type="hidden" th:field="*{id}" th:value="${user.getId()}"/>
     <div><label > Nom : <input class="form-control" type="text" name="name" th:placeholder="${user.getName()}"/> </label></div>
     <div><label > Prénom : <input  class="form-control" type="text" name="firstName" th:placeholder="${user.getFirstName()}"/> </label></div>
     <div><label > Adresse email : <input class="form-control" type="email" name="email" th:placeholder="${user.getEmail()}"/> </label></div>
-
+    <hr/>
     <label>Sélectionnez les rôles de l'utilisateur</label>
 
     <div>
@@ -25,19 +26,14 @@
 
                 <input type="checkbox"  th:value="${role.getId()}"/>
                 <label th:text="${role.getRoleName()}"/>
-                <!--
-            <input class="form-control" type="checkbox" th:field="*{user.getAppRole()}" th:value="${approle.getId()}">
 
-
-    <label th:text="${role.getName()}">Admin</label>
-        -->
             </li>
         </ul>
     </div>
 
     <!-- <div><label> Veuillez entrer votre ancien mot de passe: <input type="password" name="oldpassword"> </label></div> -->
 
-    <div><input type="submit" class="form-control" value="Valider les modification"/></div>
+    <div><input type="submit" class="form-control" value="Valider les modifications"/></div>
 </form>
 
 </section>
