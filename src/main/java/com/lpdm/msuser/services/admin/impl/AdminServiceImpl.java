@@ -11,6 +11,7 @@ import com.lpdm.msuser.model.admin.SearchDates;
 import com.lpdm.msuser.model.admin.StorageUser;
 import com.lpdm.msuser.msauthentication.AppRoleBean;
 import com.lpdm.msuser.msauthentication.AppUserBean;
+import com.lpdm.msuser.msorder.Coupon;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
 import com.lpdm.msuser.msproduct.CategoryBean;
@@ -183,6 +184,30 @@ public class AdminServiceImpl implements AdminService {
     public ProductBean addNewProduct(ProductBean product) {
 
         return productProxy.addProduct(product);
+    }
+
+    @Override
+    public List<Coupon> findAllCoupons() {
+
+        return orderProxy.getAllCoupons();
+    }
+
+    @Override
+    public Coupon addNewCoupon(Coupon coupon) {
+
+        return orderProxy.addNewCoupon(coupon);
+    }
+
+    @Override
+    public Coupon updateCoupon(Coupon coupon) {
+
+        return orderProxy.updateCoupon(coupon);
+    }
+
+    @Override
+    public boolean deleteCoupon(Coupon coupon) {
+
+        return orderProxy.deleteCoupon(coupon);
     }
 
     @Override

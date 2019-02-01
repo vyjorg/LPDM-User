@@ -3,6 +3,7 @@ package com.lpdm.msuser.controllers.admin;
 import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchDates;
 import com.lpdm.msuser.model.admin.SearchForm;
+import com.lpdm.msuser.msorder.Coupon;
 import com.lpdm.msuser.msorder.enumeration.StatusEnum;
 import com.lpdm.msuser.services.admin.AdminService;
 import feign.FeignException;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import static com.lpdm.msuser.utils.admin.ValueType.*;
@@ -137,5 +139,44 @@ public class OrderAdminController {
                 .addObject(HTML_PAGE_TITLE, ORDER_PAGE_TITLE)
                 .addObject(HTML_PAGE_CONTENT, "paymentsPage")
                 .addObject(HTML_RESULT_OBJECT, adminService.findAllPayment());
+    }
+
+    @GetMapping(value = {"/coupon", "/coupon/"})
+    public ModelAndView getAllCoupons(){
+
+        List<Coupon> couponList = null;
+
+        try { couponList = adminService.findAllCoupons(); }
+        catch (FeignException e) { log.warn(e.getMessage()); }
+
+        return new ModelAndView(ORDER_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, ORDER_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, "couponPage")
+                .addObject("couponList", couponList)
+                .addObject("coupon", new Coupon());
+    }
+
+    @PostMapping(value = {"/coupon", "/coupon/"})
+    public Coupon addNewCoupon(@Valid @RequestBody Coupon coupon){
+
+        log.info("Add coupon : " + coupon);
+
+        return adminService.addNewCoupon(coupon);
+    }
+
+    @PutMapping(value = {"/coupon", "/coupon/"})
+    public Coupon updateCoupon(@Valid @RequestBody Coupon coupon){
+
+        log.info("Update coupon : " + coupon);
+
+        return adminService.updateCoupon(coupon);
+    }
+
+    @DeleteMapping(value = {"/coupon", "/coupon/"})
+    public boolean deleteCoupon(@Valid @RequestBody Coupon coupon){
+
+        log.info("Delete coupon : " + coupon);
+
+        return adminService.deleteCoupon(coupon);
     }
 }
