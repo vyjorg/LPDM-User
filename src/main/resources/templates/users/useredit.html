@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Modification d'un utilisateur</title>
+
+</head>
+
+<body>
+<form th:action="@{/identification/edit}" method="post">
+    <div><label> Nom : <input type="text" name="name" "/> </label></div>
+    <div><label> Prénom : <input type="text" name="firstName"/> </label></div>
+    <div><label> Adresse email : <input type="email" name="email"/> </label></div>
+    <div><label> Ancien mot de passe: <input type="password" name="oldpassword"> </label></div>
+    <div><label> Mot de passe : <input type="password" name="password"/> </label></div>
+    <div><label> Confirmation du mot de passe : <input type="password" name="password2"/> </label></div>
+
+    <p>Sélectionnez les rôles de l'utilisateur</p>
+
+    <div>
+        <input type="checkbox" id="client" name="client" checked>
+        <label for="client">Client</label>
+    </div>
+    <div>
+        <input type="checkbox" id="producteur" name="producteur">
+        <label for="producteur">Producteur</label>
+    </div>
+    <div>
+        <input type="checkbox" id="livreur" name="livreur">
+        <label for="livreur">Livreur</label>
+    </div>
+    <div>
+        <input type="checkbox" id="admin" name="admin">
+        <label for="admin">Admin</label>
+    </div>
+
+    <div><label> Veuillez entrer votre ancien ncien mot de passe: <input type="password" name="oldpassword"> </label></div>
+
+    <div><input type="submit" value="Sign In"/></div>
+</form>
+
+
+
+
+</body>
+</html>

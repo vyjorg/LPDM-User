@@ -41,4 +41,10 @@ public interface MsUserProxy {
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     AppRoleBean getRoleById(@PathVariable("id") int id);
+
+    @PutMapping("/{id)")
+    AppUserBean updateAppUser(@RequestBody AppUserBean user);
+
+    @PutMapping(value = "/password/{id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Boolean updatePassword(@PathVariable("id") int id, @RequestParam String oldPassword, @RequestParam String newPassword);
 }

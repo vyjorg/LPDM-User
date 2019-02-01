@@ -33,7 +33,7 @@ public class SessionController {
 
         try {
             AppUserBean user = (AppUserBean) session.getAttribute("user");
-            model.addAttribute("username", user.getFirstName());
+            model.addAttribute("user", user);
         }catch (NullPointerException e){
             logger.info("Pas d'utilisateur identifié");
         }
