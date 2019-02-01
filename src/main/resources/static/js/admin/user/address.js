@@ -16,9 +16,11 @@ let modalResultError;
 $(document).ready(function() {
 
     selectCity = null;
-    btnUpdate = $("#btnUpdate");
+    btnUpdate = $(":button[id^='btnUpdate']");
     btnUpdate.on("click", function () {
-        updateAddress();
+        let id = $(this).attr("id");
+        id = id.substr(id.lastIndexOf("_") + 1);
+        updateAddress(id);
     });
 
     $(':input[id^="address"]').on("input paste", function () {
@@ -29,10 +31,11 @@ $(document).ready(function() {
             if(selectCity.value === "0") btn.attr("class", "btn btn-danger");
         }
 
-        checkAllInputs();
-
         userId = $(this).attr("id");
         userId = userId.split("address")[1].split("_")[0];
+
+        checkAllInputs(userId);
+
         selectCity = $("#address" + userId + "_cities");
 
         if($(this).attr("id") === "address" + userId + "_zipCode"){
@@ -46,13 +49,16 @@ $(document).ready(function() {
     modalResultError = $("#modal_result_body_error");
 });
 
-function checkAllInputs() {
+function checkAllInputs(id) {
 
     let checkup = true;
     $('[id^="check_"]').each(function(){
-        if($(this).attr("class") === "btn btn-danger") {
-            checkup = false;
-            return false;
+        if($(this).attr("id").match(id)){
+            console.log("id = " + $(this).attr("id"));
+            if($(this).attr("class") === "btn btn-danger") {
+                checkup = false;
+                return false;
+            }
         }
     });
 
@@ -97,7 +103,7 @@ function displayCities(data) {
     });
 }
 
-function updateAddress() {
+function updateAddress(id) {
 
     let jsonCity = {};
     jsonCity.id = cityId;
@@ -111,7 +117,7 @@ function updateAddress() {
     console.log("Json : " + JSON.stringify(jsonObj));
 
     $.ajax({
-        url: "/admin/auth/add/address",
+        url: "/admin/auth/add/address?user=" + id,
         type: "post",
         data: JSON.stringify(jsonObj),
         contentType: "application/json",

@@ -362,7 +362,14 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Address saveNewAddress(Address address) {
-        return locationProxy.saveNewAddress(address);
+    public Address saveNewAddress(Address address, int userId) {
+
+        address = locationProxy.saveNewAddress(address);
+
+        AppUserBean user = authProxy.findById(userId);
+        user.setAddressId(address.getId());
+
+        authProxy.updateUser(user);
+        return address;
     }
 }

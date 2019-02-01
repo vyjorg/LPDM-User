@@ -179,11 +179,9 @@ public class AuthAdminController {
     }
 
     @PostMapping(value = {"/add/address", "/add/address/"})
-    public Address addNewAddress(@Valid @RequestBody Address address){
+    public Address addNewAddress(@RequestParam int user, @Valid @RequestBody Address address){
 
-        log.info("Address : " + address);
-        address = adminService.saveNewAddress(address);
-        log.info("Address save = " + address);
+        address = adminService.saveNewAddress(address, user);
         return address;
     }
 }
