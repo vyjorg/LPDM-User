@@ -1,6 +1,7 @@
 package com.lpdm.msuser.services.admin.impl;
 
 import com.lpdm.msuser.exception.EurekaInstanceNotFound;
+import com.lpdm.msuser.exception.NotFound404Exception;
 import com.lpdm.msuser.model.location.Address;
 import com.lpdm.msuser.model.location.City;
 import com.lpdm.msuser.model.storage.Storage;
@@ -179,6 +180,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public ProductBean addNewProduct(ProductBean product) {
+
+        return productProxy.addProduct(product);
+    }
+
+    @Override
     public Store findStoreById(int id) throws FeignException {
         return storeProxy.findById(id);
     }
@@ -307,6 +314,36 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public AppUserBean addNewUser(AppUserBean user) {
         return authProxy.addNewUser(user);
+    }
+
+    @Override
+    public List<AppUserBean> findUserByEmail(String email) {
+
+        List<AppUserBean> userList = new ArrayList<>();
+        userList.add(authProxy.findByEmail(email));
+        return userList;
+    }
+
+    @Override
+    public Integer getProducerRoleId() {
+
+        List<AppRoleBean> roleList = authProxy.findAllRoles();
+        for(AppRoleBean role : roleList){
+            if(role.getRoleName().toLowerCase().equals("producer")){
+                return role.getId();
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<AppUserBean> findUserByIdAndRole(int userId, int roleId) {
+
+        AppUserBean user = authProxy.findUserByIdAndRole(userId, roleId);
+        List<AppUserBean> userList = new ArrayList<>();
+        if(user != null) userList.add(user);
+        return userList;
     }
 
     @Override

@@ -39,33 +39,37 @@ public class AuthAdminController {
                 .addObject(HTML_PAGE_TITLE, AUTH_PAGE_TITLE);
     }
 
-    @GetMapping(value = {"/search", "/search/"})
+    @GetMapping(value = {"/update", "/update/"})
     public ModelAndView searchUser(){
         return new ModelAndView(AUTH_FRAGMENT_PATH)
                 .addObject(HTML_PAGE_TITLE, AUTH_PAGE_TITLE)
-                .addObject(HTML_PAGE_CONTENT, "searchPage")
+                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_UPDATE_PAGE)
                 .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm());
     }
 
-    @PostMapping(value = {"/search", "/search/"})
+    @PostMapping(value = {"/update", "/update/"})
     public ModelAndView searchUserResult(
             @Valid @ModelAttribute(HTML_PAGE_SEARCH_FORM) SearchForm searchForm){
 
+        int searchValue = searchForm.getSearchValue();
         String keyword = searchForm.getKeyword();
         Object result = null;
+
         try{
-            switch (searchForm.getSearchValue()){
-                // Search by user id
-                case 1:
-                    log.info("Search user by ID");
+            switch (searchValue){
+
+                case SEARCH_USER_BY_ID:
                     if(Pattern.compile("^\\d+$").matcher(keyword).matches())
                         result = adminService.findUserById(Integer.parseInt(keyword));
                     else result = 500;
                     break;
-                // Search by user last name
-                case 2:
-                    log.info("Search user by lastName");
+
+                case SEARCH_USER_BY_NAME:
                     result = adminService.findUserByLastName(keyword);
+                    break;
+
+                case SEARCH_USER_BY_EMAIL:
+                    result = adminService.findUserByEmail(keyword);
                     break;
             }
         }
@@ -76,17 +80,26 @@ public class AuthAdminController {
 
         return new ModelAndView(AUTH_FRAGMENT_PATH)
                 .addObject(HTML_PAGE_TITLE, AUTH_PAGE_TITLE)
-                .addObject(HTML_PAGE_CONTENT, "searchPage")
+                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_UPDATE_PAGE)
                 .addObject(HTML_RESULT_OBJECT, result)
                 .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm())
                 .addObject("roleList", adminService.findAllUserRoles());
+    }
+
+    @PostMapping(value = {"/update/user", "/update/user/"})
+    public AppUserBean updateUser(@Valid @RequestBody AppUserBean user){
+
+        if(user.getRegistrationDate() == null) user.setRegistrationDate(LocalDateTime.now());
+        log.info("User : " + user);
+        //return adminService.addNewUser(user);
+        return user;
     }
 
     @GetMapping(value = {"/add", "/add/"})
     public ModelAndView addUser(){
         return new ModelAndView(AUTH_FRAGMENT_PATH)
                 .addObject(HTML_PAGE_TITLE, AUTH_PAGE_TITLE)
-                .addObject(HTML_PAGE_CONTENT, "addPage")
+                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_ADD_PAGE)
                 .addObject("roleList", adminService.findAllUserRoles());
     }
 
@@ -102,7 +115,7 @@ public class AuthAdminController {
     public ModelAndView searchUserForAddress(){
         return new ModelAndView(AUTH_FRAGMENT_PATH)
                 .addObject(HTML_PAGE_TITLE, AUTH_PAGE_TITLE)
-                .addObject(HTML_PAGE_CONTENT, "searchAddressPage")
+                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_ADDRESS_MANAGEMENT_PAGE)
                 .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm());
     }
 
@@ -110,19 +123,20 @@ public class AuthAdminController {
     public ModelAndView searchAddressResult(
             @Valid @ModelAttribute(HTML_PAGE_SEARCH_FORM) SearchForm searchForm){
 
+        int searchValue = searchForm.getSearchValue();
         String keyword = searchForm.getKeyword();
         Object result = null;
         try{
-            switch (searchForm.getSearchValue()){
-                // Search by user id
-                case 3:
+            switch (searchValue){
+
+                case SEARCH_USER_BY_ID:
                     log.info("Search user by ID");
                     if(Pattern.compile("^\\d+$").matcher(keyword).matches())
                         result = adminService.findUserById(Integer.parseInt(keyword));
                     else result = 500;
                     break;
-                // Search by user last name
-                case 4:
+
+                case SEARCH_USER_BY_NAME:
                     log.info("Search user by lastName");
                     result = adminService.findUserByLastName(keyword);
                     break;
@@ -152,7 +166,7 @@ public class AuthAdminController {
 
         return new ModelAndView(AUTH_FRAGMENT_PATH)
                 .addObject(HTML_PAGE_TITLE, AUTH_PAGE_TITLE)
-                .addObject(HTML_PAGE_CONTENT, "searchAddressPage")
+                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_ADDRESS_MANAGEMENT_PAGE)
                 .addObject(HTML_RESULT_OBJECT, result)
                 .addObject(HTML_PAGE_SEARCH_FORM, new SearchForm())
                 .addObject("addressList", addressList);
@@ -169,7 +183,8 @@ public class AuthAdminController {
     public Address addNewAddress(@Valid @RequestBody Address address){
 
         log.info("Address : " + address);
-        Address addressSaved = adminService.saveNewAddress(address);
-        return addressSaved;
+        address = adminService.saveNewAddress(address);
+        log.info("Address save = " + address);
+        return address;
     }
 }

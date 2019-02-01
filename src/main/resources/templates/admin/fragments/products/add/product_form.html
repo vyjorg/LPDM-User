@@ -1,15 +1,324 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <div data-th-fragment="product_form">
-    <form method="post" data-th-action="@{/admin/product/add}" data-th-object="${product}">
-        <div data-th-replace="admin/fragments/products/add/product_data :: product_data"></div>
-        <div class="panel panel-default">
-            <div class="panel-body text-center">
-                <button class="btn btn-success" type="submit" id="btnAdd" disabled>
-                    Ajouter le produit
+
+    <!-- Check if the result in a List instance -->
+    <div data-th-if="${result instanceof T(java.util.List)}">
+
+        <!-- Adding the Javascript file -->
+        <script data-th-src="@{/js/admin/product/add_product.js}"></script>
+
+        <!-- If List contains more than 1 item -->
+        <div data-th-if="${#lists.size(result)} > 1">
+            <div class="alert alert-info">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button"
+                            data-toggle="dropdown" id="btnMenuProducts">
+                        Liste des producteur
+                        <span class="caret" style="margin-left: 10px;"></span>
+                    </button>
+                    <ul class="dropdown-menu" style="height: auto; max-height: 200px; overflow-x: hidden;">
+                        <li data-th-each="producer,loop : ${result}">
+                            <a href="#" data-th-id="'producermenu_' + ${producer.id}">
+                                <span data-th-text="'ID ' + ${producer.id}
+                                + ' - Nom : ' + ${producter.firstName} + ' ' +${producer.name}"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loop over producer list -->
+        <div data-th-each="producer,status : ${result}"
+             data-th-id="'producer_' + ${producer.id}"
+             data-th-style="${#lists.size(result) > 1} ? 'display:none;'">
+
+            <ul class="list-group">
+                <li class="list-group-item" style="border: none;display: block;">
+                    <div class="input-group">
+                        <label for="producer" class="input-group-addon" style="width: 140px;">
+                            Producteur
+                        </label>
+                        <input type="text"
+                               class="form-control"
+                               id="producer"
+                               data-th-value="'ID ' + ${producer.id} + ' - Nom : ' + ${producer.firstName}
+                               + ' ' + ${producer.name}"
+                               disabled>
+                        <div class="input-group-btn">
+                            <button class="btn btn-success"
+                                    type="button" tabindex="-1"
+                                    data-toggle="tooltip"
+                                    data-placement="left"
+                                    title="Producteur sélectionné"
+                                    style="cursor: help;">
+                                <span class="glyphicon glyphicon-check"
+                                      aria-hidden="true"
+                                      style="padding-left: 6px;"></span>
+                            </button>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Product status and category -->
+                <li class="list-group-item" style="border: none;display: block;">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div class="input-group">
+                                <label data-th-for="'product_categories_' + ${producer.id}"
+                                       class="input-group-addon"
+                                       style="width: 140px;">
+                                    Statut du produit
+                                </label>
+                                <select class="form-control"
+                                        data-th-id="'product_status_' + ${producer.id}"
+                                        style="cursor: pointer;">
+                                    <option value="" disabled selected>Sélectionner -></option>
+                                    <option value="1">Activé</option>
+                                    <option value="2">Désactivé</option>
+                                </select>
+
+                                <div class="input-group-btn">
+                                    <button class="btn btn-danger"
+                                            type="button"
+                                            tabindex="-1"
+                                            data-toggle="tooltip"
+                                            data-placement="left"
+                                            id="check_status"
+                                            title="Sélectionner un statut"
+                                            style="cursor: help;">
+                                        <span class="glyphicon glyphicon-check"
+                                              aria-hidden="true" style="padding-left: 6px;">
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5 pull-right">
+                            <div class="input-group">
+                                <label data-th-for="'product_categories_' + ${producer.id}"
+                                       class="input-group-addon">
+                                    Catégorie du produit
+                                </label>
+                                <select class="form-control"
+                                        data-th-id="'product_categories_' + ${producer.id}"
+                                        style="cursor: pointer;">
+                                    <option value="" disabled selected>Sélectionner -></option>
+                                    <option data-th-each="cat,loop : ${categories}"
+                                            data-th-value="${(loop.index) + 1}"
+                                            data-th-text="${cat.name}">
+                                    </option>
+                                </select>
+
+                                <div class="input-group-btn">
+                                    <button class="btn btn-danger"
+                                            type="button"
+                                            tabindex="-1"
+                                            data-toggle="tooltip"
+                                            data-placement="left" id="check_categories"
+                                            title="Sélectionner une catégorie"
+                                            style="cursor: help;">
+                                        <span class="glyphicon glyphicon-check"
+                                              aria-hidden="true" style="padding-left: 6px;">
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Product name -->
+                <li class="list-group-item" style="height: 56px; border: none;">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <label data-th-for="'product_name_' + ${producer.id}"
+                                   class="input-group-addon"
+                                   style="width: 140px;">
+                                Nom
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   data-th-id="'product_name_' + ${producer.id}">
+                            <div class="input-group-btn">
+                                <button class="btn btn-danger"
+                                        type="button"
+                                        tabindex="-1"
+                                        data-toggle="tooltip"
+                                        data-placement="left"
+                                        data-th-id="'check_name_' + ${producer.id}"
+                                        title="Saisir le nom du produit"
+                                        style="cursor: help;">
+                                    <span class="glyphicon glyphicon-check"
+                                          aria-hidden="true"
+                                          style="padding-left: 6px;">
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Product label -->
+                <li class="list-group-item" style="height: 56px; border: none;">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <label data-th-for="'product_label_' + ${producer.id}"
+                                   class="input-group-addon"
+                                   style="width: 140px;">
+                                Désignation
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   data-th-id="'product_label_' + ${producer.id}">
+                            <div class="input-group-btn">
+                                <button class="btn btn-danger"
+                                        type="button"
+                                        tabindex="-1"
+                                        data-toggle="tooltip"
+                                        data-placement="left"
+                                        data-th-id="'check_label_' + ${producer.id}"
+                                        title="Saisir la désignation du produit"
+                                        style="cursor: help;">
+                                    <span class="glyphicon glyphicon-check"
+                                          aria-hidden="true" style="padding-left: 6px;">
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Product price -->
+                <li class="list-group-item" style="height: 56px; border: none;">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <label data-th-for="'product_price_' + ${producer.id}"
+                                   class="input-group-addon"
+                                   style="width: 140px;">
+                                Prix unitaire HT
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   data-th-id="'product_price_' + ${producer.id}">
+                            <div class="input-group-btn">
+                                <button class="btn btn-danger"
+                                        type="button"
+                                        tabindex="-1"
+                                        data-toggle="tooltip"
+                                        data-placement="left"
+                                        data-th-id="'check_price_' + ${producer.id}"
+                                        title="Saisir le prix HT du produit"
+                                        style="cursor: help;">
+                                    <span class="glyphicon glyphicon-check"
+                                          aria-hidden="true"
+                                          style="padding-left: 6px;">
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Product tax -->
+                <li class="list-group-item" style="height: 56px; border: none;">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <label data-th-for="'product_tax_' + ${producer.id}"
+                                   class="input-group-addon"
+                                   style="width: 140px;">
+                                T.V.A %
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   data-th-id="'product_tax_' + ${producer.id}">
+                            <div class="input-group-btn">
+                                <button class="btn btn-danger"
+                                        type="button"
+                                        tabindex="-1"
+                                        data-toggle="tooltip"
+                                        data-placement="left"
+                                        data-th-id="'check_tax_' + ${producer.id}"
+                                        title="Saisir le % de T.V.A."
+                                        style="cursor: help;">
+                                    <span class="glyphicon glyphicon-check"
+                                          aria-hidden="true"
+                                          style="padding-left: 6px;">
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Product picture -->
+                <li class="list-group-item" style="height: 56px; border: none;">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label data-th-for="'product_picture_' + ${producer.id}"
+                                       class="input-group-addon"
+                                       style="width: 140px;">
+                                    Photo
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       data-th-id="'product_picture_' + ${producer.id}"
+                                       style="cursor: pointer;"
+                                       readonly>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-danger"
+                                            type="button"
+                                            tabindex="-1"
+                                            data-toggle="tooltip"
+                                            data-placement="left"
+                                            data-th-id="'check_picture_' + ${producer.id}"
+                                            title="Cliquer ci-contre pour sélectionner une image"
+                                            style="cursor: help;">
+                                        <span class="glyphicon glyphicon-check"
+                                              aria-hidden="true"
+                                              style="padding-left: 6px;">
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="panel panel-default">
+                <div class="panel-body text-center">
+                    <img src="#" class="img-rounded" alt="Image du produit"
+                         data-th-id="'product_img_' + ${producer.id}" style="height: 280px;">
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <button type="button" class="btn btn-success" id="btnAdd" disabled>
+                    Ajouter ce produit et l'associer au producteur sélectionné
                 </button>
             </div>
         </div>
-    </form>
+        <!-- ^^ End producer loop ^^ -->
+
+        <div data-th-include="admin/fragments/products/update/modal_upload :: modal_upload"></div>
+
+    </div>
+    <!-- ^^ End List condition ^^ -->
+
+    <br>
+
+    <!-- Check that the result is an instance of the Integer class -->
+    <div data-th-if="${result instanceof T(java.lang.Integer)}" class="alert alert-danger">
+        <div data-th-replace="/admin/fragments/errors :: errors"></div>
+    </div>
+
+    <!-- Adding the console -->
+    <div data-th-replace="/admin/fragments/console :: console"></div>
+
+
+    <!-- Adding the modal -->
+    <div data-th-replace="/admin/fragments/modal :: modal"></div>
 </div>
 </html>

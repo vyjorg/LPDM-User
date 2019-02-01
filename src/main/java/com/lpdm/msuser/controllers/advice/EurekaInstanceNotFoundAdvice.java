@@ -1,4 +1,4 @@
-package com.lpdm.msuser.controllers.admin.advice;
+package com.lpdm.msuser.controllers.advice;
 
 import com.lpdm.msuser.exception.EurekaInstanceNotFound;
 import org.springframework.http.HttpStatus;

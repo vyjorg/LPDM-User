@@ -6,12 +6,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Recherche d'un utilisateur</div>
                 <div class="panel-body">
-                    <form method="post" data-th-action="@{/admin/auth/search/address}" data-th-object="${searchForm}">
+                    <form method="post" data-th-action="@{/admin/auth/update}" data-th-object="${searchForm}">
                         <div class="form-group">
                             <div class="label-control col-sm-3">
                                 <select class="form-control" id="select" data-th-field="*{searchValue}">
                                     <option value="1">Identifiant</option>
                                     <option value="2">Nom de famille</option>
+                                    <option value="3">Adresse e-mail</option>
                                 </select>
                             </div>
                             <div id="change_me" class="input-group">

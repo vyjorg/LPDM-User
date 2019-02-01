@@ -66,42 +66,44 @@ public class OrderAdminController {
         log.info("Keyword = " + searchForm.getKeyword());
         log.info("Value = " + searchForm.getSearchValue());
 
+        int searchValue = searchForm.getSearchValue();
         String keyword = searchForm.getKeyword();
         String selectedTab = null;
         Object result = null;
+
         try{
-            switch (searchForm.getSearchValue()){
-                // Search by order id
-                case 1:
+            switch (searchValue){
+
+                case SEARCH_ORDER_BY_ID:
                     if(Pattern.compile("^\\d+$").matcher(keyword).matches())
                         result = adminService.findOrderById(Integer.valueOf(keyword));
                     else result = 500;
                     selectedTab = "order_id";
                     break;
-                // Search by user id
-                case 2:
+
+                case SEARCH_ORDER_BY_USER_ID:
                     if(Pattern.compile("^\\d+$").matcher(keyword).matches())
                         result = adminService.findAllOrdersByUserId(Integer.valueOf(keyword));
                     else result = 500;
                     selectedTab = "customer";
                     break;
-                // Search by user email
-                case 3:
+
+                case SEARCH_ORDER_BY_USER_EMAIL:
                     result = adminService.findAllOrdersByUserEmail(keyword);
                     log.info(result.toString());
                     selectedTab = "customer";
                     break;
-                // Search bu user lastname
-                case 4:
+
+                case SEARCH_ORDER_BY_USER_NAME:
                     selectedTab = "customer";
                     break;
-                // Search by invoice ref
-                case 5:
+
+                case SEARCH_ORDER_BY_INVOICE_REF:
                     result = adminService.findOrderByInvoiceReference(keyword);
                     selectedTab = "invoice";
                     break;
-                // Search by date
-                case 6:
+
+                case SEARCH_ORDER_BY_DATE:
                     String date1 = keyword.substring(0, keyword.lastIndexOf(":"));
                     String date2 = keyword.substring(keyword.lastIndexOf(":") + 1);
                     DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
