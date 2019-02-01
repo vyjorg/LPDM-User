@@ -3,6 +3,8 @@ let btnUpdate;
 
 // User id
 let userId;
+let currentUserId;
+let currentUser;
 
 // Modal
 let modalResult;
@@ -16,12 +18,30 @@ $(document).ready(function() {
 
 
     // Button
-    btnUpdate = $("#btnUpdate");
-    btnUpdate.on("click", function (e) {
+    btnUpdate = $("[id^='btnUpdate_']");
+    btnUpdate.on("click", function () {
         updateUser();
     });
 
     checkInputsOnLoad();
+
+    let btnDropdown = $("#btnMenuUsers");
+    $(".dropdown-menu li a").click(function(){
+
+        if(currentUserId != null) currentUser.fadeOut(500);
+
+        btnDropdown.text($(this).text());
+        btnDropdown.val($(this).text());
+        btnDropdown.append("<span class='caret' style='margin-left: 10px;'></span>");
+
+        let currentId = $.trim($(this).attr("id"));
+        currentUserId = currentId.substr(currentId.indexOf("_") + 1, currentId.length);
+        currentUser = $("#user_" + currentUserId);
+        currentUser.delay(500).fadeIn();
+        userId = currentId;
+
+        checkInputsOnLoad(userId);
+    });
 
     // Checbox control
     $(":input[type='checkbox']").on("change", function () {
@@ -37,7 +57,7 @@ $(document).ready(function() {
         userId = $(this).attr("id");
         userId = userId.substr(userId.lastIndexOf("_") + 1);
 
-        checkAllInputs();
+        checkAllInputs(userId);
     });
 
     // Datepicker
@@ -60,31 +80,62 @@ $(document).ready(function() {
     });
 });
 
-function checkInputsOnLoad(){
+function checkInputsOnLoad(id){
 
-    $('[id^="user_"]').each(function () {
-        if(!$(this).attr("id").match("^user_registrationDate")){
-            let btn = $(this).next("div").find("button");
-            if($(this).val() !== "") btn.attr("class", "btn btn-success");
-            else btn.attr("class", "btn btn-danger");
-        }
-    });
+    if(id == null){
+        $(':input[id^="user_"]').each(function () {
+            if(!$(this).attr("id").match("^user_registrationDate")){
+                let btn = $(this).next("div").find("button");
+                if($(this).val() !== "") btn.attr("class", "btn btn-success");
+                else btn.attr("class", "btn btn-danger");
 
-    if(!checkAllInputs()) btnUpdate.prop("disabled", true);
+            }
+        });
+        //if(!checkAllInputs()) btnUpdate.prop("disabled", true);
+    }
+    else{
+        $(':input[id^="user_"]').each(function () {
+            if(!$(this).attr("id").match("^user_registrationDate")){
+                if($(this).attr("id").match(id)){
+                    let btn = $(this).next("div").find("button");
+                    if($(this).val() !== "") btn.attr("class", "btn btn-success");
+                    else btn.attr("class", "btn btn-danger");
+                }
+            }
+        });
+    }
+
+    checkAllInputs(id);
 }
 
-function checkAllInputs() {
+function checkAllInputs(id) {
 
+    console.log("Check all inputs = " + id);
     let checkup = true;
-    $('[id^="check_"]').each(function(){
-        if($(this).attr("class") === "btn btn-danger") {
-            checkup = false;
-            return false;
-        }
-    });
 
-    if(checkup) btnUpdate.prop("disabled", false);
-    else btnUpdate.prop("disabled", true);
+    if(id == null){
+        $('[id^="check_"]').each(function(){
+            if($(this).attr("class") === "btn btn-danger") {
+                checkup = false;
+                return false;
+            }
+        });
+        if(checkup) btnUpdate.prop("disabled", false);
+        else btnUpdate.prop("disabled", true);
+    }
+    else{
+        $('[id^="check_"]').each(function(){
+            if($(this).attr("id").match(id)){
+                console.log("input = " + $(this).attr("id"));
+                if($(this).attr("class") === "btn btn-danger") {
+                    checkup = false;
+                    return false;
+                }
+            }
+        });
+        if(checkup) $("#btnUpdate_" + id).prop("disabled", false);
+        else $("#btnUpdate_" + id).prop("disabled", true);
+    }
 }
 
 function checkAllCheckBoxes(){
@@ -123,7 +174,8 @@ function updateUser(){
     jsonObj.tel = $("#user_tel_" + userId).val();
     jsonObj.birthday = moment($("#user_birthday_" + userId).val(), "DD/MM/YYYY")
         .format("YYYY-MM-DD");
-    jsonObj.registrationDate = $("#user_registrationDate_" + userId).val();
+    jsonObj.registrationDate = moment.utc(
+        $("#user_registrationDate_" + userId).val(), "DD/MM/YYYY h:mm:ss").format();
     jsonObj.addressId = $("#user_address_" + userId).val();
     jsonObj.active = active;
 

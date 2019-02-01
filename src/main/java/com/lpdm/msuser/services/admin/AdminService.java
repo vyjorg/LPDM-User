@@ -84,6 +84,7 @@ public interface AdminService {
     List<AppUserBean> findUserByEmail(String email);
     Integer getProducerRoleId();
     List<AppUserBean> findUserByIdAndRole(int userId, int roleId);
+    AppUserBean updateUser(AppUserBean user);
 
     /**
      * Location
@@ -91,5 +92,5 @@ public interface AdminService {
 
     Address findAddressById(int id);
     List<City> findCitiesByZipCode(String zipCode);
-    Address saveNewAddress(Address address);
+    Address saveNewAddress(Address address, int userId);
 }

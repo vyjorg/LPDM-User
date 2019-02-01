@@ -56,9 +56,13 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Insert the address form -->
             <div data-th-replace="/admin/fragments/users/address/address_form.html :: address_form"></div>
+
+            <!-- Adding the update button -->
             <div class="alert text-center">
-                <button id="btnUpdate" type="button" class="btn btn-success" disabled>
+                <button data-th-id="'btnUpdate_' + ${user.id}" type="button" class="btn btn-success" disabled>
                     Mettre à jour l'adresse pour cet utilisateur
                 </button>
             </div>
