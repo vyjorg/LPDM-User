@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/identification")
@@ -150,10 +151,25 @@ public class LoginController {
 
     @PostMapping(value = "/edit")
     public String changeProfile(@ModelAttribute AppUserBean userToUpdate, Model model, HttpSession session){
-        logger.info("changeProfile userToUpdate" + userToUpdate.toString());
-
+        logger.info("changeProfile userToUpdate: " + userToUpdate.toString());
+        AppUserBean sessionUser = (AppUserBean)session.getAttribute("user");
+        userToUpdate.setId(sessionUser.getId());
         AppUserBean appUser = msUserProxy.updateAppUser(userToUpdate);
         model.addAttribute("user", appUser);
+        sessionController.addSessionAttributes(session, model);
+        return "users/profile";
+    }
+
+    @PostMapping(value = "/editroles")
+    public String changeRoles(@RequestParam List<String> appRole, Model model, HttpSession session){
+        AppUserBean sessionUser = (AppUserBean)session.getAttribute("user");
+
+        sessionUser.getAppRole().clear();
+
+        for(String role: appRole)
+            sessionUser.getAppRole().add(msUserProxy.getRoleById(Integer.parseInt(role)));
+        msUserProxy.updateAppUser(sessionUser);
+        session.setAttribute("user", sessionUser);
         sessionController.addSessionAttributes(session, model);
         return "users/profile";
     }

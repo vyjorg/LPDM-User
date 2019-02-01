@@ -1,6 +1,7 @@
 package com.lpdm.msuser.controllers;
 
 import com.lpdm.msuser.msauthentication.AppUserBean;
+import com.lpdm.msuser.msauthentication.enumeration.Access;
 import com.lpdm.msuser.proxies.MsAuthProxy;
 import com.lpdm.msuser.proxies.MsProductProxy;
 import org.slf4j.Logger;
@@ -46,8 +47,6 @@ public class SessionController {
         model.addAttribute("products", msProductProxy.listProduct());
         model.addAttribute("categories", msProductProxy.listCategories());
         model.addAttribute("roles", msAuthProxy.findAllRoles());
-
-        //model.addAttribute("producers", )
     }
 
     /**

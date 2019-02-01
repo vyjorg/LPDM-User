@@ -18,7 +18,6 @@ public class AppUserBean {
     private LocalDateTime registrationDate;
     private Integer addressId;
     private Boolean active;
-    private List<String> test;
 
     public AppUserBean() {
     }
@@ -109,14 +108,6 @@ public class AppUserBean {
 
     public void setActive(Boolean active) {
         this.active = active;
-    }
-
-    public List<String> getTest() {
-        return test;
-    }
-
-    public void setTest(List<String> test) {
-        this.test = test;
     }
 
     @Override
