@@ -1,5 +1,7 @@
 package com.lpdm.msuser.msproduct;
 
+import com.lpdm.msuser.msauthentication.AppUserBean;
+
 import java.util.List;
 
 public class ProductBean {

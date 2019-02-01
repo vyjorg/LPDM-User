@@ -19,7 +19,9 @@
     <p th:text="'Tél.: ' + ${user.getName()}"/>
     <p th:text="'Date d\'enregistrement: ' + ${user.getName()}"/>
     <p th:text="'Rôle(s): '"/>
-    <p th:each="role: ${user.getAppRole()}" th:text="' - ' + ${role.getRoleName()}">
+    <p th:each="role: ${user.getAppRole()}" th:text="' - ' + ${role.getRoleName()}"/>
+
+    <a th:value="'Editer l\'utilisateur'" th:href="@{'/identification/edit/' + ${user.getId()}}" th:text="'Editer l\'utilisateur' + ${user.getEmail()}"/>
 
 </section>
 

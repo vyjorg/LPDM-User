@@ -140,6 +140,7 @@ public class LoginController {
 
     @GetMapping("/edit/{id}")
     public String editProfileForm(@PathVariable("id") int id, Model model){
+        logger.info("entering profile");
         AppUserBean user = msUserProxy.getUserById(id);
         model.addAttribute("user", user);
         return "users/useredit";

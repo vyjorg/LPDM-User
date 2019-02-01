@@ -9,8 +9,11 @@
 </head>
 
 <body>
+
+<section layout:fragment="content">
+
 <form th:action="@{/identification/edit}" method="post">
-    <div><label> Nom : <input type="text" name="name" "/> </label></div>
+    <div><label> Nom : <input type="text" name="name"/> </label></div>
     <div><label> Prénom : <input type="text" name="firstName"/> </label></div>
     <div><label> Adresse email : <input type="email" name="email"/> </label></div>
     <div><label> Ancien mot de passe: <input type="password" name="oldpassword"> </label></div>
@@ -41,6 +44,10 @@
     <div><input type="submit" value="Sign In"/></div>
 </form>
 
+</section>
+
+<section layout:fragment="content-right">
+</section>
 
 
 
