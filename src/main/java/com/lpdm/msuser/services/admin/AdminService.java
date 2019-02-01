@@ -84,6 +84,7 @@ public interface AdminService {
     List<AppUserBean> findUserByEmail(String email);
     Integer getProducerRoleId();
     List<AppUserBean> findUserByIdAndRole(int userId, int roleId);
+    AppUserBean updateUser(AppUserBean user);
 
     /**
      * Location

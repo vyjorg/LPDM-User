@@ -21,8 +21,9 @@
                 </div>
             </div>
         </div>
-        <div data-th-each="product,status : ${result}" data-th-id="'product_'
-        + ${product.id}" data-th-style="${#lists.size(result) > 1} ? 'display:none;'">
+        <div data-th-each="product,status : ${result}"
+             data-th-id="'product_' + ${product.id}"
+             data-th-style="${#lists.size(result) > 1} ? 'display:none;'">
             <div data-th-if="${product.deactivate}" class="alert alert-danger">
                 Ce produit est désactivé
             </div>

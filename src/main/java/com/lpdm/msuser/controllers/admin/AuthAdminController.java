@@ -91,8 +91,7 @@ public class AuthAdminController {
 
         if(user.getRegistrationDate() == null) user.setRegistrationDate(LocalDateTime.now());
         log.info("User : " + user);
-        //return adminService.addNewUser(user);
-        return user;
+        return adminService.updateUser(user);
     }
 
     @GetMapping(value = {"/add", "/add/"})

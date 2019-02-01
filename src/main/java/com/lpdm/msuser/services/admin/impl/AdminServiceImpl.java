@@ -347,6 +347,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public AppUserBean updateUser(AppUserBean user) {
+        return authProxy.updateUser(user);
+    }
+
+    @Override
     public Address findAddressById(int id) {
         return locationProxy.findAddressById(id);
     }
