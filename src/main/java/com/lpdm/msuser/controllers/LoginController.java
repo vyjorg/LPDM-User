@@ -131,26 +131,29 @@ public class LoginController {
     }
 
     @GetMapping("/{id}")
-    public String profile(@PathVariable ("id") int id, Model model ){
+    public String profile(@PathVariable ("id") int id, Model model, HttpSession session){
         logger.info("entering profile");
         AppUserBean user = msUserProxy.getUserById(id);
         model.addAttribute("user", user);
+        sessionController.addSessionAttributes(session, model);
         return "users/profile";
     }
 
     @GetMapping("/edit/{id}")
-    public String editProfileForm(@PathVariable("id") int id, Model model){
+    public String editProfileForm(@PathVariable("id") int id, Model model, HttpSession session){
         logger.info("entering profile");
         AppUserBean user = msUserProxy.getUserById(id);
         model.addAttribute("user", user);
+        sessionController.addSessionAttributes(session, model);
         return "users/useredit";
     }
 
 
     @PostMapping(value = "/edit")
-    public String changeProfile(@ModelAttribute AppUserBean user, Model model){
+    public String changeProfile(@ModelAttribute AppUserBean user, Model model, HttpSession session){
         AppUserBean appUser = msUserProxy.updateAppUser(user);
-        model.addAttribute("user", user);
+        model.addAttribute("user", appUser);
+        sessionController.addSessionAttributes(session, model);
         return "users/profile";
     }
 
