@@ -1,7 +1,6 @@
 package com.lpdm.msuser.services.admin.impl;
 
 import com.lpdm.msuser.exception.EurekaInstanceNotFound;
-import com.lpdm.msuser.exception.NotFound404Exception;
 import com.lpdm.msuser.model.location.Address;
 import com.lpdm.msuser.model.location.City;
 import com.lpdm.msuser.model.storage.Storage;
@@ -12,6 +11,7 @@ import com.lpdm.msuser.model.admin.StorageUser;
 import com.lpdm.msuser.msauthentication.AppRoleBean;
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msorder.Coupon;
+import com.lpdm.msuser.msorder.Delivery;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
 import com.lpdm.msuser.msproduct.CategoryBean;
@@ -189,7 +189,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<Coupon> findAllCoupons() {
 
-        return orderProxy.getAllCoupons();
+        List<Coupon> couponList = null;
+
+        try { couponList = orderProxy.getAllCoupons(); }
+        catch (FeignException e){ log.warn(e.getMessage()); }
+
+        return couponList;
     }
 
     @Override
@@ -208,6 +213,35 @@ public class AdminServiceImpl implements AdminService {
     public boolean deleteCoupon(Coupon coupon) {
 
         return orderProxy.deleteCoupon(coupon);
+    }
+
+    @Override
+    public List<Delivery> findAllDeliveryMethods() {
+
+        List<Delivery> deliveryList = null;
+
+        try { deliveryList = orderProxy.findAllDeliveryMethods(); }
+        catch (FeignException e) { log.warn(e.getMessage()); }
+
+        return deliveryList;
+    }
+
+    @Override
+    public Delivery addNewDeliveryMethod(Delivery delivery) {
+
+        return orderProxy.addNewDeliveryMethod(delivery);
+    }
+
+    @Override
+    public Delivery updateDeliveryMethod(Delivery delivery) {
+
+        return orderProxy.updateDeliveryMethod(delivery);
+    }
+
+    @Override
+    public boolean deleteDeliveryMethod(Delivery delivery) {
+
+        return orderProxy.deleteDeliveryMethod(delivery);
     }
 
     @Override

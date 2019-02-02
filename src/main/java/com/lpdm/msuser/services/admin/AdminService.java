@@ -10,6 +10,7 @@ import com.lpdm.msuser.model.admin.StorageUser;
 import com.lpdm.msuser.msauthentication.AppRoleBean;
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msorder.Coupon;
+import com.lpdm.msuser.msorder.Delivery;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.PaymentBean;
 import com.lpdm.msuser.msproduct.CategoryBean;
@@ -55,6 +56,14 @@ public interface AdminService {
     Coupon addNewCoupon(Coupon coupon);
     Coupon updateCoupon(Coupon coupon);
     boolean deleteCoupon(Coupon coupon);
+
+    /**
+     * Delivery
+     */
+    List<Delivery> findAllDeliveryMethods();
+    Delivery addNewDeliveryMethod(Delivery delivery);
+    Delivery updateDeliveryMethod(Delivery delivery);
+    boolean deleteDeliveryMethod(Delivery delivery);
 
     /**
      * Store

@@ -6,7 +6,7 @@
         <div class="panel-heading">Ajouter un nouveau code promotionnel</div>
         <div class="panel-body">
             <form>
-                <table class="table">
+                <table class="table table-responsive">
                     <thead>
                     <tr>
                         <th class="text-center">Description</th>
@@ -18,21 +18,21 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>
+                        <td class="text-center">
                             <label>
                                 <input type="text"
                                        id="coupon_desc"
                                        class="form-control">
                             </label>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <label>
                                 <input type="text"
                                        id="coupon_amount"
                                        class="form-control">
                             </label>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <div class="[ form-group ]">
                                 <input type="checkbox"
                                        value="active"
@@ -46,14 +46,14 @@
                                 </div>
                             </div>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <label>
                                 <input type="text"
                                        id="coupon_code"
                                        class="form-control">
                             </label>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <button type="button"
                                     id="btnAddCoupon"
                                     class="btn btn-success">
@@ -69,7 +69,7 @@
     <div data-th-if="${couponList == null}" class="alert alert-warning">
         Aucun code promotionnel n'a été trouvé
     </div>
-    <table data-th-if="${couponList != null}" class="table table-hover">
+    <table data-th-if="${couponList != null}" class="table table-hover table-responsive">
         <thead>
         <tr>
             <th>Description</th>
