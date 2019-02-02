@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class HomeController {
@@ -43,19 +42,25 @@ public class HomeController {
         sessionController.addSessionAttributes(session,model);
         model.addAttribute("categories", productProxy.listCategories());
         model.addAttribute("producers", userProxy.getUsersByRole(3));
-        model.addAttribute( "products", productToBeDisplayed(productProxy.listProduct(), 2, 3));
+        model.addAttribute( "products", productToBeDisplayed(productProxy.listProduct(), 1 , 3));
 
         return "home";
     }
 
+    /**
+     * loads the message to be sent by the email
+     * @param email
+     * @param text
+     * @return confirmation page
+     */
     @PostMapping("/message")
-    public String message(@RequestParam String email, @RequestParam String text, HttpSession session, Model model){
+    public String message(@RequestParam String email, @RequestParam String text){
         logger.info(text + " de " + email);
         return "home";
     }
 
     /**
-     * select the products to be displayed at requested page
+     * selects the products to be displayed at requested page and according to number of products per page
      * @param productList
      * @param page
      * @param prodPerPage
@@ -73,5 +78,7 @@ public class HomeController {
         return toBeDisplayed;
 
     }
+
+
 
 }

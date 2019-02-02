@@ -212,7 +212,9 @@ select{
     padding: 2% auto;
     margin: 2% auto;
     min-height: 4em;
+}
 
-
+.arrow{
+    size: 2em;
 }
 

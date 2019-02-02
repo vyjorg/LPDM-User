@@ -1,5 +1,7 @@
 package com.lpdm.msuser.msauthentication;
 
+import com.lpdm.msuser.model.location.Address;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,6 +19,7 @@ public class AppUserBean {
     private LocalDate birthday;
     private LocalDateTime registrationDate;
     private Integer addressId;
+    private Address address;
     private Boolean active;
 
     public AppUserBean() {
@@ -108,6 +111,14 @@ public class AppUserBean {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override

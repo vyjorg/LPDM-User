@@ -1,8 +1,11 @@
 package com.lpdm.msuser.controllers;
 
+import com.lpdm.msuser.model.location.Address;
 import com.lpdm.msuser.msauthentication.AppUserBean;
+import com.lpdm.msuser.proxies.MsLocationProxy;
 import com.lpdm.msuser.proxies.MsProductProxy;
 import com.lpdm.msuser.proxies.MsUserProxy;
+import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,9 @@ public class LoginController {
 
     @Autowired
     MsProductProxy msProductProxy;
+
+    @Autowired
+    MsLocationProxy msLocationProxy;
 
     /**
      * displays the login form
@@ -135,6 +141,7 @@ public class LoginController {
         logger.info("entering profile");
         AppUserBean user = msUserProxy.getUserById(id);
         model.addAttribute("user", user);
+
         sessionController.addSessionAttributes(session, model);
         return "users/profile";
     }

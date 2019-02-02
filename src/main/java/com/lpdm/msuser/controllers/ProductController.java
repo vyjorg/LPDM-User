@@ -120,5 +120,16 @@ public class ProductController {
 
         return "home";
     }
+
+    public static List<ProductBean> productFilter(int typeId, List<ProductBean> productBeanList){
+        List<ProductBean> toBeDisplayed = new ArrayList<>();
+
+        for (ProductBean p : productBeanList) {
+            if (p.getId() == typeId)
+                toBeDisplayed.add(p);
+        }
+        return toBeDisplayed;
+
+    }
 }
 
