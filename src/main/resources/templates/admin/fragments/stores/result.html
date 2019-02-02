@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<div data-th-fragment="result">
+
+    <!-- Javascript file -->
+    <script data-th-src="@{/js/admin/store/store.js}" charset="UTF-8"></script>
+
+    <div data-th-if="${result instanceof T(java.util.List)}">
+        <div class="panel panel-default">
+            <div class="panel-heading">Résultat de la recherche</div>
+            <div class="panel-body">
+                <div class="panel panel-default" data-th-each="store : ${result}">
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <b>ID <span data-th-text="${store.id}"></span></b>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <label data-th-for="'name_' + ${store.id}"
+                                                   class="input-group-addon"
+                                                   style="width: 140px;">Nom :</label>
+                                            <input type="text"
+                                                   data-th-value="${store.name}"
+                                                   class="form-control"
+                                                   data-th-id="'name_' + ${store.id}">
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-default" type="button" disabled>
+                                                    <span class="glyphicon glyphicon-check" style="padding-left: 6px;"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <hr>
+                        <div data-th-if="${store.address == null}">
+                            <div class="alert alert-warning">
+                                Il n' y a aucune adresse d'enregistrée pour ce magasin
+                            </div>
+                        </div>
+                        <div data-th-replace="/admin/fragments/stores/address_form :: address_form"></div>
+                        <br>
+                        <div class="text-center">
+                            <button class="btn btn-success"
+                                    type="button"
+                                    data-th-id="'btn_update_' + ${store.id}"
+                                    disabled>
+                                Mettre à jour ce magasin
+                                <span class="glyphicon glyphicon-ok" style="padding-left: 6px;"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- ^^ End of list loop ^^ -->
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Adding error alert -->
+    <div data-th-if="${result instanceof T(java.lang.Integer)}" class="alert alert-danger">
+        <div data-th-replace="/admin/fragments/errors :: errors"></div>
+    </div>
+
+    <!-- Adding the console panel -->
+    <div data-th-replace="/admin/fragments/console :: console"></div>
+
+    <!-- Adding the modal -->
+    <div data-th-replace="/admin/fragments/modal :: modal"></div>
+</div>
+</html>

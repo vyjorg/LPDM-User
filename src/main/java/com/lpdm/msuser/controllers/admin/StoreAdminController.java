@@ -31,12 +31,14 @@ public class StoreAdminController {
 
     @GetMapping(value = DEFAULT_PATH)
     public ModelAndView adminStore(){
+
         return new ModelAndView(STORE_FRAGMENT_PATH)
                 .addObject(HTML_PAGE_TITLE, STORE_PAGE_TITLE);
     }
 
     @GetMapping(value = DEFAULT_SEARCH_PATH)
     public ModelAndView searchStore(){
+
         return new ModelAndView(STORE_FRAGMENT_PATH)
                 .addObject(HTML_PAGE_TITLE, STORE_PAGE_TITLE)
                 .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_SEARCH_PAGE)
@@ -71,12 +73,11 @@ public class StoreAdminController {
                 .addObject(HTML_RESULT_OBJECT, result);
     }
 
-    @PostMapping(value = {"/update", "/update/"})
-    public ModelAndView updateStore(@Valid @RequestBody Store store){
+    @PutMapping(value = {"/update", "/update/"})
+    public Store updateStore(@Valid @RequestBody Store store){
 
-        return new ModelAndView(STORE_FRAGMENT_PATH)
-                .addObject(HTML_PAGE_TITLE, STORE_PAGE_TITLE)
-                .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_SEARCH_PAGE)
-                .addObject(HTML_RESULT_OBJECT, store);
+        log.info("Update store : " + store);
+
+        return adminService.updateStore(store);
     }
 }

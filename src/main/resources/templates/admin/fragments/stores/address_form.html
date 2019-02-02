@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<div data-th-fragment="address_form">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <div class="input-group">
+                    <label data-th-for="'address_streetNumber_' + ${store.id}"
+                           class="input-group-addon" style="width: 104px;">
+                        Numéro
+                    </label>
+                    <input type="text"
+                           class="form-control"
+                           data-th-id="'address_streetNumber_' + ${store.id}"
+                           data-th-value="${store.address?.streetNumber}">
+                    <div class="input-group-btn">
+                        <button class="btn btn-danger"
+                                type="button"
+                                tabindex="-1"
+                                data-th-id="'check_number_' + ${store.id}"
+                                data-toggle="tooltip"
+                                data-placement="left"
+                                title="Saisir un numéro de voie"
+                                style="cursor: default;"
+                                disabled>
+                            <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="form-group">
+                <div class="input-group">
+                    <label data-th-for="'address_streetName_' + ${store.id}"
+                           class="input-group-addon" style="width: 104px;">
+                        Voie
+                    </label>
+                    <input type="text"
+                           class="form-control"
+                           data-th-id="'address_streetName_' + ${store.id}"
+                           data-th-value="${store.address?.streetName}">
+                    <div class="input-group-btn">
+                        <button class="btn btn-danger"
+                                type="button"
+                                tabindex="-1"
+                                data-th-id="'check_streetName_' + ${store.id}"
+                                data-toggle="tooltip"
+                                data-placement="left"
+                                title="Saisir un nom de voie"
+                                style="cursor: default;"
+                                disabled>
+                            <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <label data-th-for="'address_complement_' + ${store.id}"
+                   class="input-group-addon" style="width: 104px;">
+                Complément
+            </label>
+            <input type="text"
+                   class="form-control"
+                   data-th-id="'address_complement_' + ${store.id}"
+                   data-th-value="${store.address?.complement}">
+            <div class="input-group-btn">
+                <button class="btn btn-danger"
+                        type="button"
+                        tabindex="-1"
+                        data-th-id="'check_complement_' + ${store.id}"
+                        data-toggle="tooltip"
+                        data-placement="left"
+                        title="Saisir un complément de voie"
+                        style="cursor: default;"
+                        disabled>
+                    <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <div class="input-group">
+                    <label data-th-for="'address_zipCode_' + ${store.id}"
+                           class="input-group-addon" style="width: 104px;">
+                        Code postal
+                    </label>
+                    <input type="text"
+                           class="form-control"
+                           data-th-id="'address_zipCode_' + ${store.id}"
+                           data-th-value="${store.address?.city?.zipCode}">
+                    <div class="input-group-btn">
+                        <button class="btn btn-danger"
+                                type="button"
+                                tabindex="-1"
+                                data-th-id="'check_zipCode_' + ${store.id}"
+                                data-toggle="tooltip"
+                                data-placement="left"
+                                title="Saisir un code postal"
+                                style="cursor: default;"
+                                disabled>
+                            <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="input-group">
+                <label class="input-group-addon" style="width: 104px;">
+                    Ville
+                </label>
+                <select data-th-id="'address_cities_' + ${store.id}"
+                        class="form-control"
+                        style="cursor: pointer;"
+                        disabled>
+                    <option value=""
+                            data-th-text="${store.address?.city?.name}"
+                            disabled
+                            selected></option>
+                </select>
+                <div class="input-group-btn">
+                    <button class="btn btn-danger"
+                            type="button" tabindex="-1"
+                            data-th-id="'check_city_' + ${store.id}"
+                            data-toggle="tooltip"
+                            data-placement="left"
+                            title="Sélectionner un statut"
+                            style="cursor: default;"
+                            disabled>
+                        <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

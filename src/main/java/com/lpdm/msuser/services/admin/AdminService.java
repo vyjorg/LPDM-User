@@ -71,6 +71,7 @@ public interface AdminService {
      */
     Store findStoreById(int id) throws FeignException;
     List<Store> findStoreByName(String name) throws FeignException;
+    Store updateStore(Store store);
 
     /**
      * Eureka

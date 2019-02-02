@@ -27,10 +27,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -321,12 +318,25 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Store findStoreById(int id) throws FeignException {
+
         return storeProxy.findById(id);
     }
 
     @Override
     public List<Store> findStoreByName(String name) throws FeignException {
         return storeProxy.findByName(name);
+    }
+
+    @Override
+    public Store updateStore(Store store) {
+
+        Address address = locationProxy.saveNewAddress(store.getAddress());
+
+        log.info("new address = " + address);
+
+        store.setAddressId(address.getId());
+
+        return storeProxy.updateStore(store);
     }
 
     @Override
