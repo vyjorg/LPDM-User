@@ -22,18 +22,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr th:each="product:${order.getOrderedProducts()}">
                     <td>
                         <img src="https://cache.magazine-avantages.fr/data/photo/w1000_ci/1bj/calendrier-fruits-legumes.jpg"
                              class="img-thumbnail"
                              alt="Image"
                              style="height: 40px;">
-                        Tomates
+                        <a th:value="${product.getProduct().getId()}" th:href="@{'/products/' + ${product.getProduct().getId()}}" th:text="${product.getProduct().getName()}"
                     </td>
-                    <td>1</td>
-                    <td>10 €</td>
-                    <td>5.5%</td>
-                    <td>10.55 €</td>
+                    <td th:text="${product.getQuantity()}"/>
+                    <td th:text="${product.getProduct().getPrice()}"/>
+                    <td th:text="${product.getProduct().getTax()} + ' %'"/>
+                    <td th:text="${product.getProduct().getPrice()} * ${product.getQuantity()} * ${product.getProduct().getTax()}">
                     <td><span class="glyphicon glyphicon-trash"></span> </td>
                 </tr>
                 <tr>

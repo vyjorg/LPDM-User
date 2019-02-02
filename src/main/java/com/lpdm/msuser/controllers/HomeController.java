@@ -44,7 +44,7 @@ public class HomeController {
         model.addAttribute("producers", userProxy.getUsersByRole(3));
         model.addAttribute( "products", productToBeDisplayed(productProxy.listProduct(), 1 , 3));
 
-        return "home";
+        return "shop/fragments/home";//"home";
     }
 
     /**

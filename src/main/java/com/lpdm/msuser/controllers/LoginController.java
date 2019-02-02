@@ -9,6 +9,7 @@ import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -73,6 +74,7 @@ public class LoginController {
         logger.info("appUser : " + user.toString());
 
         logger.info("trying to login");
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(13)));
         AppUserBean appUser = msUserProxy.login(user);
 
         if (appUser.getId() == 0){
@@ -115,6 +117,7 @@ public class LoginController {
             model.addAttribute("error","L'utilisateur existe déjà");
         }else if(user.getPassword().equals(password2)){
             logger.info("Passwords match!");
+            user.setPassword(BCrypt.hashpw(user.getPassword(),BCrypt.gensalt(13)));
             msUserProxy.addUser(user);
             session.setAttribute("user", user);
             sessionController.addSessionAttributes(session, model);
@@ -144,7 +147,7 @@ public class LoginController {
         logger.info("user:" +  user.toString());
         session.setAttribute("user", user);
         sessionController.addSessionAttributes(session, model);
-        return "users/profile";
+        return "shop/fragments/account/account";//"users/profile";
     }
 
     @GetMapping("/edit/{id}")
