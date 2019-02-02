@@ -12,43 +12,42 @@
 
 <section layout:fragment="content">
 
-<form th:action="@{/identification/edit}" method="post">
-    <div><label> Nom : <input type="text" name="name"/> </label></div>
-    <div><label> Prénom : <input type="text" name="firstName"/> </label></div>
-    <div><label> Adresse email : <input type="email" name="email"/> </label></div>
-    <div><label> Ancien mot de passe: <input type="password" name="oldpassword"> </label></div>
-    <div><label> Mot de passe : <input type="password" name="password"/> </label></div>
-    <div><label> Confirmation du mot de passe : <input type="password" name="password2"/> </label></div>
+    <form class="form-group" th:action="@{/identification/edit}" method="post" th:object="${userToUpdate}">
+        <!-- <input type="hidden" th:field="*{id}" th:value="${user.getId()}"/> -->
+        <div><label> Nom : <input class="form-control" type="text" name="name" th:placeholder="${user.getName()}"/>
+        </label></div>
+        <div><label> Prénom : <input class="form-control" type="text" name="firstName"
+                                     th:placeholder="${user.getFirstName()}"/> </label></div>
+        <div><label> Adresse email : <input class="form-control" type="email" name="email"
+                                            th:placeholder="${user.getEmail()}"/> </label></div>
+        <hr/>
 
-    <p>Sélectionnez les rôles de l'utilisateur</p>
 
-    <div>
-        <input type="checkbox" id="client" name="client" checked>
-        <label for="client">Client</label>
-    </div>
-    <div>
-        <input type="checkbox" id="producteur" name="producteur">
-        <label for="producteur">Producteur</label>
-    </div>
-    <div>
-        <input type="checkbox" id="livreur" name="livreur">
-        <label for="livreur">Livreur</label>
-    </div>
-    <div>
-        <input type="checkbox" id="admin" name="admin">
-        <label for="admin">Admin</label>
-    </div>
+        <!-- <div><label> Veuillez entrer votre ancien mot de passe: <input type="password" name="oldpassword"> </label></div> -->
 
-    <div><label> Veuillez entrer votre ancien ncien mot de passe: <input type="password" name="oldpassword"> </label></div>
+        <div><input type="submit" class="form-control" value="Valider les modifications"/></div>
+    </form>
 
-    <div><input type="submit" value="Sign In"/></div>
-</form>
+    <form class="form-group" th:action="@{/identification/editroles}" method="post">
+        <label>Sélectionnez les rôles de l'utilisateur</label>
 
+        <div>
+            <ul>
+                <li th:each="role: ${roles}">
+
+                    <input type="checkbox" name="appRole" th:value="${role.getId()}"/> <!-- th:field="*{appRole}"  -->
+                    <label th:text="${role.getRoleName()}"/>
+
+                </li>
+            </ul>
+        </div>
+        <div><input type="submit" class="form-control" value="Valider les rôles"/></div>
+
+    </form>
 </section>
 
 <section layout:fragment="content-right">
 </section>
-
 
 
 </body>

@@ -1,8 +1,11 @@
 package com.lpdm.msuser.controllers;
 
+import com.lpdm.msuser.model.location.Address;
 import com.lpdm.msuser.msauthentication.AppUserBean;
+import com.lpdm.msuser.proxies.MsLocationProxy;
 import com.lpdm.msuser.proxies.MsProductProxy;
 import com.lpdm.msuser.proxies.MsUserProxy;
+import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/identification")
@@ -27,6 +31,9 @@ public class LoginController {
 
     @Autowired
     MsProductProxy msProductProxy;
+
+    @Autowired
+    MsLocationProxy msLocationProxy;
 
     /**
      * displays the login form
@@ -65,18 +72,17 @@ public class LoginController {
 
         logger.info("appUser : " + user.toString());
 
-        logger.info("Essai de login");
+        logger.info("trying to login");
         AppUserBean appUser = msUserProxy.login(user);
-        logger.info("appUser : " + appUser.toString());
 
         if (appUser.getId() == 0){
-            logger.info("Pas d'utilisateur trouvé");
+            logger.info("No user found");
             model.addAttribute("error", "Cet utilisateur n'est pas enregistré");
             return "identification/login";
 
         } else {
             logger.info("appUser : " + appUser.toString());
-            logger.info("Entrée de l'utilisateur dans la session");
+            logger.info("Entering user in session");
             session.setAttribute("user", appUser);
             sessionController.addSessionAttributes(session, model);
             return "home";
@@ -103,12 +109,12 @@ public class LoginController {
         }
         if (!user.getPassword().equals(password2)){
             logger.info("erreur de mdp: " + password2);
-            model.addAttribute("error", "Les mots de passe saisis sont différents");
+            model.addAttribute("error", "Les mots de passe sont différents");
         } else if (msUserProxy.getUserByEmail(user.getEmail()) != null) {
-            logger.info("L'utilisateur existe déjà");
+            logger.info("User already exists");
             model.addAttribute("error","L'utilisateur existe déjà");
         }else if(user.getPassword().equals(password2)){
-            logger.info("Mot de passe similaires");
+            logger.info("Passwords match!");
             msUserProxy.addUser(user);
             session.setAttribute("user", user);
             sessionController.addSessionAttributes(session, model);
@@ -131,26 +137,48 @@ public class LoginController {
     }
 
     @GetMapping("/{id}")
-    public String profile(@PathVariable ("id") int id, Model model ){
+    public String profile(@PathVariable ("id") int id, Model model, HttpSession session){
         logger.info("entering profile");
         AppUserBean user = msUserProxy.getUserById(id);
         model.addAttribute("user", user);
+        logger.info("user:" +  user.toString());
+        session.setAttribute("user", user);
+        sessionController.addSessionAttributes(session, model);
         return "users/profile";
     }
 
     @GetMapping("/edit/{id}")
-    public String editProfileForm(@PathVariable("id") int id, Model model){
+    public String editProfileForm(@PathVariable("id") int id, Model model, HttpSession session){
         logger.info("entering profile");
         AppUserBean user = msUserProxy.getUserById(id);
         model.addAttribute("user", user);
+        sessionController.addSessionAttributes(session, model);
         return "users/useredit";
     }
 
 
     @PostMapping(value = "/edit")
-    public String changeProfile(@ModelAttribute AppUserBean user, Model model){
-        AppUserBean appUser = msUserProxy.updateAppUser(user);
-        model.addAttribute("user", user);
+    public String changeProfile(@ModelAttribute AppUserBean userToUpdate, Model model, HttpSession session){
+        logger.info("changeProfile userToUpdate: " + userToUpdate.toString());
+        AppUserBean sessionUser = (AppUserBean)session.getAttribute("user");
+        userToUpdate.setId(sessionUser.getId());
+        AppUserBean appUser = msUserProxy.updateAppUser(userToUpdate);
+        model.addAttribute("user", appUser);
+        sessionController.addSessionAttributes(session, model);
+        return "users/profile";
+    }
+
+    @PostMapping(value = "/editroles")
+    public String changeRoles(@RequestParam List<String> appRole, Model model, HttpSession session){
+        AppUserBean sessionUser = (AppUserBean)session.getAttribute("user");
+
+        sessionUser.getAppRole().clear();
+
+        for(String role: appRole)
+            sessionUser.getAppRole().add(msUserProxy.getRoleById(Integer.parseInt(role)));
+        msUserProxy.updateAppUser(sessionUser);
+        session.setAttribute("user", sessionUser);
+        sessionController.addSessionAttributes(session, model);
         return "users/profile";
     }
 

@@ -1,5 +1,6 @@
 package com.lpdm.msuser.controllers;
 
+import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.proxies.MsProductProxy;
 import com.lpdm.msuser.proxies.MsUserProxy;
 import org.slf4j.Logger;
@@ -8,8 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class HomeController {
@@ -37,7 +42,43 @@ public class HomeController {
         sessionController.addSessionAttributes(session,model);
         model.addAttribute("categories", productProxy.listCategories());
         model.addAttribute("producers", userProxy.getUsersByRole(3));
+        model.addAttribute( "products", productToBeDisplayed(productProxy.listProduct(), 1 , 3));
+
         return "home";
     }
+
+    /**
+     * loads the message to be sent by the email
+     * @param email
+     * @param text
+     * @return confirmation page
+     */
+    @PostMapping("/message")
+    public String message(@RequestParam String email, @RequestParam String text){
+        logger.info(text + " de " + email);
+        return "home";
+    }
+
+    /**
+     * selects the products to be displayed at requested page and according to number of products per page
+     * @param productList
+     * @param page
+     * @param prodPerPage
+     * @return list of products to be displayed
+     */
+    public List<ProductBean> productToBeDisplayed(List<ProductBean> productList, int page, int prodPerPage){
+        List<ProductBean> toBeDisplayed = new ArrayList<>();
+        int startIndex = page * prodPerPage;
+
+        for(int i = startIndex; i < startIndex + prodPerPage; i++)
+            toBeDisplayed.add(productList.get(i));
+
+        logger.info(toBeDisplayed.toString());
+
+        return toBeDisplayed;
+
+    }
+
+
 
 }

@@ -13,15 +13,22 @@
 <section layout:fragment="content">
 
     <p th:text="'Nom: ' + ${user.getName()}"/>
-    <p th:text="'Prénom: ' + ${user.getName()}"/>
-    <p th:text="'Date de naissance: ' + ${user.getName()}"/>
-    <p th:text="'Email: ' + ${user.getName()}"/>
-    <p th:text="'Tél.: ' + ${user.getName()}"/>
-    <p th:text="'Date d\'enregistrement: ' + ${user.getName()}"/>
+    <p th:text="'Prénom: ' + ${user.getFirstName()}"/>
+    <p th:text="'Date de naissance: ' + ${user.getBirthday()}"/>
+    <p th:text="'Email: ' + ${user.getEmail()}"/>
+    <p th:text="'Tél.: ' + ${user.getTel()}"/>
+    <p th:text="'Date d\'enregistrement: ' + ${user.getRegistrationDate()}"/>
     <p th:text="'Rôle(s): '"/>
     <p th:each="role: ${user.getAppRole()}" th:text="' - ' + ${role.getRoleName()}"/>
+    <hr>
+    <p th:unless="!${user.getAddress()}" th:text="'Adresse: ' + ${user.getAddress().getStreetNumber()} + ', ' + ${user.getAddress().getStreetName()} + ',' + ${user.getAddress().getCity().getName()} "/>
 
-    <a th:value="'Editer l\'utilisateur'" th:href="@{'/identification/edit/' + ${user.getId()}}" th:text="'Editer l\'utilisateur' + ${user.getEmail()}"/>
+    <hr>
+
+    <!--  <p  th:text="'Adresse: ' + ${user.getAddress().getCity()}"/> + ',' + ${user.getAddress().getStreetName()} + ',' + ${user.getAddress().getCity().getName()} "/>
+      -->
+
+    <a th:value="'Editer l\'utilisateur'" th:href="@{'/identification/edit/' + ${user.getId()}}" th:text="'Editer l\'utilisateur ' + ${user.getEmail()}"/>
 
 </section>
 

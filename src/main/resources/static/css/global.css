@@ -1,11 +1,11 @@
 
 :root {
     --elsize: brown; /* elements width */
-    --margL: 10px; /* margin (left and right)*/
-    --margT: 10px; /* margin top */
-    --bRs: 1em; /* border radius */
-    --bckCol: #213370; /* background color*/
-    --br: black 2px solid; /* border  */
+    --margL: 5px; /* margin (left and right)*/
+    --margT: 5px; /* margin top */
+    --bRs: 0.2em; /* border radius */
+    --bckCol: black; /* background color*/
+    --br: black 15px solid; /* border  */
     --clr: floralwhite;
 }
 
@@ -13,8 +13,10 @@ h2:hover{
     color: chartreuse;
 }
 
-#mapid { height: 180px;
-            background-color: #88D5E9}
+#mapid {
+    height: 180px;
+    background-color: #88D5E9
+}
 
 th{
     padding-right: 10px
@@ -44,7 +46,7 @@ header, footer{
     /*border: black 2px solid;*/
     border-radius: var(--bRs);
     padding: 10px;
-    color:lightslategray;
+    color: #88D5E9;
 }
 
 header{
@@ -210,7 +212,9 @@ select{
     padding: 2% auto;
     margin: 2% auto;
     min-height: 4em;
+}
 
-
+.arrow{
+    size: 2em;
 }
 

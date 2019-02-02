@@ -1,9 +1,12 @@
 package com.lpdm.msuser.msauthentication;
 
+import java.util.List;
+
 public class AppRoleBean {
 
     private int id;
     private String roleName;
+
 
     public AppRoleBean() {
     }
