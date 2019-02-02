@@ -166,11 +166,13 @@ function updateProduct(id, deactivate){
     jsonObj.id = id;
     jsonObj.name = name;
     jsonObj.label = label;
-    jsonObj.tva = tva;
+    jsonObj.tax = tva;
     jsonObj.price = price;
     jsonObj.picture = picture;
     jsonObj.category = jsonCategory;
     jsonObj.deactivate = deactivate;
+
+    console.log(JSON.stringify(jsonObj));
 
     $.ajax({
         url: "/admin/products/update",

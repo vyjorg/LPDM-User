@@ -35,9 +35,17 @@
                                 <h4><i><b>Info producteur</b></i></h4>
                                 Nom : <span data-th-text="${product.producer.firstName}"></span>
                                 <span data-th-text="${product.producer.name}"></span><br>
-                                Address :<br>
                                 Email : <span data-th-text="${product.producer.email}"></span><br>
-                                Tel : <span data-th-text="${product.producer.tel}"></span>
+                                Tel : <span data-th-text="${product.producer.tel}"></span><br>
+                                Address : <span data-th-if="${product.producer.address == null}" data-th-text="'Non renseignée'"></span><br>
+                                <div data-th-if="${product.producer.address != null}">
+                                    <span data-th-text="${product.producer.address.streetNumber}"></span>
+                                    <span data-th-text="${product.producer.address.streetName}"></span><br>
+                                    <span data-th-text="${product.producer.address.city.zipCode}"></span>
+                                    <span data-th-text="${product.producer.address.city.name}"></span>
+                                </div>
+
+
                             </div>
                             <div class="input-group">
                                 <label data-th-for="'categoryList_' + ${product.id}" class="input-group-addon">

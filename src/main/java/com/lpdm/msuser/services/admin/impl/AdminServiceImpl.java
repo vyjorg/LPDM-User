@@ -213,6 +213,10 @@ public class AdminServiceImpl implements AdminService {
 
             AppUserBean producer = product.getProducer();
 
+            if (producer.getAddress() == null){
+                Address address = locationProxy.findAddressById(producer.getAddressId());
+                producer.setAddress(address);
+            }
         }
 
         return productProxy.listProductByProducerId(id);
@@ -240,9 +244,10 @@ public class AdminServiceImpl implements AdminService {
     public void updateProduct(ProductBean product) {
 
         ProductBean oldProduct = productProxy.findProduct(product.getId());
-        product.setListStock(oldProduct.getListStock());
-        if(product.getPicture() == null) product.setPicture(oldProduct.getPicture());
-        product.setProducerID(oldProduct.getProducer().getId());
+
+        if(product.getPicture() == null)
+            product.setPicture(oldProduct.getPicture());
+
         product.setProducer(oldProduct.getProducer());
 
         log.info("New Product : " + product.toString());
