@@ -195,6 +195,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<CategoryBean> findAllCategories() {
+
         return productProxy.listCategories();
     }
 
@@ -205,6 +206,15 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<ProductBean> findProductsByProducerId(int id) {
+
+        List<ProductBean> productList = productProxy.listProductByProducerId(id);
+
+        for(ProductBean product : productList){
+
+            AppUserBean producer = product.getProducer();
+
+        }
+
         return productProxy.listProductByProducerId(id);
     }
 
