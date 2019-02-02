@@ -21,6 +21,9 @@
                 <div data-th-if="${content=='couponPage'}">
                     <div data-th-replace="admin/fragments/orders/coupon/coupon :: coupon"></div>
                 </div>
+                <div data-th-if="${content=='deliveryPage'}">
+                    <div data-th-replace="admin/fragments/orders/delivery/delivery :: delivery"></div>
+                </div>
                 <div>
                     <canvas id="myChart"></canvas>
                 </div>
