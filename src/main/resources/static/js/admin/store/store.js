@@ -66,6 +66,13 @@ function checkAllInputs(id) {
 
     console.log("check " + id);
 
+    $(':input[id^="address_"]').each(function () {
+
+        let btn = $(this).next("div").find("button");
+        if($(this).val() !== "") btn.attr("class", "btn btn-success");
+        else btn.attr("class", "btn btn-danger");
+    });
+
     let disabled = false;
     $('[id^="check_"]').each(function(){
         if($(this).attr("id").match(id)){
