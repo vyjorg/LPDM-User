@@ -20,17 +20,18 @@ import com.netflix.discovery.shared.Application;
 import feign.FeignException;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AdminService {
 
     /**
      * Order
      */
-    List<OrderBean> findOrderById(int id) throws FeignException;
-    List<OrderBean> findAllOrdersByUserId(int id);
-    List<OrderBean> findAllOrdersByUserEmail(String email);
-    List<OrderBean> findAllOrdersByUserLastName(String lastName);
-    List<OrderBean> findOrderByInvoiceReference(String ref);
+    Map<OrderBean, List<String>> findOrderById(int id) throws FeignException;
+    Map<OrderBean, List<String>> findAllOrdersByUserId(int id);
+    Map<OrderBean, List<String>> findAllOrdersByUserEmail(String email);
+    Map<OrderBean, List<String>> findAllOrdersByUserLastName(String lastName);
+    Map<OrderBean, List<String>> findOrderByInvoiceReference(String ref);
     List<PaymentBean> findAllPayment();
     OrderStats findOrderStatsByYear(Integer year);
     OrderStats getAverageStats(OrderStats stats1, OrderStats stats2);

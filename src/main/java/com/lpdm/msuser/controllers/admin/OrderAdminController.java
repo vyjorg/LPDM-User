@@ -5,6 +5,7 @@ import com.lpdm.msuser.model.admin.SearchDates;
 import com.lpdm.msuser.model.admin.SearchForm;
 import com.lpdm.msuser.msorder.Coupon;
 import com.lpdm.msuser.msorder.Delivery;
+import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.enumeration.StatusEnum;
 import com.lpdm.msuser.services.admin.AdminService;
 import feign.FeignException;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import static com.lpdm.msuser.utils.admin.ValueType.*;
@@ -92,7 +94,6 @@ public class OrderAdminController {
 
                 case SEARCH_ORDER_BY_USER_EMAIL:
                     result = adminService.findAllOrdersByUserEmail(keyword);
-                    log.info(result.toString());
                     selectedTab = "customer";
                     break;
 

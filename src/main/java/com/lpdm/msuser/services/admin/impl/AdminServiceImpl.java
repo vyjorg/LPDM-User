@@ -10,10 +10,7 @@ import com.lpdm.msuser.model.admin.SearchDates;
 import com.lpdm.msuser.model.admin.StorageUser;
 import com.lpdm.msuser.msauthentication.AppRoleBean;
 import com.lpdm.msuser.msauthentication.AppUserBean;
-import com.lpdm.msuser.msorder.Coupon;
-import com.lpdm.msuser.msorder.Delivery;
-import com.lpdm.msuser.msorder.OrderBean;
-import com.lpdm.msuser.msorder.PaymentBean;
+import com.lpdm.msuser.msorder.*;
 import com.lpdm.msuser.msproduct.CategoryBean;
 import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.msproduct.StockBean;
@@ -29,7 +26,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,33 +66,94 @@ public class AdminServiceImpl implements AdminService {
         this.locationProxy = locationProxy;
     }
 
-    @Override
-    public List<OrderBean> findOrderById(int id) throws FeignException {
-        List<OrderBean> orderList = new ArrayList<>();
-        orderList.add(orderProxy.getOrderById(id));
-        return orderList;
+    private List<String> calculateSubTotal(OrderBean order){
+
+        double subTotal = 0;
+        double subTax = 0;
+
+        List<String> resultList = new ArrayList<>();
+        for(OrderedProductBean orderedProduct : order.getOrderedProducts()){
+
+            double productTotal = orderedProduct.getPrice() * orderedProduct.getQuantity();
+            double taxTotal = productTotal * (orderedProduct.getTax() / 100);
+
+            subTotal += productTotal;
+            subTax += taxTotal;
+        }
+
+        subTotal = Math.round(subTotal * 100.0) / 100.0;
+        subTax = Math.round(subTax * 100.0) / 100.0;
+
+        double coupon = 0;
+        if(order.getCoupon() != null) coupon = order.getCoupon().getAmount();
+
+        double total = subTotal + subTax + coupon;
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        resultList.add(df.format(subTotal));
+        resultList.add(df.format(subTax));
+        resultList.add(df.format(coupon));
+        resultList.add(df.format(total));
+
+        return resultList;
     }
 
     @Override
-    public List<OrderBean> findAllOrdersByUserId(int id) {
-        return orderProxy.findAllByUserId(id);
+    public Map<OrderBean, List<String>> findOrderById(int id) throws FeignException {
+
+        Map<OrderBean, List<String>> resultMap = new HashMap<>();
+
+        OrderBean order = orderProxy.getOrderById(id);
+        resultMap.put(order, calculateSubTotal(order));
+
+        return resultMap;
     }
 
     @Override
-    public List<OrderBean> findAllOrdersByUserEmail(String email) {
-        return orderProxy.findAllByUserEmail(email);
+    public Map<OrderBean, List<String>> findAllOrdersByUserId(int id) {
+
+        List<OrderBean> orderList = orderProxy.findAllByUserId(id);
+        Map<OrderBean, List<String>> resultMap = new HashMap<>();
+
+        for(OrderBean order : orderList)
+            resultMap.put(order, calculateSubTotal(order));
+
+        return resultMap;
     }
 
     @Override
-    public List<OrderBean> findAllOrdersByUserLastName(String lastName) {
-        return orderProxy.findAllByUserLastName(lastName);
+    public Map<OrderBean, List<String>> findAllOrdersByUserEmail(String email) {
+
+        List<OrderBean> orderList = orderProxy.findAllByUserEmail(email);
+        Map<OrderBean, List<String>> resultMap = new HashMap<>();
+
+        for(OrderBean order : orderList)
+            resultMap.put(order, calculateSubTotal(order));
+
+        return resultMap;
     }
 
     @Override
-    public List<OrderBean> findOrderByInvoiceReference(String ref) {
-        List<OrderBean> orderList = new ArrayList<>();
-        orderList.add(orderProxy.findByInvoiceReference(ref));
-        return orderList;
+    public Map<OrderBean, List<String>> findAllOrdersByUserLastName(String lastName) {
+
+        List<OrderBean> orderList = orderProxy.findAllByUserLastName(lastName);
+        Map<OrderBean, List<String>> resultMap = new HashMap<>();
+
+        for(OrderBean order : orderList)
+            resultMap.put(order, calculateSubTotal(order));
+
+        return resultMap;
+    }
+
+    @Override
+    public Map<OrderBean, List<String>> findOrderByInvoiceReference(String ref) {
+
+        OrderBean order = orderProxy.findByInvoiceReference(ref);
+        Map<OrderBean, List<String>> resultMap = new HashMap<>();
+        resultMap.put(order, calculateSubTotal(order));
+
+        return resultMap;
     }
 
     @Override
