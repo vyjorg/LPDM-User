@@ -141,7 +141,8 @@ public class LoginController {
         logger.info("entering profile");
         AppUserBean user = msUserProxy.getUserById(id);
         model.addAttribute("user", user);
-
+        logger.info("user:" +  user.toString());
+        session.setAttribute("user", user);
         sessionController.addSessionAttributes(session, model);
         return "users/profile";
     }

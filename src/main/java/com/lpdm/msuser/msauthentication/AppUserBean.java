@@ -134,6 +134,7 @@ public class AppUserBean {
                 ", birthday=" + birthday +
                 ", registrationDate=" + registrationDate +
                 ", addressId=" + addressId +
+                ", address=" + address +
                 ", active=" + active +
                 '}';
     }

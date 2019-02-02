@@ -21,10 +21,12 @@
     <p th:text="'Rôle(s): '"/>
     <p th:each="role: ${user.getAppRole()}" th:text="' - ' + ${role.getRoleName()}"/>
     <hr>
-    <p th:unless="!${address}" th:text="'Adresse: ' + ${address.getStreetNumber()} + ',' + ${address.getStreetName().} + ',' + ${address.getCity()} "/>
+    <p th:unless="!${user.getAddress()}" th:text="'Adresse: ' + ${user.getAddress().getStreetNumber()} + ', ' + ${user.getAddress().getStreetName()} + ',' + ${user.getAddress().getCity().getName()} "/>
+
     <hr>
 
-
+    <!--  <p  th:text="'Adresse: ' + ${user.getAddress().getCity()}"/> + ',' + ${user.getAddress().getStreetName()} + ',' + ${user.getAddress().getCity().getName()} "/>
+      -->
 
     <a th:value="'Editer l\'utilisateur'" th:href="@{'/identification/edit/' + ${user.getId()}}" th:text="'Editer l\'utilisateur ' + ${user.getEmail()}"/>
 
