@@ -157,7 +157,7 @@ public class OrderController {
 
         sessionController.addSessionAttributes(session, model);
 
-        return "home";
+        return "shop/fragments/home";
     }
 
     /**
@@ -196,7 +196,7 @@ public class OrderController {
 
         model.addAttribute("products", msProductProxy.listProduct());
         sessionController.addSessionAttributes(session, model);
-        return "home";
+        return "shop/fragments/home";
     }
 
     @GetMapping("/paypalsuccess")

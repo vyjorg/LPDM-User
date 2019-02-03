@@ -1,6 +1,5 @@
 package com.lpdm.msuser.controllers;
 
-import com.lpdm.msuser.model.location.Address;
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.proxies.MsLocationProxy;
 import com.lpdm.msuser.proxies.MsProductProxy;
@@ -9,7 +8,6 @@ import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,7 +44,7 @@ public class LoginController {
     public String loginForm(HttpSession session, Model model){
         logger.info("Affichage du formulaire de login");
         sessionController.addSessionAttributes(session, model);
-        return "identification/login";
+        return "shop/fragments/account/login";
     }
 
     /**
@@ -58,7 +56,7 @@ public class LoginController {
     @GetMapping("/registration")
     public String registrationForm(HttpSession session, Model model){
         logger.info("Affichage du formulaire d'enregistrement");
-        return "identification/registration";
+        return "shop/fragments/account/login";
     }
 
     /**
@@ -71,23 +69,29 @@ public class LoginController {
     @PostMapping("/login")
     public String login(@ModelAttribute AppUserBean user, Model model, HttpSession session){
 
+        AppUserBean appUser = null;
         logger.info("appUser : " + user.toString());
 
         logger.info("trying to login");
-        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(13)));
-        AppUserBean appUser = msUserProxy.login(user);
+        try {
+            appUser = msUserProxy.login(user);
+        }catch (FeignException e){
+            model.addAttribute("error", "Nom d'utiisateur ou mot de passe invalide");
+            return "shop/fragments/account/login";
+        }
+
 
         if (appUser.getId() == 0){
             logger.info("No user found");
             model.addAttribute("error", "Cet utilisateur n'est pas enregistré");
-            return "identification/login";
+            return "shop/fragments/account/login";
 
         } else {
             logger.info("appUser : " + appUser.toString());
             logger.info("Entering user in session");
             session.setAttribute("user", appUser);
             sessionController.addSessionAttributes(session, model);
-            return "home";
+            return "shop/fragments/home";
         }
     }
 
@@ -107,7 +111,7 @@ public class LoginController {
         logger.info("Utilisateur: " + user.getFirstName() + " " + user.getName() + " " + user.getEmail() + " " + user.getPassword());
 
         if (bindingResult.hasErrors()) {
-            return "/identification/registration";
+            return "shop/fragments/account/login";
         }
         if (!user.getPassword().equals(password2)){
             logger.info("erreur de mdp: " + password2);
@@ -117,15 +121,14 @@ public class LoginController {
             model.addAttribute("error","L'utilisateur existe déjà");
         }else if(user.getPassword().equals(password2)){
             logger.info("Passwords match!");
-            user.setPassword(BCrypt.hashpw(user.getPassword(),BCrypt.gensalt(13)));
             msUserProxy.addUser(user);
             session.setAttribute("user", user);
             sessionController.addSessionAttributes(session, model);
-            return "home";
+            return "shop/fragments/home";
         }
         sessionController.addSessionAttributes(session, model);
 
-        return "/identification/registration";
+        return "shop/fragments/account/login";
     }
 
     /**
@@ -134,9 +137,10 @@ public class LoginController {
      * @return home page template
      */
     @GetMapping("/logout")
-    public String logout(HttpSession session){
+    public String logout(HttpSession session, Model model){
         sessionController.logout(session);
-        return "home";
+        sessionController.addSessionAttributes(session, model);
+        return "shop/fragments/home";
     }
 
     @GetMapping("/{id}")
@@ -147,7 +151,7 @@ public class LoginController {
         logger.info("user:" +  user.toString());
         session.setAttribute("user", user);
         sessionController.addSessionAttributes(session, model);
-        return "shop/fragments/account/account";//"users/profile";
+        return "shop/fragments/account/account";
     }
 
     @GetMapping("/edit/{id}")
@@ -156,7 +160,7 @@ public class LoginController {
         AppUserBean user = msUserProxy.getUserById(id);
         model.addAttribute("user", user);
         sessionController.addSessionAttributes(session, model);
-        return "users/useredit";
+        return "shop/fragments/account/account.html";
     }
 
 

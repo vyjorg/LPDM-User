@@ -18,7 +18,16 @@
                         <ul class="list-group">
 
                             <!-- User last name -->
+                            <!-- <div th:text="${error}"/>
 
+                            <form th:action="@{/identification/login}" method="post">
+                                <div><label> User Name : <input type="email" name="email"/> </label></div>
+                                <div><label> Password: <input type="password" name="password"/> </label></div>
+                                <div><input type="submit" value="Sign In"/></div>
+                            </form>
+
+                            <a href="/identification/registration">Nouvel enregistrement</a>
+                            -->
                             <li class="list-group-item" style="height: 56px; border: none;">
                                 <div class="form-group">
                                     <div class="input-group">
@@ -27,8 +36,9 @@
                                         </label>
                                         <input type="text"
                                                class="form-control"
-                                               id="user_lastName"
-                                               required>
+                                               id="name"
+                                               required
+                                               name="name">
                                         <div class="input-group-btn">
                                             <button class="btn btn-danger"
                                                     id="check_name"
@@ -39,7 +49,8 @@
                                                     title="Saisir le nom de famille"
                                                     style="cursor: default;"
                                                     disabled>
-                                                <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                                <span class="glyphicon glyphicon-check" aria-hidden="true"
+                                                      style="padding-left: 6px;"></span>
                                             </button>
                                         </div>
                                     </div>
@@ -55,6 +66,7 @@
                                             E-mail
                                         </label>
                                         <input type="email"
+                                               name="email"
                                                class="form-control"
                                                id="user_email"
                                                required>
@@ -68,7 +80,8 @@
                                                     title="Saisir une adresse e-mail"
                                                     style="cursor: default;"
                                                     disabled>
-                                                <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                                <span class="glyphicon glyphicon-check" aria-hidden="true"
+                                                      style="padding-left: 6px;"></span>
                                             </button>
                                         </div>
                                     </div>
@@ -84,6 +97,7 @@
                                             Mot de passe
                                         </label>
                                         <input type="password"
+                                               name="password"
                                                class="form-control"
                                                id="user_password"
                                                required>
@@ -97,7 +111,8 @@
                                                     title="Saisir un mot de passe"
                                                     style="cursor: default;"
                                                     disabled>
-                                                <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
+                                                <span class="glyphicon glyphicon-check" aria-hidden="true"
+                                                      style="padding-left: 6px;"></span>
                                             </button>
                                         </div>
                                     </div>
@@ -125,79 +140,90 @@
                     <h6>Si vous avez des questions, n'hésitez pas à <a href="#">nous contacter</a></h6>
                     <br>
                     <div class="row">
-                        <ul class="list-group">
+                        <form action="/identification/login" method="post">
+                            <ul class="list-group">
 
-                            <!-- User email -->
+                                <!-- User email -->
 
-                            <li class="list-group-item" style="height: 56px; border: none;">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <label for="user_email" class="input-group-addon" style="width: 150px;">
-                                            E-mail
-                                        </label>
-                                        <input type="email"
-                                               class="form-control"
-                                               id="login_email"
-                                               required>
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-danger"
-                                                    id="check_login_email"
-                                                    type="button"
-                                                    tabindex="-1"
-                                                    data-toggle="tooltip"
-                                                    data-placement="left"
-                                                    title="Saisir une adresse e-mail"
-                                                    style="cursor: default;"
-                                                    disabled>
-                                                <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
-                                            </button>
+                                <li class="list-group-item" style="height: 56px; border: none;">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label for="user_email" class="input-group-addon" style="width: 150px;">
+                                                E-mail
+                                            </label>
+                                            <input type="email"
+                                                   class="form-control"
+                                                   id="login_email"
+                                                   name="email"
+                                                   required>
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-danger"
+                                                        id="check_login_email"
+                                                        type="button"
+                                                        tabindex="-1"
+                                                        data-toggle="tooltip"
+                                                        data-placement="left"
+                                                        title="Saisir une adresse e-mail"
+                                                        style="cursor: default;"
+                                                        disabled>
+                                                <span class="glyphicon glyphicon-check" aria-hidden="true"
+                                                      style="padding-left: 6px;"></span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
 
-                            <!-- User password -->
+                                <!-- User password -->
 
-                            <li class="list-group-item" style="height: 56px; border: none;">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <label for="user_password" class="input-group-addon" style="width: 150px;">
-                                            Mot de passe
-                                        </label>
-                                        <input type="password"
-                                               class="form-control"
-                                               id="login_password"
-                                               required>
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-danger"
-                                                    id="check_login_password"
-                                                    type="button"
-                                                    tabindex="-1"
-                                                    data-toggle="tooltip"
-                                                    data-placement="left"
-                                                    title="Saisir un mot de passe"
-                                                    style="cursor: default;"
-                                                    disabled>
-                                                <span class="glyphicon glyphicon-check" aria-hidden="true" style="padding-left: 6px;"></span>
-                                            </button>
+                                <li class="list-group-item" style="height: 56px; border: none;">
+                                    <div class="form-group">
+                                        <div class="alert alert-default text-center">
+
+                                            <div class="input-group">
+                                                <label for="user_password" class="input-group-addon"
+                                                       style="width: 150px;">
+                                                    Mot de passe
+                                                </label>
+                                                <input type="password"
+                                                       name="password"
+                                                       class="form-control"
+                                                       id="login_password"
+                                                       required>
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-danger"
+                                                            id="check_login_password"
+                                                            type="button"
+                                                            tabindex="-1"
+                                                            data-toggle="tooltip"
+                                                            data-placement="left"
+                                                            title="Saisir un mot de passe"
+                                                            style="cursor: default;"
+                                                            disabled>
+                                                        <span class="glyphicon glyphicon-check" aria-hidden="true"
+                                                              style="padding-left: 6px;"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+
                                         </div>
+                                        <button type="submit" class="btn btn-success" id="btn_login">
+                                            Connexion à mon compte
+                                        </button>
+                                        <p th:unless="!${error}" th:text="${error}"/>
                                     </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <br>
-                    <div class="alert alert-default text-center">
-                        <form action="/shop/account">
-                            <button type="submit" class="btn btn-success" id="btn_login">
-                                Connexion à mon compte
-                            </button>
+
+                                </li>
+                            </ul>
                         </form>
                     </div>
+                    <br>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

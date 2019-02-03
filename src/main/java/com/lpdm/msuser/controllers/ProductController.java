@@ -118,7 +118,7 @@ public class ProductController {
         sessionController.addSessionAttributes(session, model);
         model.addAttribute("products", products);
 
-        return "home";
+        return "shop/fragments/home";
     }
 
     public static List<ProductBean> productFilter(int typeId, List<ProductBean> productBeanList){
