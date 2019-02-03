@@ -27,4 +27,9 @@ public interface MsStoreProxy {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     Store updateStore(@RequestBody Store store);
+
+    @PostMapping(path = "${lpdm.store.name}/admin/add",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    Store addNewStore(@RequestBody Store store);
 }

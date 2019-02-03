@@ -340,6 +340,16 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public Store addNewStore(Store store) {
+
+        Address address = locationProxy.saveNewAddress(store.getAddress());
+
+        store.setAddressId(address.getId());
+
+        return storeProxy.addNewStore(store);
+    }
+
+    @Override
     public List<Application> findAllApps() throws FeignException {
 
         return discoveryClient.getApplications().getRegisteredApplications();
