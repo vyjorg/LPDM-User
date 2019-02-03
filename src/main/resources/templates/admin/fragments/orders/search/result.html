@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <div data-th-fragment="search_result(result)">
-    <div data-th-if="${result instanceof T(java.util.List)}">
-        <div data-th-if="${#lists.size(result)} > 1">
+    <div data-th-if="${result instanceof T(java.util.Map)}">
+        <div data-th-if="${#maps.size(result)} > 1">
             <div class="alert alert-info">
                 <div class="dropdown">
                     <button class="btn btn-default dropdown-toggle" type="button"
@@ -20,19 +20,19 @@
                 </div>
             </div>
         </div>
-        <div data-th-each="order,status : ${result}" data-th-id="'order_' + ${order.id}" data-th-style="${#lists.size(result) > 1} ? 'display:none;'">
+        <div data-th-each="order,status : ${result}" data-th-id="'order_' + ${order.key.id}" data-th-style="${#maps.size(result) > 1} ? 'display:none;'">
             <ul class="list-group">
                 <li class="list-group-item" style="border: none;display: block;">
                     <div class="row">
                         <div class="col-sm-3">
-                            <h2><b>ID <span data-th-text="${order.id}"></span></b></h2>
+                            <h2><b>ID <span data-th-text="${order.key.id}"></span></b></h2>
                         </div>
                         <div class="col-sm-5 pull-right">
                             <div class="alert alert-info">
-                                Identifiant : <span data-th-text="${order.customer.id}"></span><br>
-                                Nom <span data-th-text="${order.customer.firstName}"></span><br>
+                                Identifiant : <span data-th-text="${order.key.customer.id}"></span><br>
+                                Nom <span data-th-text="${order.key.customer.firstName}"></span><br>
                                 Address :<br>
-                                Email : <span data-th-text="${order.customer.email}"></span><br>
+                                Email : <span data-th-text="${order.key.customer.email}"></span><br>
                                 Tel :
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                             Date de commande
                         </label>
                         <input type="text" id="orderDate" class="form-control"
-                               data-th-value="${#temporals.format(order.orderDate, 'dd / MM / yyyy à HH:mm:ss')}"
+                               data-th-value="${#temporals.format(order.key.orderDate, 'dd / MM / yyyy à HH:mm:ss')}"
                                disabled>
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="submit" disabled>
@@ -59,7 +59,7 @@
                             Statut
                         </label>
                         <input type="text" id="orderStatus" class="form-control"
-                               data-th-value="${order.status}"
+                               data-th-value="${order.key.status}"
                                disabled>
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="submit" disabled>
@@ -74,7 +74,22 @@
                             Paiement
                         </label>
                         <input type="text" id="orderPayment" class="form-control"
-                               data-th-value="${order.payment.label}"
+                               data-th-value="${order.key.payment.label}"
+                               disabled>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit" disabled>
+                                <span class="glyphicon glyphicon-check" style="padding-left: 6px;"></span>
+                            </button>
+                        </span>
+                    </div>
+                </li>
+                <li class="list-group-item" style="height: 56px; border: none;">
+                    <div class="input-group">
+                        <label for="orderDelivery" class="input-group-addon" style="width: 160px;">
+                            Mode de livraison
+                        </label>
+                        <input type="text" id="orderDelivery" class="form-control"
+                               data-th-value="${order.key.delivery.method}"
                                disabled>
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="submit" disabled>
@@ -84,14 +99,14 @@
                     </div>
                 </li>
                 <li class="list-group-item text-center" style="height: 56px; border: none;"
-                    data-th-if="${order.status != 'CART' AND order.status != 'VALIDATE'}">
+                    data-th-if="${order.key.status != 'CART' AND order.key.status != 'VALIDATE'}">
                     <button class="btn btn-warning" type="submit">
                         Afficher la facture
                         <span class="glyphicon glyphicon-list-alt" style="padding-left: 6px;"></span>
                     </button>
                 </li>
             </ul>
-            <div data-th-replace="admin/fragments/orders/search/result/products :: products(${order}, ${order.total})"></div>
+            <div data-th-replace="admin/fragments/orders/search/result/products :: products"></div>
         </div>
     </div>
     <div data-th-if="${result instanceof T(java.lang.Integer)}" class="alert alert-danger">

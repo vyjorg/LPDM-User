@@ -29,7 +29,7 @@ public interface MsOrderProxy {
     List<OrderBean> findAllByUserId(@PathVariable("id") int id);
 
     // Get all payments
-    @GetMapping(value = "/ms-order/orders/payments", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "${lpdm.order.name}/orders/payments", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     List<PaymentBean> getPaymentList();
 
     // Search orders by customer email
@@ -96,4 +96,26 @@ public interface MsOrderProxy {
     // Check a coupon
     @GetMapping(value = "${lpdm.order.name}/orders/coupon/check")
     Coupon checkCoupon(@RequestParam String code);
+
+    // Get all delivery methods
+    @GetMapping(value = "${lpdm.order.name}/orders/delivery/all",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    List<Delivery> findAllDeliveryMethods();
+
+    // Add new delivery method
+    @PostMapping(value = "${lpdm.order.name}/admin/delivery/add",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    Delivery addNewDeliveryMethod(@RequestBody Delivery delivery);
+
+    // Update a delivery method
+    @PutMapping(value = "${lpdm.order.name}/admin/delivery/update",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    Delivery updateDeliveryMethod(@RequestBody Delivery delivery);
+
+    // Delete a delivery method
+    @DeleteMapping(value = "${lpdm.order.name}/admin/delivery/delete",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    boolean deleteDeliveryMethod(@RequestBody Delivery delivery);
 }

@@ -4,6 +4,8 @@ import com.lpdm.msuser.model.admin.OrderStats;
 import com.lpdm.msuser.model.admin.SearchDates;
 import com.lpdm.msuser.model.admin.SearchForm;
 import com.lpdm.msuser.msorder.Coupon;
+import com.lpdm.msuser.msorder.Delivery;
+import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.msorder.enumeration.StatusEnum;
 import com.lpdm.msuser.services.admin.AdminService;
 import feign.FeignException;
@@ -92,7 +94,6 @@ public class OrderAdminController {
 
                 case SEARCH_ORDER_BY_USER_EMAIL:
                     result = adminService.findAllOrdersByUserEmail(keyword);
-                    log.info(result.toString());
                     selectedTab = "customer";
                     break;
 
@@ -144,15 +145,10 @@ public class OrderAdminController {
     @GetMapping(value = {"/coupon", "/coupon/"})
     public ModelAndView getAllCoupons(){
 
-        List<Coupon> couponList = null;
-
-        try { couponList = adminService.findAllCoupons(); }
-        catch (FeignException e) { log.warn(e.getMessage()); }
-
         return new ModelAndView(ORDER_FRAGMENT_PATH)
                 .addObject(HTML_PAGE_TITLE, ORDER_PAGE_TITLE)
                 .addObject(HTML_PAGE_CONTENT, "couponPage")
-                .addObject("couponList", couponList)
+                .addObject("couponList", adminService.findAllCoupons())
                 .addObject("coupon", new Coupon());
     }
 
@@ -178,5 +174,38 @@ public class OrderAdminController {
         log.info("Delete coupon : " + coupon);
 
         return adminService.deleteCoupon(coupon);
+    }
+
+    @GetMapping(value = {"/delivery", "/delivery/"})
+    public ModelAndView getAllDeliveryMethods(){
+
+        return new ModelAndView(ORDER_FRAGMENT_PATH)
+                .addObject(HTML_PAGE_TITLE, ORDER_PAGE_TITLE)
+                .addObject(HTML_PAGE_CONTENT, "deliveryPage")
+                .addObject("deliveryList", adminService.findAllDeliveryMethods());
+    }
+
+    @PostMapping(value = {"/delivery", "/delivery/"})
+    public Delivery addNewDeliveryMethod(@Valid @RequestBody Delivery delivery) {
+
+        log.info("Add new delivery : " + delivery);
+
+        return adminService.addNewDeliveryMethod(delivery);
+    }
+
+    @PutMapping(value = {"/delivery", "/delivery/"})
+    public Delivery updateDeliveryMethod(@Valid @RequestBody Delivery delivery) {
+
+        log.info("Update delivery : " + delivery);
+
+        return adminService.updateDeliveryMethod(delivery);
+    }
+
+    @DeleteMapping(value = {"/delivery", "/delivery/"})
+    public boolean deleteDeliveryMethod(@Valid @RequestBody Delivery delivery) {
+
+        log.info("Delete delivery : " + delivery);
+
+        return adminService.deleteDeliveryMethod(delivery);
     }
 }

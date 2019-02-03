@@ -1,82 +1,83 @@
-let btnAddCoupon;
+let btnAdd;
+let result;
 let modalResult;
 let modalResultSuccess;
 let modalResultError;
-let result;
 
 $(document).ready(function() {
 
-    btnAddCoupon = $("#btnAddCoupon");
-    btnAddCoupon.click(function () {
-        addNewCoupon();
+    btnAdd = $("#btnAdd");
+    btnAdd.click(function () {
+        btnAdd.prop("disabled", true);
+        addNew();
     });
 
     let btnUpdate = $(":button[type='button'][id^='btn_update_']");
     btnUpdate.click(function () {
-        let couponId = $(this).attr("id");
-        couponId = couponId.substr(couponId.lastIndexOf("_") + 1);
-        updateDeleteCoupon(couponId, "put");
+        let deliveryId = $(this).attr("id");
+        deliveryId = deliveryId.substr(deliveryId.lastIndexOf("_") + 1);
+        updateDeleteDelivery(deliveryId, "put");
     });
 
     let btnDelete = $(":button[type='button'][id^='btn_delete_']");
     btnDelete.click(function () {
-        let couponId = $(this).attr("id");
-        couponId = couponId.substr(couponId.lastIndexOf("_") + 1);
-        updateDeleteCoupon(couponId, "delete");
-    });
-
-    $(":input").on("input change past keyup", function () {
-
-        if($(this).attr("id") === "coupon_amount"){
-            this.value=this.value.replace(/[^0-9.]/g, '')
-                .replace(/(\..*)\./g, '$1');
-        }
-        checkAllInputs();
-    });
-
-    // Checbox control
-    $(":input[type='checkbox']").on("change", function () {
-        console.log($(this).attr("id") + " : " + $(this).prop("checked"));
+        let deliveryId = $(this).attr("id");
+        deliveryId = deliveryId.substr(deliveryId.lastIndexOf("_") + 1);
+        updateDeleteDelivery(deliveryId, "delete");
     });
 
     modalResult = $("#modal");
     modalResultSuccess = $("#modal_result_body_success");
     modalResultError = $("#modal_result_body_error");
 
+    $(":input").on("input change past keyup", function () {
+
+        if($(this).attr("id").match("delivery_amount")){
+            this.value=this.value.replace(/[^0-9.]/g, '')
+                .replace(/(\..*)\./g, '$1');
+        }
+        checkAddInputs();
+
+        let deliveryId = $(this).attr("id");
+        deliveryId = deliveryId.substr(deliveryId.lastIndexOf("_") + 1);
+        if($.isNumeric(deliveryId)) checkUpdateInputs(deliveryId);
+    });
+
     // On modal result close
     modalResult.on('hidden.bs.modal', function () {
         if(result){
             $(":button").prop("disabled", true);
-            window.location.href = "/admin/orders/coupon";
+            window.location.href = "/admin/orders/delivery";
         }
     });
-
-    checkAllInputs();
 });
 
-function checkAllInputs() {
+function checkAddInputs() {
 
     let disabled = false;
-    $(':input[id^="coupon_"]').each(function () {
-        if($(this).val() === ""){
-            disabled = true;
-            return false;
-        }
-    });
+    if($("#delivery_method").val() === "" || $("#delivery_amount").val() === "")
+        disabled = true;
 
-    btnAddCoupon.prop("disabled", disabled);
+    btnAdd.prop("disabled", disabled);
 }
 
-function addNewCoupon() {
+function checkUpdateInputs(id) {
+
+    if($("#delivery_method_" + id).val() === ""
+        || $("#delivery_amount_" + id).val() === "")
+        $("#btn_update_" + id).prop("disabled", true);
+    else $("#btn_update_" + id).prop("disabled", false);
+}
+
+function addNew(){
 
     let jsonObj = {};
-    jsonObj.code = $("#coupon_code").val();
-    jsonObj.amount = $("#coupon_amount").val();
-    jsonObj.description = $("#coupon_desc").val();
-    jsonObj.active = $("#coupon_active").prop("checked");
+
+    jsonObj.method = $("#delivery_method").val();
+    jsonObj.amount = $("#delivery_amount").val()
 
     $.ajax({
-        url: "/admin/orders/coupon",
+        url: "/admin/orders/delivery",
         type: "post",
         data: JSON.stringify(jsonObj),
         contentType: "application/json",
@@ -94,21 +95,19 @@ function addNewCoupon() {
     });
 }
 
-function updateDeleteCoupon(id, type) {
+function updateDeleteDelivery(id, type) {
 
     console.log("id " + id);
 
     let jsonObj = {};
     jsonObj.id = id;
-    jsonObj.code = "not modified";
-    jsonObj.amount = $("#coupon_amount_" + id).val();
-    jsonObj.description = $("#coupon_desc_" + id).val();
-    jsonObj.active = $("#coupon_active_" + id).prop("checked");
+    jsonObj.method = $("#delivery_method_" + id).val();
+    jsonObj.amount = $("#delivery_amount_" + id).val();
 
     console.log(JSON.stringify(jsonObj));
 
     $.ajax({
-        url: "/admin/orders/coupon",
+        url: "/admin/orders/delivery",
         type: type,
         data: JSON.stringify(jsonObj),
         contentType: "application/json",

@@ -61,9 +61,11 @@ public class ProductAdminController {
 
     @GetMapping(value = {"/search/{id}", "/search/{id}/"})
     public ModelAndView searchProductById(@PathVariable int id){
+
         ProductBean product = adminService.findProductById(id);
         List<ProductBean> result = new ArrayList<>();
         result.add(product);
+
         return new ModelAndView(PRODUCT_FRAGMENT_PATH)
                 .addObject(HTML_PAGE_TITLE, PRODUCT_PAGE_TITLE)
                 .addObject(HTML_PAGE_CONTENT, HTML_DEFAULT_SEARCH_PAGE)

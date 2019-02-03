@@ -1,7 +1,6 @@
 package com.lpdm.msuser.services.admin.impl;
 
 import com.lpdm.msuser.exception.EurekaInstanceNotFound;
-import com.lpdm.msuser.exception.NotFound404Exception;
 import com.lpdm.msuser.model.location.Address;
 import com.lpdm.msuser.model.location.City;
 import com.lpdm.msuser.model.storage.Storage;
@@ -11,9 +10,7 @@ import com.lpdm.msuser.model.admin.SearchDates;
 import com.lpdm.msuser.model.admin.StorageUser;
 import com.lpdm.msuser.msauthentication.AppRoleBean;
 import com.lpdm.msuser.msauthentication.AppUserBean;
-import com.lpdm.msuser.msorder.Coupon;
-import com.lpdm.msuser.msorder.OrderBean;
-import com.lpdm.msuser.msorder.PaymentBean;
+import com.lpdm.msuser.msorder.*;
 import com.lpdm.msuser.msproduct.CategoryBean;
 import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.msproduct.StockBean;
@@ -29,9 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.text.DecimalFormat;
+import java.util.*;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -67,33 +63,94 @@ public class AdminServiceImpl implements AdminService {
         this.locationProxy = locationProxy;
     }
 
-    @Override
-    public List<OrderBean> findOrderById(int id) throws FeignException {
-        List<OrderBean> orderList = new ArrayList<>();
-        orderList.add(orderProxy.getOrderById(id));
-        return orderList;
+    private List<String> calculateSubTotal(OrderBean order){
+
+        double subTotal = 0;
+        double subTax = 0;
+
+        List<String> resultList = new ArrayList<>();
+        for(OrderedProductBean orderedProduct : order.getOrderedProducts()){
+
+            double productTotal = orderedProduct.getPrice() * orderedProduct.getQuantity();
+            double taxTotal = productTotal * (orderedProduct.getTax() / 100);
+
+            subTotal += productTotal;
+            subTax += taxTotal;
+        }
+
+        subTotal = Math.round(subTotal * 100.0) / 100.0;
+        subTax = Math.round(subTax * 100.0) / 100.0;
+
+        double coupon = 0;
+        if(order.getCoupon() != null) coupon = order.getCoupon().getAmount();
+
+        double total = subTotal + subTax + coupon;
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        resultList.add(df.format(subTotal));
+        resultList.add(df.format(subTax));
+        resultList.add(df.format(coupon));
+        resultList.add(df.format(total));
+
+        return resultList;
     }
 
     @Override
-    public List<OrderBean> findAllOrdersByUserId(int id) {
-        return orderProxy.findAllByUserId(id);
+    public Map<OrderBean, List<String>> findOrderById(int id) throws FeignException {
+
+        Map<OrderBean, List<String>> resultMap = new HashMap<>();
+
+        OrderBean order = orderProxy.getOrderById(id);
+        resultMap.put(order, calculateSubTotal(order));
+
+        return resultMap;
     }
 
     @Override
-    public List<OrderBean> findAllOrdersByUserEmail(String email) {
-        return orderProxy.findAllByUserEmail(email);
+    public Map<OrderBean, List<String>> findAllOrdersByUserId(int id) {
+
+        List<OrderBean> orderList = orderProxy.findAllByUserId(id);
+        Map<OrderBean, List<String>> resultMap = new HashMap<>();
+
+        for(OrderBean order : orderList)
+            resultMap.put(order, calculateSubTotal(order));
+
+        return resultMap;
     }
 
     @Override
-    public List<OrderBean> findAllOrdersByUserLastName(String lastName) {
-        return orderProxy.findAllByUserLastName(lastName);
+    public Map<OrderBean, List<String>> findAllOrdersByUserEmail(String email) {
+
+        List<OrderBean> orderList = orderProxy.findAllByUserEmail(email);
+        Map<OrderBean, List<String>> resultMap = new HashMap<>();
+
+        for(OrderBean order : orderList)
+            resultMap.put(order, calculateSubTotal(order));
+
+        return resultMap;
     }
 
     @Override
-    public List<OrderBean> findOrderByInvoiceReference(String ref) {
-        List<OrderBean> orderList = new ArrayList<>();
-        orderList.add(orderProxy.findByInvoiceReference(ref));
-        return orderList;
+    public Map<OrderBean, List<String>> findAllOrdersByUserLastName(String lastName) {
+
+        List<OrderBean> orderList = orderProxy.findAllByUserLastName(lastName);
+        Map<OrderBean, List<String>> resultMap = new HashMap<>();
+
+        for(OrderBean order : orderList)
+            resultMap.put(order, calculateSubTotal(order));
+
+        return resultMap;
+    }
+
+    @Override
+    public Map<OrderBean, List<String>> findOrderByInvoiceReference(String ref) {
+
+        OrderBean order = orderProxy.findByInvoiceReference(ref);
+        Map<OrderBean, List<String>> resultMap = new HashMap<>();
+        resultMap.put(order, calculateSubTotal(order));
+
+        return resultMap;
     }
 
     @Override
@@ -135,6 +192,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<CategoryBean> findAllCategories() {
+
         return productProxy.listCategories();
     }
 
@@ -145,6 +203,19 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<ProductBean> findProductsByProducerId(int id) {
+
+        List<ProductBean> productList = productProxy.listProductByProducerId(id);
+
+        for(ProductBean product : productList){
+
+            AppUserBean producer = product.getProducer();
+
+            if (producer.getAddress() == null){
+                Address address = locationProxy.findAddressById(producer.getAddressId());
+                producer.setAddress(address);
+            }
+        }
+
         return productProxy.listProductByProducerId(id);
     }
 
@@ -170,9 +241,10 @@ public class AdminServiceImpl implements AdminService {
     public void updateProduct(ProductBean product) {
 
         ProductBean oldProduct = productProxy.findProduct(product.getId());
-        product.setListStock(oldProduct.getListStock());
-        if(product.getPicture() == null) product.setPicture(oldProduct.getPicture());
-        product.setProducerID(oldProduct.getProducer().getId());
+
+        if(product.getPicture() == null)
+            product.setPicture(oldProduct.getPicture());
+
         product.setProducer(oldProduct.getProducer());
 
         log.info("New Product : " + product.toString());
@@ -189,7 +261,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<Coupon> findAllCoupons() {
 
-        return orderProxy.getAllCoupons();
+        List<Coupon> couponList = null;
+
+        try { couponList = orderProxy.getAllCoupons(); }
+        catch (FeignException e){ log.warn(e.getMessage()); }
+
+        return couponList;
     }
 
     @Override
@@ -211,13 +288,55 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public List<Delivery> findAllDeliveryMethods() {
+
+        List<Delivery> deliveryList = null;
+
+        try { deliveryList = orderProxy.findAllDeliveryMethods(); }
+        catch (FeignException e) { log.warn(e.getMessage()); }
+
+        return deliveryList;
+    }
+
+    @Override
+    public Delivery addNewDeliveryMethod(Delivery delivery) {
+
+        return orderProxy.addNewDeliveryMethod(delivery);
+    }
+
+    @Override
+    public Delivery updateDeliveryMethod(Delivery delivery) {
+
+        return orderProxy.updateDeliveryMethod(delivery);
+    }
+
+    @Override
+    public boolean deleteDeliveryMethod(Delivery delivery) {
+
+        return orderProxy.deleteDeliveryMethod(delivery);
+    }
+
+    @Override
     public Store findStoreById(int id) throws FeignException {
+
         return storeProxy.findById(id);
     }
 
     @Override
     public List<Store> findStoreByName(String name) throws FeignException {
         return storeProxy.findByName(name);
+    }
+
+    @Override
+    public Store updateStore(Store store) {
+
+        Address address = locationProxy.saveNewAddress(store.getAddress());
+
+        log.info("new address = " + address);
+
+        store.setAddressId(address.getId());
+
+        return storeProxy.updateStore(store);
     }
 
     @Override

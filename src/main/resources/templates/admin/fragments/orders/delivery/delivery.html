@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<div data-th-fragment="delivery">
+
+    <!-- Adding the javascript file -->
+    <script data-th-src="@{/js/admin/order/delivery.js}"></script>
+
+    <!-- Form for adding a delivery method -->
+    <div class="panel panel-default">
+        <div class="panel-heading">Ajouter un nouveau mode de livraison</div>
+        <div class="panel-body">
+            <div class="row">
+                <form class="form-inline">
+                    <div class="col-sm-5">
+                        <label>
+                            Description
+                            <input type="text"
+                                   id="delivery_method"
+                                   class="form-control"
+                                   placeholder="Saisir un mode"
+                                   style="box-sizing: border-box;
+                                   width: 100%;">
+                        </label>
+                    </div>
+                    <div class="col-sm-5">
+                        <label>
+                            Montant
+                            <input type="text"
+                                   id="delivery_amount"
+                                   class="form-control"
+                                   placeholder="Saisir un montant"
+                                   style="box-sizing: border-box;
+                                   width: 100%;">
+                        </label>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button"
+                                id="btnAdd"
+                                class="btn btn-success"
+                                style="margin-top:20px;"
+                                disabled>
+                            Ajouter
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert to inform that there is no delivery method -->
+    <div data-th-if="${deliveryList == null}" class="alert alert-warning">
+        Aucun mode de livraison n'a été trouvé
+    </div>
+
+    <!-- List of different modes of delivery with an edit form -->
+    <table data-th-if="${deliveryList != null}" class="table table-hover table-responsive">
+        <thead>
+        <tr>
+            <th>Description</th>
+            <th class="text-center">Montant</th>
+            <th class="text-center">Modifier</th>
+            <th class="text-center">Supprimer</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="delivery : ${deliveryList}">
+            <td style="vertical-align: middle;">
+                <input type="text"
+                       data-th-id="'delivery_method_' + ${delivery.id}"
+                       data-th-value="${delivery.method}"
+                       class="form-control">
+            </td>
+            <td class="text-center"
+                style="vertical-align: middle;">
+                <input type="text"
+                       data-th-id="'delivery_amount_' + ${delivery.id}"
+                       data-th-value="${delivery.amount}"
+                       class="form-control">
+            </td>
+            <td class="text-center">
+                <button type="button"
+                        class="btn btn-info"
+                        data-th-id="'btn_update_' + ${delivery.id}">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </button>
+            </td>
+            <td class="text-center">
+                <button type="button"
+                        class="btn btn-danger"
+                        data-th-id="'btn_delete_' + ${delivery.id}"
+                        data-th-disabled="${delivery.id == 1}">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Adding the modal -->
+    <div data-th-replace="/admin/fragments/modal :: modal"></div>
+</div>
+</html>

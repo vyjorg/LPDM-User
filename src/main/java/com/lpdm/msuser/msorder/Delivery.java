@@ -1,12 +1,13 @@
 package com.lpdm.msuser.msorder;
 
-import javax.validation.constraints.NotNull;
-
 public class Delivery {
 
     private int id;
-
     private String method;
+    private double amount;
+
+    public Delivery() {
+    }
 
     public int getId() {
         return id;
@@ -24,11 +25,20 @@ public class Delivery {
         this.method = method;
     }
 
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
     @Override
     public String toString() {
         return "Delivery{" +
                 "id=" + id +
                 ", method='" + method + '\'' +
+                ", amount=" + amount +
                 '}';
     }
 }

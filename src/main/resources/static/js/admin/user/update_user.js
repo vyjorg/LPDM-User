@@ -75,7 +75,7 @@ $(document).ready(function() {
     modalResult.on('hidden.bs.modal', function () {
         if(result){
             $(":button").prop("disabled", true);
-            window.location.href = "/admin/auth/update";
+            window.location.href = "/admin/store/";
         }
     });
 });

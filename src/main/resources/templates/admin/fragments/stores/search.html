@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <div data-th-fragment="search">
     <div class="row">
         <div class="col-sm-12">
@@ -31,38 +31,7 @@
     </div>
     <br>
     <div data-th-if="${result != null}">
-        <div data-th-if="${result instanceof T(java.util.List)}">
-            <div class="panel panel-default">
-                <div class="panel-heading">Résultat de la recherche</div>
-                <div class="panel-body">
-                    <div data-th-each="store : ${result}">
-                        <ul class="list-group">
-                            <li class="list-group-item"><b>ID <span data-th-text="${store.id}"></span></b></li>
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="input-group">
-                                            <label for="name" class="input-group-addon" style="width: 140px;">Nom :</label>
-                                            <input type="text" data-th-value="${store.name}" class="form-control" id="name">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-primary" type="submit">
-                                                    Modifier
-                                                    <span class="glyphicon glyphicon-ok" style="padding-left: 6px;"></span>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div data-th-if="${result instanceof T(java.lang.Integer)}" class="alert alert-danger">
-            <div data-th-replace="/admin/fragments/errors :: errors"></div>
-        </div>
-        <div data-th-replace="/admin/fragments/console :: console"></div>
+        <div data-th-replace="/admin/fragments/stores/result :: result"></div>
     </div>
 </div>
 </html>
