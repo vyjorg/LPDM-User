@@ -165,8 +165,7 @@ body {
 }
 .shadow-box-8:after
 {
-    right:10px;
-    left:auto;
+
     -webkit-transform:skew(8deg) rotate(3deg);
     -moz-transform:skew(8deg) rotate(3deg);
     -ms-transform:skew(8deg) rotate(3deg);
@@ -176,6 +175,7 @@ body {
 
 .product{
     margin-bottom: 30px;
+    text-align: center;
 }
 
 .product-img{
@@ -185,4 +185,6 @@ body {
     max-width: 20em;
     min-height: 10em;
     max-height: 10em;
+    border: 2px black solid;
+
 }
