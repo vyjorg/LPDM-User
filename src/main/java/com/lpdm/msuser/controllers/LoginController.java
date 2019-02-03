@@ -3,6 +3,7 @@ package com.lpdm.msuser.controllers;
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.proxies.MsLocationProxy;
+import com.lpdm.msuser.proxies.MsOrderProxy;
 import com.lpdm.msuser.proxies.MsProductProxy;
 import com.lpdm.msuser.proxies.MsUserProxy;
 import feign.FeignException;
@@ -34,6 +35,9 @@ public class LoginController {
 
     @Autowired
     MsLocationProxy msLocationProxy;
+
+    @Autowired
+    MsOrderProxy msOrderProxy;
 
     /**
      * displays the login form
@@ -151,6 +155,7 @@ public class LoginController {
         AppUserBean user = msUserProxy.getUserById(id);
         model.addAttribute("user", user);
         logger.info("user:" +  user.toString());
+        model.addAttribute("orders", msOrderProxy.findAllByUserId(id));
         session.setAttribute("user", user);
         sessionController.addSessionAttributes(session, model);
         return "shop/fragments/account/account";

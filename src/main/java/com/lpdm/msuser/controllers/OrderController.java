@@ -227,6 +227,15 @@ public class OrderController {
         return "redirect:" + paypalUrl.getRedirectUrl();
     }
 
+    @GetMapping("/description/{id}")
+    public String orderDescription(@PathVariable ("id") int id, HttpSession session, Model model){
+
+        OrderBean order = orderProxy.getOrderById(id);
+        model.addAttribute("order", order);
+        sessionController.addSessionAttributes(session, model);
+        return "shop/fragments/cart/view.html";
+
+    }
 
 
 

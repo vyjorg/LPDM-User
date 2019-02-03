@@ -64,29 +64,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>#1459</td>
-                            <td>10/12/2018</td>
-                            <td>28.29 €</td>
-                            <td>Livrée</td>
-                            <td>Voir</td>
+                        <tr th:each="order : ${orders}">
+                            <td th:text="${order.getId()}"/>
+                            <td th:text="${order.getOrderDate()}"/>
+                            <td th:text="${order.getTotal()}"/>
+                            <td th:text="${order.getStatus()}"/>
+                            <td><a th:href="@{'/orders/description/'+ ${order.getId()}}" th:text="'Voir'" th:value="${order.getId()}"/></td>
+                            <!--th:href="@{'/users/'+ ${user.getId()}}"-->
                         </tr>
-                        <tr>
-                            <td>#5796</td>
-                            <td>02/01/2019</td>
-                            <td>144.50 €</td>
-                            <td>Livrée</td>
-                            <td>Voir</td>
-                        </tr>
-                        <tr>
-                            <td>#1836</td>
-                            <td>10/01/2019</td>
-                            <td>8.99 €</td>
-                            <td>Livrée</td>
-                            <td>
-                                Voir
-                            </td>
-                        </tr>
+
+
                         </tbody>
                     </table>
                 </div>

@@ -65,9 +65,6 @@ public class SessionController {
         OrderController.cart.clear();
         OrderController.cartTotal = 0;
        session.removeAttribute("user");
-        session.removeAttribute("cart");
         session.removeAttribute("total");
-
-
     }
 }
