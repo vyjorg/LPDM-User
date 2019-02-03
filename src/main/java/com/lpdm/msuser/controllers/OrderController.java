@@ -113,7 +113,7 @@ public class OrderController {
 
         sessionController.addSessionAttributes(session, model);
 
-        return "orders/orderdescription";
+        return "shop/fragments/cart/view";
     }
 
     /**

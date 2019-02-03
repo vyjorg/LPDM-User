@@ -62,7 +62,8 @@ public class SessionController {
      * @param session
      */
     public void logout(HttpSession session){
-
+        OrderController.cart.clear();
+        OrderController.cartTotal = 0;
        session.removeAttribute("user");
         session.removeAttribute("cart");
         session.removeAttribute("total");
