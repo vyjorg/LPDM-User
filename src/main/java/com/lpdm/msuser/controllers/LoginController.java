@@ -1,6 +1,7 @@
 package com.lpdm.msuser.controllers;
 
 import com.lpdm.msuser.msauthentication.AppUserBean;
+import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.proxies.MsLocationProxy;
 import com.lpdm.msuser.proxies.MsProductProxy;
 import com.lpdm.msuser.proxies.MsUserProxy;
@@ -138,8 +139,9 @@ public class LoginController {
      */
     @GetMapping("/logout")
     public String logout(HttpSession session, Model model){
-        sessionController.logout(session);
         sessionController.addSessionAttributes(session, model);
+        logger.info(OrderController.cart.toString());
+        sessionController.logout(session);
         return "shop/fragments/home";
     }
 
@@ -172,7 +174,7 @@ public class LoginController {
         AppUserBean appUser = msUserProxy.updateAppUser(userToUpdate);
         model.addAttribute("user", appUser);
         sessionController.addSessionAttributes(session, model);
-        return "users/profile";
+        return "shop/fragments/account/account.html";
     }
 
     @PostMapping(value = "/editroles")
@@ -186,7 +188,7 @@ public class LoginController {
         msUserProxy.updateAppUser(sessionUser);
         session.setAttribute("user", sessionUser);
         sessionController.addSessionAttributes(session, model);
-        return "users/profile";
+        return "shop/fragments/account/account.html";
     }
 
 }

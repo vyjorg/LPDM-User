@@ -62,7 +62,7 @@ public class OrderController {
         log.info("Transfert des données de la commande vers la vue");
         sessionController.addSessionAttributes(session, model);
 
-        return "orders/orderdescription";
+        return "shop/fragments/cart/view";
     }
 
     /**
@@ -97,7 +97,7 @@ public class OrderController {
             order.setCustomerId(user.getId());
         }catch (NullPointerException e){
             logger.info("L'utilisateur doit s'authentifier");
-            return "identification/login";
+            return "shop/fragments/account/login";
         }
 
         order.setTotal(cartTotal);

@@ -84,7 +84,7 @@ public class ProductController {
     public String emptyCart(HttpSession session, Model model) {
         sessionController.emptyCart();
         sessionController.addSessionAttributes(session, model);
-        return "home";
+        return "shop/fragments/home";
     }
 
     /**

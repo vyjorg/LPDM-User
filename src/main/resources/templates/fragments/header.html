@@ -26,8 +26,9 @@
             <!-- col 3  -->
             <div class="col-md-2">
                 <a th:unless="${user}" href="/identification/login">Identification</a>
-                <p th:unless="!${user}" th:text="'Bienvenue, ' + ${user.getFirstName()}"/>
-                <a th:unless="!${user}" href="/identification/logout">Déconnexion</a>
+                <div th:inline="text "><p th:unless="!${user}" th:text="'Bienvenue, ' + ${user.getFirstName()} " /><a th:unless="!${user}" href="/identification/logout">Déconnexion</a></div>
+
+
                 <!-- <a th:unless="!${username}" th:href="@{'/'+ ${user.getId()}}">Profil utilisateur</a> -->
             </div>
         </div>
