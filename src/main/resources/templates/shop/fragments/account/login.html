@@ -173,6 +173,35 @@
                                         </div>
                                     </div>
                                 </li>
+                                <li class="list-group-item" style="height: 56px; border: none;">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label for="user_password" class="input-group-addon" style="width: 150px;">
+                                                Password
+                                            </label>
+                                            <input type="password"
+                                                   class="form-control"
+                                                   id="login_password"
+                                                   name="password"
+                                                   required>
+                                            <div class="input-group-btn">
+                                                <button class="btn btn-danger"
+                                                        id="check_login_password"
+                                                        type="button"
+                                                        tabindex="-1"
+                                                        data-toggle="tooltip"
+                                                        data-placement="left"
+                                                        title="Saisir un mot de passe"
+                                                        style="cursor: default;"
+                                                        disabled>
+                                                <span class="glyphicon glyphicon-check" aria-hidden="true"
+                                                      style="padding-left: 6px;"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
 
                                 <!-- User password -->
 
@@ -180,38 +209,13 @@
                                     <div class="form-group">
                                         <div class="alert alert-default text-center">
 
-                                            <div class="input-group">
-                                                <label for="user_password" class="input-group-addon"
-                                                       style="width: 150px;">
-                                                    Mot de passe
-                                                </label>
-                                                <input type="password"
-                                                       name="password"
-                                                       class="form-control"
-                                                       id="login_password"
-                                                       required>
-                                                <div class="input-group-btn">
-                                                    <button class="btn btn-danger"
-                                                            id="check_login_password"
-                                                            type="button"
-                                                            tabindex="-1"
-                                                            data-toggle="tooltip"
-                                                            data-placement="left"
-                                                            title="Saisir un mot de passe"
-                                                            style="cursor: default;"
-                                                            disabled>
-                                                        <span class="glyphicon glyphicon-check" aria-hidden="true"
-                                                              style="padding-left: 6px;"></span>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
                                         <button type="submit" class="btn btn-success" id="btn_login">
-                                            Connexion à mon compte
-                                        </button>
-                                        <p th:unless="!${error}" th:text="${error}"/>
+                                                Connexion à mon compte
+                                            </button>
+                                            <p th:unless="!${error}" th:text="${error}"/>
+                                        </div>
+
+
                                     </div>
 
                                 </li>
