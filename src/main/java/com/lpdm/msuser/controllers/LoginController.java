@@ -1,5 +1,6 @@
 package com.lpdm.msuser.controllers;
 
+import com.lpdm.msuser.msauthentication.AppRoleBean;
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msorder.OrderBean;
 import com.lpdm.msuser.proxies.*;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -120,21 +122,20 @@ public class LoginController {
                                @RequestParam String password_reg,
                                @RequestParam String password_reg_2,
                                Model model,
-                               HttpSession session)//BindingResult bindingResult
+                               HttpSession session)
     {
-
         AppUserBean user = new AppUserBean();
         user.setName(name_reg);
+
         user.setFirstName(firstName_reg);
         user.setEmail(email_reg);
         user.setPassword(password_reg);
+        user.setAppRole(new ArrayList<>());
+        user.getAppRole().add(msUserProxy.getRoleById(4));
 
         logger.info("Essai de registration");
         logger.info("Utilisateur: " + user.getFirstName() + " " + user.getName() + " " + user.getEmail() + " " + user.getPassword());
 
-        //if (bindingResult.hasErrors()) {
-        //    return "shop/fragments/account/login";
-        //}
         if (!user.getPassword().equals(password_reg_2)){
             model.addAttribute("error", "Les mots de passe sont différents");
         } else if (msUserProxy.getUserByEmail(user.getEmail()) != null) {
@@ -159,7 +160,7 @@ public class LoginController {
     @GetMapping("/logout")
     public String logout(HttpSession session, Model model){
         sessionController.addSessionAttributes(session, model);
-        logger.info(OrderController.cart.toString());
+        logger.info(sessionController.cart.toString());
         sessionController.logout(session);
         return "shop/fragments/home";
     }

@@ -62,6 +62,4 @@ public interface MsProductProxy {
     void updateCategory(@RequestBody CategoryBean category);
 
 
-
-
 }

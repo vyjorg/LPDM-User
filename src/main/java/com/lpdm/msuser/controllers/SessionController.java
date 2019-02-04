@@ -1,7 +1,7 @@
 package com.lpdm.msuser.controllers;
 
 import com.lpdm.msuser.msauthentication.AppUserBean;
-import com.lpdm.msuser.msauthentication.enumeration.Access;
+import com.lpdm.msuser.msorder.OrderedProductBean;
 import com.lpdm.msuser.proxies.MsAuthProxy;
 import com.lpdm.msuser.proxies.MsProductProxy;
 import com.lpdm.msuser.proxies.MsUserProxy;
@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.ui.Model;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Manage all sesssion information
@@ -27,6 +29,10 @@ public class SessionController {
 
     @Autowired
     MsUserProxy msUserProxy;
+
+    public List<OrderedProductBean> cart = new ArrayList<>();
+
+    public double cartTotal;
 
 
     @Bean
@@ -47,9 +53,9 @@ public class SessionController {
         }catch (NullPointerException e){
             logger.info("Pas d'utilisateur identifié");
         }
-        model.addAttribute("cart", OrderController.cart);
+        model.addAttribute("cart", cart);
         model.addAttribute("producers", msUserProxy.getUsersByRole(3));
-        model.addAttribute("total", OrderController.cartTotal);
+        model.addAttribute("total", cartTotal);
         model.addAttribute("products", msProductProxy.listProduct());
         model.addAttribute("categories", msProductProxy.listCategories());
         model.addAttribute("roles", msAuthProxy.findAllRoles());
@@ -59,8 +65,8 @@ public class SessionController {
      * clears cart
      */
     public void emptyCart(){
-        OrderController.cartTotal = 0;
-        OrderController.cart.clear();
+        cartTotal = 0;
+        cart.clear();
     }
 
     /**
@@ -68,9 +74,9 @@ public class SessionController {
      * @param session
      */
     public void logout(HttpSession session){
-        OrderController.cart.clear();
-        OrderController.cartTotal = 0;
-       session.removeAttribute("user");
+        cart.clear();
+        cartTotal = 0;
+        session.removeAttribute("user");
         session.removeAttribute("total");
     }
 }

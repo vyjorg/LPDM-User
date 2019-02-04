@@ -37,9 +37,9 @@ public class OrderController {
 
     org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public static List<OrderedProductBean> cart = new ArrayList<>();
 
-    public  static double cartTotal = 0;
+
+
 
     /**
      * gets a targeted order from ms-order and displays its description
@@ -101,8 +101,8 @@ public class OrderController {
             return "shop/fragments/account/login";
         }
 
-        order.setTotal(cartTotal);
-        order.setOrderedProducts(cart);
+        order.setTotal(sessionController.cartTotal);
+        order.setOrderedProducts(sessionController.cart);
         order.setStatus(StatusEnum.PROCESSED);
         order.setOrderDate(LocalDateTime.now());
         order.setPayment(payment);
@@ -134,7 +134,7 @@ public class OrderController {
 
         // check stock quantity available
 
-        for (OrderedProductBean item: cart) {
+        for (OrderedProductBean item: sessionController.cart) {
             if (item.getProduct().getId() == productId) {
                 orderedProduct = item;
                 orderedProduct.setQuantity(orderedProduct.getQuantity() + 1);
@@ -145,11 +145,11 @@ public class OrderController {
             orderedProduct = new OrderedProductBean();
             orderedProduct.setProduct(product);
             orderedProduct.setQuantity(1);
-            cart.add(orderedProduct);
+            sessionController.cart.add(orderedProduct);
         }
 
-        cartTotal += product.getPrice();
-        logger.info("total panier + :" + cartTotal);
+        sessionController.cartTotal += product.getPrice();
+        logger.info("total panier + :" + sessionController.cartTotal);
 
 
         model.addAttribute("product", product);
@@ -179,20 +179,20 @@ public class OrderController {
 
         logger.info("product: " + product);
 
-        for (OrderedProductBean item : cart) {
+        for (OrderedProductBean item : sessionController.cart) {
             if (item.getProduct().getId() == productId) {
                 orderedProduct = item;
                 orderedProduct.setQuantity(orderedProduct.getQuantity() >= 1 ? orderedProduct.getQuantity() - 1 : 0);
                 if (orderedProduct.getQuantity() == 0)
-                    cart.remove(orderedProduct);
+                    sessionController.cart.remove(orderedProduct);
                 break;
             }
         }
         logger.info("après la boucle");
         if (orderedProduct != null)
-            cartTotal = orderedProduct.getQuantity() >= 0 ? cartTotal -= product.getPrice() : cartTotal;
+            sessionController.cartTotal = orderedProduct.getQuantity() >= 0 ? sessionController.cartTotal -= product.getPrice() : sessionController.cartTotal;
 
-        logger.info("total panier - :" + cartTotal);
+        logger.info("total panier - :" + sessionController.cartTotal);
 
         model.addAttribute("products", msProductProxy.listProduct());
         sessionController.addSessionAttributes(session, model);
