@@ -26,7 +26,7 @@
                 <tr th:each="product:${order.getOrderedProducts()}">
                     <td>
                         <img src="${product.getPicture()}"
-                             class="img-thumbnail"
+                             class="product-img"
                              alt="Image"
                              style="height: 40px;">
                         <a class="img-thumbnail" th:value="${product.getProduct().getId()}" th:href="@{'/products/' + ${product.getProduct().getId()}}" th:text="${product.getProduct().getName()}"

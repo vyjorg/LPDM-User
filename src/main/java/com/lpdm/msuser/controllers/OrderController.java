@@ -201,6 +201,7 @@ public class OrderController {
 
     @GetMapping("/paypalsuccess")
     public String successPaypal(){
+        sessionController.emptyCart();
         return "orders/paypalsuccess";
     }
 

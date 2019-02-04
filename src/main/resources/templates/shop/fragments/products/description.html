@@ -44,17 +44,16 @@
 
                 </tbody>
             </table>
-            <
+
 
            </div>
-       </div>
+
        <div class="col-sm-3">
            <br>
            <div class="panel panel-success">
-               <div class="panel-heading"><h4><b>Récapitulatif de la commande</b></h4></div>
+               <div class="panel-heading"><h4><b>Informations fournisseur</b></h4></div>
                <div class="panel-body shadow-box-8">
-                   <h5>Les frais d’expédition et les frais supplémentaires sont calculés
-                       en fonction des valeurs que vous avez entrées.</h5>
+
                    <table class="table table-hover">
                        <tbody>
                        <tr>
@@ -62,8 +61,8 @@
                            <td th:text="${product.getProducer().getName()}"/>
                        </tr>
                        <tr>
-                           <td>Frais de port et de manutention</td>
-                           <td class="text-right">9.99 €</td>
+                           <td>Adresse Fournisseur</td>
+                           <td class="text-right" th:text="${product.getProducer().getAddress()}"/>
                        </tr>
                        <tr>
                            <td>Code promo</td>
