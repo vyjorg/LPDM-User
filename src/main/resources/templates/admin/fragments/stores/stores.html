@@ -12,6 +12,9 @@
                 <div data-th-if="${content=='searchPage'}">
                     <div data-th-replace="admin/fragments/stores/search :: search"></div>
                 </div>
+                <div data-th-if="${content=='addPage'}">
+                    <div data-th-replace="admin/fragments/stores/add_store :: add_store"></div>
+                </div>
             </div>
         </div>
     </div>
