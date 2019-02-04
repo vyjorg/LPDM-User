@@ -39,7 +39,7 @@ public class ProductController {
         ProductBean product = msProductProxy.findProduct(id);
         model.addAttribute("product", product);
         sessionController.addSessionAttributes(session, model);
-        return "products/productdescription";
+        return "shop/fragments/products/description.html";
     }
 
     /**
