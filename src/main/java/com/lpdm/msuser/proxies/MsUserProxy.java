@@ -18,22 +18,22 @@ public interface MsUserProxy {
     @GetMapping("/microservice-authentication/users/")
     List<AppUserBean> getAllUsers();
 
-    @GetMapping("/microservice-authentication/users/{id}")
+    @GetMapping(value = "/microservice-authentication/users/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     AppUserBean getUserById(@PathVariable("id") int id);
 
     @PostMapping(value = "/microservice-authentication/users/login", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     AppUserBean login(@RequestBody AppUserBean user);
 
-    @PostMapping("/microservice-authentication/users/")
+    @PostMapping(value = "/microservice-authentication/users/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     AppUserBean addUser(@RequestBody AppUserBean user);
 
-    @PostMapping("/microservice-authentication/roles/")
+    @PostMapping(value = "/microservice-authentication/roles/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     AppRoleBean addRole(@RequestBody AppRoleBean role);
 
-    @PostMapping("/microservice-authentication/users/get")
+    @PostMapping(value = "/microservice-authentication/users/get", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     AppUserBean getUserByUsername(@RequestParam String username);
 
-    @GetMapping("/microservice-authentication/users/email/{email}")
+    @GetMapping(value = "/microservice-authentication/users/email/{email}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     AppUserBean getUserByEmail(@PathVariable String email);
 
     @GetMapping(value = "/microservice-authentication/users/per_role/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

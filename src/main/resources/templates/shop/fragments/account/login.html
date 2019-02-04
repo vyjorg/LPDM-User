@@ -6,6 +6,8 @@
 <body>
 <div data-layout-fragment="content" style="padding-top: 10px;">
     <div class="row">
+
+        <!-- Left Panel-->
         <div class="col-sm-6 no-float">
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -15,6 +17,7 @@
                     <p>L'ensemble du processus ne vous prendra pas plus d'une minute !</p>
                     <h6>Si vous avez des questions, n'hésitez pas à <a href="#">nous contacter</a></h6>
                     <div class="row">
+                        <form action="/identification/registration" method="post">
                         <ul class="list-group">
 
                             <!-- User last name -->
@@ -31,17 +34,17 @@
                             <li class="list-group-item" style="height: 56px; border: none;">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <label data-th-for="user_name" class="input-group-addon" style="width: 150px;">
+                                        <label data-th-for="name_reg" class="input-group-addon" style="width: 150px;">
                                             Nom
                                         </label>
                                         <input type="text"
                                                class="form-control"
-                                               id="name"
+                                               id="name_reg"
                                                required
-                                               name="name">
+                                               name="name_reg">
                                         <div class="input-group-btn">
                                             <button class="btn btn-danger"
-                                                    id="check_name"
+                                                    id="check_name_reg"
                                                     type="button"
                                                     tabindex="-1"
                                                     data-toggle="tooltip"
@@ -62,17 +65,17 @@
                             <li class="list-group-item" style="height: 56px; border: none;">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <label for="user_email" class="input-group-addon" style="width: 150px;">
+                                        <label for="user_email_reg" class="input-group-addon" style="width: 150px;">
                                             E-mail
                                         </label>
                                         <input type="email"
-                                               name="email"
+                                               name="email_reg"
                                                class="form-control"
-                                               id="user_email"
+                                               id="user_email_reg"
                                                required>
                                         <div class="input-group-btn">
                                             <button class="btn btn-danger"
-                                                    id="check_email"
+                                                    id="check_email_reg"
                                                     type="button"
                                                     tabindex="-1"
                                                     data-toggle="tooltip"
@@ -93,17 +96,17 @@
                             <li class="list-group-item" style="height: 56px; border: none;">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <label for="user_password" class="input-group-addon" style="width: 150px;">
+                                        <label for="user_password_reg_1" class="input-group-addon" style="width: 150px;">
                                             Mot de passe
                                         </label>
                                         <input type="password"
-                                               name="password"
+                                               name="password_reg"
                                                class="form-control"
-                                               id="user_password"
+                                               id="user_password_reg_1"
                                                required>
                                         <div class="input-group-btn">
                                             <button class="btn btn-danger"
-                                                    id="check_password"
+                                                    id="check_password_reg_1"
                                                     type="button"
                                                     tabindex="-1"
                                                     data-toggle="tooltip"
@@ -118,18 +121,50 @@
                                     </div>
                                 </div>
                             </li>
+                            <li class="list-group-item" style="height: 56px; border: none;">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label for="user_password_reg_2" class="input-group-addon" style="width: 150px;">
+                                            Confirmer mot de passe
+                                        </label>
+                                        <input type="password"
+                                               name="password_reg_2"
+                                               class="form-control"
+                                               id="user_password_reg_2"
+                                               required>
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-danger"
+                                                    id="check_password_reg_2"
+                                                    type="button"
+                                                    tabindex="-1"
+                                                    data-toggle="tooltip"
+                                                    data-placement="left"
+                                                    title="Saisir un mot de passe"
+                                                    style="cursor: default;"
+                                                    disabled>
+                                                <span class="glyphicon glyphicon-check" aria-hidden="true"
+                                                      style="padding-left: 6px;"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="alert alert-default text-center">
+                                    <button type="submit" class="btn btn-success" id="btn_register">
+                                        Créer mon compte
+                                    </button>
+                                </div>
+                            </li>
                         </ul>
-                    </div>
-                    <div class="alert alert-default text-center">
-                        <form action="/shop/account">
-                            <button type="submit" class="btn btn-success" id="btn_register">
-                                Créer mon compte
-                            </button>
                         </form>
                     </div>
+
                 </div>
             </div>
         </div>
+
+        <!-- Right panel-->
         <div class="col-sm-6 no-float">
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -153,7 +188,7 @@
                                             </label>
                                             <input type="email"
                                                    class="form-control"
-                                                   id="login_email"
+                                                   id="user_email"
                                                    name="email"
                                                    required>
                                             <div class="input-group-btn">

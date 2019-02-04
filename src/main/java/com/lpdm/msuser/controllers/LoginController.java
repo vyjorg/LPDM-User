@@ -104,29 +104,40 @@ public class LoginController {
 
     /**
      * sends information to ms-auth to persist a new user and open an account after password confirmation. Save records in the session
-     * @param user
-     * @param password2
+     * @param name_reg
+     * @param email_reg
+     * @param password_reg
+     * @param password_reg_2
      * @param model
      * @param session
-     * @param bindingResult
-     * @return home template
+    // * @param bindingResult
+     * @return home template with user authenticated
      */
     @PostMapping("/registration")
-    public String registration(@ModelAttribute AppUserBean user, @RequestParam String password2, Model model, HttpSession session, BindingResult bindingResult){
+    public String registration(@RequestParam String name_reg,
+                               @RequestParam String email_reg,
+                               @RequestParam String password_reg,
+                               @RequestParam String password_reg_2,
+                               Model model,
+                               HttpSession session)//BindingResult bindingResult
+    {
+
+        AppUserBean user = new AppUserBean();
+        user.setName(name_reg);
+        user.setEmail(email_reg);
+        user.setPassword(password_reg);
 
         logger.info("Essai de registration");
         logger.info("Utilisateur: " + user.getFirstName() + " " + user.getName() + " " + user.getEmail() + " " + user.getPassword());
 
-        if (bindingResult.hasErrors()) {
-            return "shop/fragments/account/login";
-        }
-        if (!user.getPassword().equals(password2)){
-            logger.info("erreur de mdp: " + password2);
+        //if (bindingResult.hasErrors()) {
+        //    return "shop/fragments/account/login";
+        //}
+        if (!user.getPassword().equals(password_reg_2)){
             model.addAttribute("error", "Les mots de passe sont différents");
         } else if (msUserProxy.getUserByEmail(user.getEmail()) != null) {
-            logger.info("User already exists");
             model.addAttribute("error","L'utilisateur existe déjà");
-        }else if(user.getPassword().equals(password2)){
+        }else if(user.getPassword().equals(password_reg_2)){
             logger.info("Passwords match!");
             msUserProxy.addUser(user);
             session.setAttribute("user", user);
