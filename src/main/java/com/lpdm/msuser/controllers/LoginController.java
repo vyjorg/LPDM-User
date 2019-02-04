@@ -2,10 +2,7 @@ package com.lpdm.msuser.controllers;
 
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msorder.OrderBean;
-import com.lpdm.msuser.proxies.MsLocationProxy;
-import com.lpdm.msuser.proxies.MsOrderProxy;
-import com.lpdm.msuser.proxies.MsProductProxy;
-import com.lpdm.msuser.proxies.MsUserProxy;
+import com.lpdm.msuser.proxies.*;
 import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +23,9 @@ public class LoginController {
 
     @Autowired
     private MsUserProxy msUserProxy;
+
+    @Autowired
+    private MsAuthProxy msAuthProxy;
 
     @Autowired
     private SessionController sessionController;
@@ -115,6 +115,7 @@ public class LoginController {
      */
     @PostMapping("/registration")
     public String registration(@RequestParam String name_reg,
+                               @RequestParam String firstName_reg,
                                @RequestParam String email_reg,
                                @RequestParam String password_reg,
                                @RequestParam String password_reg_2,
@@ -124,6 +125,7 @@ public class LoginController {
 
         AppUserBean user = new AppUserBean();
         user.setName(name_reg);
+        user.setFirstName(firstName_reg);
         user.setEmail(email_reg);
         user.setPassword(password_reg);
 
@@ -139,7 +141,7 @@ public class LoginController {
             model.addAttribute("error","L'utilisateur existe déjà");
         }else if(user.getPassword().equals(password_reg_2)){
             logger.info("Passwords match!");
-            msUserProxy.addUser(user);
+            msAuthProxy.addNewUser(user);
             session.setAttribute("user", user);
             sessionController.addSessionAttributes(session, model);
             return "shop/fragments/home";

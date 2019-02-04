@@ -24,7 +24,7 @@ public interface MsUserProxy {
     @PostMapping(value = "/microservice-authentication/users/login", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     AppUserBean login(@RequestBody AppUserBean user);
 
-    @PostMapping(value = "/microservice-authentication/users/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "/microservice-authentication/users/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     AppUserBean addUser(@RequestBody AppUserBean user);
 
     @PostMapping(value = "/microservice-authentication/roles/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
