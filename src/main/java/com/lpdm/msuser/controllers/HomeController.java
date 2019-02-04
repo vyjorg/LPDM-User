@@ -39,10 +39,11 @@ public class HomeController {
     @GetMapping("/")
     public String home(HttpSession session, Model model){
         logger.info("Entrée dans la méthode 'home'");
+
+        //model.addAttribute("categories", productProxy.listCategories());
+        //model.addAttribute("producers", userProxy.getUsersByRole(3));
+        //model.addAttribute( "products", productToBeDisplayed(productProxy.listProduct(), 1 , 3));
         sessionController.addSessionAttributes(session,model);
-        model.addAttribute("categories", productProxy.listCategories());
-        model.addAttribute("producers", userProxy.getUsersByRole(3));
-        model.addAttribute( "products", productToBeDisplayed(productProxy.listProduct(), 1 , 3));
 
         return "shop/fragments/home";//"home";
     }

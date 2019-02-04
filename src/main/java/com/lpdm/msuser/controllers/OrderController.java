@@ -97,6 +97,7 @@ public class OrderController {
             order.setCustomerId(user.getId());
         }catch (NullPointerException e){
             logger.info("L'utilisateur doit s'authentifier");
+            sessionController.addSessionAttributes(session, model);
             return "shop/fragments/account/login";
         }
 
@@ -112,7 +113,6 @@ public class OrderController {
         model.addAttribute("products", orderConfirmation.getOrderedProducts());
 
         sessionController.addSessionAttributes(session, model);
-
         return "shop/fragments/cart/view";
     }
 

@@ -4,6 +4,7 @@ import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msauthentication.enumeration.Access;
 import com.lpdm.msuser.proxies.MsAuthProxy;
 import com.lpdm.msuser.proxies.MsProductProxy;
+import com.lpdm.msuser.proxies.MsUserProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,10 @@ public class SessionController {
     @Autowired
     MsAuthProxy msAuthProxy;
 
+    @Autowired
+    MsUserProxy msUserProxy;
+
+
     @Bean
     public SessionController getSession(){
         return new SessionController();
@@ -43,6 +48,7 @@ public class SessionController {
             logger.info("Pas d'utilisateur identifié");
         }
         model.addAttribute("cart", OrderController.cart);
+        model.addAttribute("producers", msUserProxy.getUsersByRole(3));
         model.addAttribute("total", OrderController.cartTotal);
         model.addAttribute("products", msProductProxy.listProduct());
         model.addAttribute("categories", msProductProxy.listCategories());

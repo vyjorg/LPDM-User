@@ -82,13 +82,15 @@ public class LoginController {
             appUser = msUserProxy.login(user);
         }catch (FeignException e){
             model.addAttribute("error", "Nom d'utiisateur ou mot de passe invalide");
+            sessionController.addSessionAttributes(session, model);
             return "shop/fragments/account/login";
         }
 
 
         if (appUser.getId() == 0){
             logger.info("No user found");
-            model.addAttribute("error", "Cet utilisateur n'est pas enregistré");
+            model.addAttribute("error", " Cet utilisateur n'est pas enregistré");
+            sessionController.addSessionAttributes(session, model);
             return "shop/fragments/account/login";
 
         } else {

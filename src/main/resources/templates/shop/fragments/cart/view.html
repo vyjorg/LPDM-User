@@ -28,7 +28,7 @@
                              class="img-thumbnail"
                              alt="Image"
                              style="height: 40px;">
-                        <a th:value="${product.getProduct().getId()}" th:href="@{'/products/' + ${product.getProduct().getId()}}" th:text="${product.getProduct().getName()}"
+                        <a class="img-thumbnail" th:value="${product.getProduct().getId()}" th:href="@{'/products/' + ${product.getProduct().getId()}}" th:text="${product.getProduct().getName()}"
                     </td>
                     <td th:text="${product.getQuantity()}"/>
                     <td th:text="${product.getProduct().getPrice()} + ' €'"/>
