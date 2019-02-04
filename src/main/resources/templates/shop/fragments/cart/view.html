@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html data-layout-decorate="~{shop/layout}" lang="fr">
+<html data-layout-decorate="~{shop/layout}" lang="fr" xmlns="http://www.w3.org/1999/html"
+      xmlns:th="http://www.thymeleaf.org" >
 <head>
     <title>LPDM - Panier</title>
 </head>
@@ -56,16 +57,12 @@
                 </div>
 
                 <div class="col-sm-8 text-right">
-                    <button type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-ok"></span>
-                        Paiement
-                    </button>
-                    <!--
-                   <button type="button" class="btn btn-default">
-                       Procéder au paiement
-                       <span class="glyphicon glyphicon-chevron-right"></span>
-                   </button>
-                   -->
+                    <form th:action="@{'/orders/confirmorder/' + ${order.getId()}}">
+                        <button type="submit" class="btn btn-default">
+                            <span class="glyphicon glyphicon-ok"></span>
+                            Paiement
+                        </button>
+                    </form>
                </div>
 
            </div>
