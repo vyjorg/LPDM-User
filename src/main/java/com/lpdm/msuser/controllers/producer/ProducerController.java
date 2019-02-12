@@ -1,6 +1,8 @@
 package com.lpdm.msuser.controllers.producer;
 
 import com.lpdm.msuser.controllers.SessionController;
+import com.lpdm.msuser.msproduct.CategoryBean;
+import com.lpdm.msuser.proxies.MsProductProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class ProducerController {
@@ -17,9 +20,15 @@ public class ProducerController {
     @Autowired
     private SessionController sessionController;
 
+    @Autowired
+    private MsProductProxy msProductProxy;
+
     @GetMapping("/producer/product")
-    public String loginForm(HttpSession session, Model model){
-        log.info("Affichage du formulaire de login");
+    public String addProductForm(HttpSession session, Model model){
+        log.info("Affichage du formulaire d'ajout de produit");
+
+        List<CategoryBean> listCategory = msProductProxy.listCategories();
+        model.addAttribute("listCategory",listCategory);
         sessionController.addSessionAttributes(session, model);
         return "shop/fragments/producer/product";
     }

@@ -5,6 +5,9 @@
 </head>
 <body>
 <div data-layout-fragment="content" style="padding-top: 10px;">
+    <!-- Adding the Javascript file -->
+    <script data-th-src="@{/js/producer/addProduct.js}"></script>
+
     <!-- Product status and category -->
     <li class="list-group-item" style="border: none;display: block;">
         <div class="row">
@@ -16,7 +19,8 @@
                     </label>
                     <select class="form-control"
 
-                            style="cursor: pointer;">
+                            style="cursor: pointer;"
+                            id="status">
                         <option value="" disabled selected>Sélectionner -></option>
                         <option value="1">Activé</option>
                         <option value="2">Désactivé</option>
@@ -44,12 +48,13 @@
                         Catégorie du produit
                     </label>
                     <select class="form-control"
-                            style="cursor: pointer;">
-                        <option value="" disabled selected>Sélectionner -></option>
-                       <!-- <option data-th-each="cat,loop : ${categories}"
+                            style="cursor: pointer;"
+                            id="category">
+                       <option value="" disabled selected>Sélectionner -></option>
+                       <option data-th-each="cat,loop : ${listCategory}"
                                 data-th-value="${(loop.index) + 1}"
                                 data-th-text="${cat.name}">
-                        </option>-->
+                       </option>
                     </select>
 
                     <div class="input-group-btn">
@@ -226,9 +231,10 @@
     <hr>
     <div class="text-center">
         <button type="button" class="btn btn-success" id="btnAdd">
-            Ajouter ce produit et l'associer au producteur sélectionné
+            Ajouter ce produit
         </button>
     </div>
+    <br>
 </div>
 
 </body>
