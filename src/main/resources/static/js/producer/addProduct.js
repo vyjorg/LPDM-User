@@ -24,4 +24,16 @@ $(document).ready(function() {
         if($(this).val() !== "") button.attr("class", "btn btn-success");
         else button.attr("class", "btn btn-danger");
     });
+
+    // Check inputs name and label
+    $(":input").on("input change when keyup", function () {
+        let input = $(this).attr("id");
+        if(input.match("name") || input.match("label")){
+            this.value=this.value.replace(!/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+        }
+
+        let button = $(this).next("div").find("button");
+        if($(this).val() !== "") button.attr("class", "btn btn-success");
+        else button.attr("class", "btn btn-danger");
+    });
 })

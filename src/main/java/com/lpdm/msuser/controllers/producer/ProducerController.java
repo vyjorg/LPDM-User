@@ -1,6 +1,7 @@
 package com.lpdm.msuser.controllers.producer;
 
 import com.lpdm.msuser.controllers.SessionController;
+import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msproduct.CategoryBean;
 import com.lpdm.msuser.proxies.MsProductProxy;
 import org.slf4j.Logger;
@@ -27,7 +28,9 @@ public class ProducerController {
     public String addProductForm(HttpSession session, Model model){
         log.info("Affichage du formulaire d'ajout de produit");
 
+        AppUserBean user = (AppUserBean) session.getAttribute("user");
         List<CategoryBean> listCategory = msProductProxy.listCategories();
+        model.addAttribute("user",user);
         model.addAttribute("listCategory",listCategory);
         sessionController.addSessionAttributes(session, model);
         return "shop/fragments/producer/product";
