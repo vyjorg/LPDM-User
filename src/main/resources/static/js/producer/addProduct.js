@@ -2,6 +2,8 @@ $(document).ready(function() {
     /*
     * Check of form
     */
+    let producerId;
+
 
     //check the category
     $('#category').change(function(){
@@ -36,4 +38,10 @@ $(document).ready(function() {
         if($(this).val() !== "") button.attr("class", "btn btn-success");
         else button.attr("class", "btn btn-danger");
     });
+    setProducerId();
+
+    function setProducerId() {
+        producerId = $('#producer').val();
+        console.log("producer id = " + producerId);
+    }
 })
