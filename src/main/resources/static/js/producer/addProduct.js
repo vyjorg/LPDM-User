@@ -1,10 +1,8 @@
+let producerId;
 $(document).ready(function() {
     /*
     * Check of form
     */
-    let producerId;
-
-
     //check the category
     $('#category').change(function(){
         $('#check_categories').attr("class", "btn btn-success");
@@ -40,8 +38,40 @@ $(document).ready(function() {
     });
     setProducerId();
 
-    function setProducerId() {
-        producerId = $('#producer').val();
-        console.log("producer id = " + producerId);
-    }
+    getUploadForm(producerId);
+
+
+
 })
+
+//get the id of the producer
+function setProducerId() {
+    producerId = $('#producer').val();
+    console.log("producer id = " + producerId);
+}
+
+// id correspond à l'id de l'utilisateur
+function getUploadForm(id) {
+
+    $.ajax({
+        url: "/admin/products/upload",
+        type: "post",
+        data: "id=" + id + "&restricted=true",
+        success: function (data) {
+            insertUploadForm(data);
+        },
+        error: function (error) {
+            modalUpload.focus();
+        },
+        complete: function () {
+            modalUpload.modal();
+            modalUpload.focus();
+        }
+    });
+}
+
+function insertUploadForm(uploadForm) {
+
+    let content = $.parseHTML(uploadForm, document, true);
+    modalFormDiv.append(content[17]);
+}
