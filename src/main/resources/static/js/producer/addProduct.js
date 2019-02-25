@@ -1,8 +1,23 @@
 let producerId;
+let modalFormDiv;
+let modalUpload;
+let modalResult;
+let modalResultSuccess;
+let modalResultError;
+
+
 $(document).ready(function() {
     /*
     * Check of form
     */
+    let inputPic = $(":input[type=text][readonly='readonly']");
+    modalUpload = $("#modal_upload");
+    modalFormDiv = $("#uploadForm");
+    modalResult = $("#modal_result");
+    modalResultSuccess = $("#modal_result_body_success");
+    modalResultError = $("#modal_result_body_error");
+
+
     //check the category
     $('#category').change(function(){
         $('#check_categories').attr("class", "btn btn-success");
@@ -36,9 +51,16 @@ $(document).ready(function() {
         if($(this).val() !== "") button.attr("class", "btn btn-success");
         else button.attr("class", "btn btn-danger");
     });
+
     setProducerId();
 
-    getUploadForm(producerId);
+    // FocusIN picture URL input
+    inputPic.focusin(function (e) {
+        e.preventDefault();
+        $(this).focusout();
+        currentPictureInput = $(this);
+        getUploadForm(producerId);
+    });
 
 
 
@@ -52,7 +74,7 @@ function setProducerId() {
 
 // id correspond à l'id de l'utilisateur
 function getUploadForm(id) {
-
+    console.log("entrée upload form + id ="+id);
     $.ajax({
         url: "/admin/products/upload",
         type: "post",
@@ -71,7 +93,7 @@ function getUploadForm(id) {
 }
 
 function insertUploadForm(uploadForm) {
-
+    console.log("insertuplaodform");
     let content = $.parseHTML(uploadForm, document, true);
     modalFormDiv.append(content[17]);
 }
