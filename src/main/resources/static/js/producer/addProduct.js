@@ -4,13 +4,15 @@ let modalUpload;
 let modalResult;
 let modalResultSuccess;
 let modalResultError;
+let currentPictureInput;
+let inputPic;
 
 
 $(document).ready(function() {
     /*
     * Check of form
     */
-    let inputPic = $(":input[type=text][readonly='readonly']");
+    inputPic = $(":input[type=text][readonly='readonly']");
     modalUpload = $("#modal_upload");
     modalFormDiv = $("#uploadForm");
     modalResult = $("#modal_result");
@@ -62,6 +64,11 @@ $(document).ready(function() {
         getUploadForm(producerId);
     });
 
+    // On modal upload picture close
+    modalUpload.on('hidden.bs.modal', function () {
+        modalFormDiv.empty();
+        getLatestPicture();
+    });
 
 
 })
@@ -96,4 +103,28 @@ function insertUploadForm(uploadForm) {
     console.log("insertuplaodform");
     let content = $.parseHTML(uploadForm, document, true);
     modalFormDiv.append(content[17]);
+}
+
+function getLatestPicture(){
+    console.log("getlatestpicture");
+    $.ajax({
+        url: "/admin/products/picture/owner/" + producerId,
+        type: "get",
+        success: function (data) {
+            console.log("success");
+            displayUploadedPic(data);
+        },
+        error: function (error) {
+            alert("ERROR : " + error);
+        },
+    });
+}
+
+function displayUploadedPic(data){
+    console.log("displayUploadedPic");
+    currentPictureInput.val(data.url);
+    currentPicture = currentPictureInput.parents('ul').next().find("img");
+    console.log(inputPic.val())
+    $('#image').attr("src", data.url);
+    $('#check_photo').attr("class", "btn btn-success");
 }

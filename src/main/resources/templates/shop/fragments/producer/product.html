@@ -209,6 +209,7 @@
                         <button class="btn btn-danger"
                                 type="button"
                                 tabindex="-1"
+                                id="check_photo"
                                 data-toggle="tooltip"
                                 data-placement="left"
                                 title="Cliquer ci-contre pour sélectionner une image"
@@ -225,7 +226,7 @@
     </li>
     <div class="panel panel-default">
         <div class="panel-body text-center">
-            <img src="#" class="img-rounded" alt="Image du produit"
+            <img src="#" class="img-rounded" id="image" alt="Image du produit"
                style="height: 280px;">
         </div>
     </div>
@@ -236,10 +237,11 @@
         </button>
     </div>
     <br>
+    <div data-th-include="admin/fragments/products/update/modal_upload :: modal_upload"></div>
+    <!-- Adding the modal -->
+    <div data-th-replace="/admin/fragments/modal :: modal"></div>
 </div>
-<div data-th-include="admin/fragments/products/update/modal_upload :: modal_upload"></div>
-<!-- Adding the modal -->
-<div data-th-replace="/admin/fragments/modal :: modal"></div>
+
 
 </body>
 </html>
