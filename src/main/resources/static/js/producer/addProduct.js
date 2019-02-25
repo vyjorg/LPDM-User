@@ -54,6 +54,7 @@ $(document).ready(function() {
         else button.attr("class", "btn btn-danger");
     });
 
+    //récupère l'id du producteur
     setProducerId();
 
     // FocusIN picture URL input
@@ -71,6 +72,7 @@ $(document).ready(function() {
     });
 
 
+    checkAllInputs()
 })
 
 //get the id of the producer
@@ -79,7 +81,7 @@ function setProducerId() {
     console.log("producer id = " + producerId);
 }
 
-// id correspond à l'id de l'utilisateur
+// get the form for upload
 function getUploadForm(id) {
     console.log("entrée upload form + id ="+id);
     $.ajax({
@@ -105,6 +107,7 @@ function insertUploadForm(uploadForm) {
     modalFormDiv.append(content[17]);
 }
 
+//get the latest picture
 function getLatestPicture(){
     console.log("getlatestpicture");
     $.ajax({
@@ -120,6 +123,7 @@ function getLatestPicture(){
     });
 }
 
+//show the latest picture
 function displayUploadedPic(data){
     console.log("displayUploadedPic");
     currentPictureInput.val(data.url);
@@ -127,4 +131,20 @@ function displayUploadedPic(data){
     console.log(inputPic.val())
     $('#image').attr("src", data.url);
     $('#check_photo').attr("class", "btn btn-success");
+    checkAllInputs()
+}
+
+//check if all input are ok
+function checkAllInputs() {
+
+    let checkup = true;
+    $('[id^="check_"]').each(function(){
+        if($(this).attr("class") === "btn btn-danger") {
+            checkup = false;
+            return false;
+        }
+    });
+
+    if(checkup) $("#btnAdd").prop("disabled", false);
+    else $("#btnAdd").prop("disabled", true);
 }
