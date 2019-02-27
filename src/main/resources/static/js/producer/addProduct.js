@@ -20,6 +20,22 @@ $(document).ready(function() {
     modalResultError = $("#modal_result_body_error");
 
 
+    $("#btnAdd").on("click", function () {
+        addNewProduct();
+    });
+
+    $("#close").on("click", function () {
+        $('#modalAdd').hide();
+    });
+
+    $('#modalAdd').on('shown.bs.modal', function() {
+        $(this).find('[autofocus]').focus();
+    });
+
+    $('#modalAdd').hide();
+
+
+
     //check the category
     $('#category').change(function(){
         $('#check_categories').attr("class", "btn btn-success");
@@ -147,4 +163,39 @@ function checkAllInputs() {
 
     if(checkup) $("#btnAdd").prop("disabled", false);
     else $("#btnAdd").prop("disabled", true);
+}
+
+function addNewProduct() {
+
+    let deactivate = $("#status").val() !== "1";
+
+    let producer = {};
+    producer.id = parseInt(producerId);
+
+    let category = {};
+    category.id = $("#category").val();
+
+    console.log($("#tva").val())
+
+    let jsonObj = {};
+    jsonObj.name = $("#name").val();
+    jsonObj.category = category;
+    jsonObj.label = $("#label").val();
+    jsonObj.price = $("#price").val();
+    jsonObj.tax = $("#tva").val();
+    jsonObj.deactivate = deactivate;
+    jsonObj.picture = $("#picture").val();
+    jsonObj.producer = producer;
+
+    console.log(jsonObj);
+
+    $.ajax({
+        url: "/producer/product/add",
+        type: "post",
+        data: JSON.stringify(jsonObj),
+        contentType: "application/json",
+        dataType : "json"
+    });
+
+    $('#modalAdd').show();
 }

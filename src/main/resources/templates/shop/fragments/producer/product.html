@@ -135,6 +135,29 @@
         </div>
     </li>
 
+    <!-- Modal fragment -->
+    <div class="modal-dialog" id="modalAdd">
+        <div class="modal-content">
+
+            <!-- Modal header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Ajout d'un produit</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div  class="alert alert-success" autofocus>
+                    La requête a bien été effectuée.
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Product price -->
     <li class="list-group-item" style="height: 56px; border: none;">
         <div class="form-group">
@@ -175,7 +198,7 @@
                 </label>
                 <input type="text"
                        class="form-control"
-                      id="tax">
+                      id="tva">
                 <div class="input-group-btn">
                     <button class="btn btn-danger"
                             type="button"
@@ -207,6 +230,7 @@
                     <input type="text"
                            class="form-control"
                            style="cursor: pointer;"
+                           id="picture"
                            readonly>
                     <div class="input-group-btn">
                         <button class="btn btn-danger"
@@ -241,8 +265,7 @@
     </div>
     <br>
     <div data-th-include="admin/fragments/products/update/modal_upload :: modal_upload"></div>
-    <!-- Adding the modal -->
-    <div data-th-replace="/admin/fragments/modal :: modal"></div>
+
 </div>
 
 
