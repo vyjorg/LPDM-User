@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html data-layout-decorate="~{shop/layout}" lang="fr" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>LPDM - Producer</title>
+</head>
+<body>
+    <div data-layout-fragment="content" style="padding-top: 10px;">
+        <div class="row">
+
+            <div th:if="${list != null}">
+
+                <div th:each="product: ${list}" class="col-sm-4 shadow-box product">
+                    <h5 th:text="${product.getName()}"></h5>
+                    <img th:src="${product.getPicture()}" class="product product-img"/><br/>
+
+                </div>
+            </div>
+            <div th:if="${list == null}">
+            <h2>Vous n'avez aucun produit enregistré.</h2>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

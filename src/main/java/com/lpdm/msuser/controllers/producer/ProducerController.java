@@ -46,4 +46,20 @@ public class ProducerController {
         log.info("Product : " + product);
         return msProductProxy.addProduct(product);
     }
+
+
+    @GetMapping("/producer/list")
+    public String listProduct(HttpSession session, Model model){
+        log.info("Affichage de la liste des produits du user");
+
+        AppUserBean user = (AppUserBean) session.getAttribute("user");
+        List<ProductBean> list = msProductProxy.listProductByProducerId(user.getId());
+
+        model.addAttribute("user",user);
+        model.addAttribute("list",list);
+
+
+        sessionController.addSessionAttributes(session, model);
+        return "shop/fragments/producer/list";
+    }
 }
