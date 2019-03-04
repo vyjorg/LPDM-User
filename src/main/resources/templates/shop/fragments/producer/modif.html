@@ -6,9 +6,10 @@
 <body>
 <div data-layout-fragment="content" style="padding-top: 10px;">
     <!-- Adding the Javascript file -->
-    <script data-th-src="@{/js/producer/addProduct.js}"></script>
+    <script data-th-src="@{/js/producer/modifProduct.js}"></script>
 
     <input type=hidden id="producer" name="abcName" data-th-value="${user.id}"/>
+    <input type=hidden id="productid" name="id" data-th-value="${product.id}"/>
     <!-- Product status and category -->
     <li class="list-group-item" style="border: none;display: block;">
         <div class="row">

@@ -10,10 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -80,5 +77,13 @@ public class ProducerController {
 
         sessionController.addSessionAttributes(session, model);
         return "shop/fragments/producer/modif";
+    }
+
+
+    @PutMapping(value = {"/producer/product/modif", "/producer/product/modif/"})
+    public void modifProduct(@Valid @RequestBody ProductBean product){
+
+        log.info("Product : " + product);
+        msProductProxy.updateProduct(product);
     }
 }
