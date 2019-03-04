@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -61,5 +62,23 @@ public class ProducerController {
 
         sessionController.addSessionAttributes(session, model);
         return "shop/fragments/producer/list";
+    }
+
+    @GetMapping("/producer/product/{id}")
+    public String modifProduct(HttpSession session, Model model,@PathVariable int id){
+        log.info("Affichage du formulaire de modification du produit");
+
+        log.info("id = "+id);
+        AppUserBean user = (AppUserBean) session.getAttribute("user");
+        ProductBean product = msProductProxy.findProduct(id);
+
+        List<CategoryBean> listCategory = msProductProxy.listCategories();
+
+        model.addAttribute("user",user);
+        model.addAttribute("product",product);
+        model.addAttribute("listCategory",listCategory);
+
+        sessionController.addSessionAttributes(session, model);
+        return "shop/fragments/producer/modif";
     }
 }

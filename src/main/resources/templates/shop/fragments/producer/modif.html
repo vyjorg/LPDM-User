@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html data-layout-decorate="~{shop/layout}" lang="fr" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>LPDM - Producer</title>
+</head>
+<body>
+<div data-layout-fragment="content" style="padding-top: 10px;">
+    <!-- Adding the Javascript file -->
+    <script data-th-src="@{/js/producer/addProduct.js}"></script>
+
+    <input type=hidden id="producer" name="abcName" data-th-value="${user.id}"/>
+    <!-- Product status and category -->
+    <li class="list-group-item" style="border: none;display: block;">
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="input-group">
+                    <label class="input-group-addon"
+                           style="width: 140px;">
+                        Statut du produit
+                    </label>
+                    <select class="form-control"
+
+                            style="cursor: pointer;"
+                            id="status"
+                            th:value="${product.isDeactivate()}">
+                        <option value="" disabled selected>Sélectionner -></option>
+                        <div th:if="${product.isDeactivate() == false}">
+                            <option value="1" selected>Activé</option>
+                            <option value="2">Désactivé</option>
+                        </div>
+                        <div th:if="${product.isDeactivate() == true}">
+                            <option value="1">Activé</option>
+                            <option value="2" selected>Désactivé</option>
+                        </div>
+                    </select>
+
+                    <div class="input-group-btn">
+                        <button class="btn btn-default"
+                                type="button"
+                                tabindex="-1"
+                                data-toggle="tooltip"
+                                data-placement="left"
+                                id="check_status"
+                                title="Sélectionner un statut"
+                                style="cursor: help;">
+                                        <span class="glyphicon glyphicon-check"
+                                              aria-hidden="true" style="padding-left: 6px;">
+                                        </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-5 pull-right">
+                <div class="input-group">
+                    <label class="input-group-addon">
+                        Catégorie du produit
+                    </label>
+                    <select class="form-control"
+                            style="cursor: pointer;"
+                            id="category"
+                           >
+                        <option value="" disabled selected>Sélectionner -></option>
+                        <option data-th-each="cat,loop : ${listCategory}"
+                                data-th-value="${(loop.index) + 1}"
+                                data-th-text="${cat.name}"
+                                data-th-selected="${cat.name == product.category.name}">>
+                        </option>
+                    </select>
+
+                    <div class="input-group-btn">
+                        <button class="btn btn-default"
+                                type="button"
+                                tabindex="-1"
+                                data-toggle="tooltip"
+                                data-placement="left" id="check_categories"
+                                title="Sélectionner une catégorie"
+                                style="cursor: help;">
+                                        <span class="glyphicon glyphicon-check"
+                                              aria-hidden="true" style="padding-left: 6px;">
+                                        </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <!-- Product name -->
+    <li class="list-group-item" style="height: 56px; border: none;">
+        <div class="form-group">
+            <div class="input-group">
+                <label class="input-group-addon"
+                       style="width: 140px;">
+                    Nom
+                </label>
+                <input type="text"
+                       class="form-control"
+                       id="name"
+                        th:value="${product.getName()}">
+                <div class="input-group-btn">
+                    <button class="btn btn-default"
+                            type="button"
+                            tabindex="-1"
+                            id="check_name"
+                            data-toggle="tooltip"
+                            data-placement="left"
+                            title="Saisir le nom du produit"
+                            style="cursor: help;">
+                                    <span class="glyphicon glyphicon-check"
+                                          aria-hidden="true"
+                                          style="padding-left: 6px;">
+                                    </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <!-- Product label -->
+    <li class="list-group-item" style="height: 56px; border: none;">
+        <div class="form-group">
+            <div class="input-group">
+                <label class="input-group-addon"
+                       style="width: 140px;">
+                    Désignation
+                </label>
+                <input type="text"
+                       class="form-control"
+                       id="label"
+                        th:value="${product.getLabel()}">
+                <div class="input-group-btn">
+                    <button class="btn btn-default"
+                            type="button"
+                            tabindex="-1"
+                            id="check_label"
+                            data-toggle="tooltip"
+                            data-placement="left"
+                            title="Saisir la désignation du produit"
+                            style="cursor: help;">
+                                    <span class="glyphicon glyphicon-check"
+                                          aria-hidden="true" style="padding-left: 6px;">
+                                    </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <!-- Modal fragment -->
+    <div class="modal-dialog" id="modalAdd">
+        <div class="modal-content">
+
+            <!-- Modal header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modification d'un produit</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div  class="alert alert-success" autofocus>
+                    La requête a bien été effectuée.
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product price -->
+    <li class="list-group-item" style="height: 56px; border: none;">
+        <div class="form-group">
+            <div class="input-group">
+                <label class="input-group-addon"
+                       style="width: 140px;">
+                    Prix unitaire HT
+                </label>
+                <input type="text"
+                       class="form-control"
+                       id="price"
+                        th:value="${product.getPrice()}">
+                <div class="input-group-btn">
+                    <button class="btn btn-default"
+                            type="button"
+                            tabindex="-1"
+                            data-toggle="tooltip"
+                            data-placement="left"
+                            title="Saisir le prix HT du produit"
+                            style="cursor: help;"
+                            id="check_price">
+                                    <span class="glyphicon glyphicon-check"
+                                          aria-hidden="true"
+                                          style="padding-left: 6px;">
+                                    </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <!-- Product tax -->
+    <li class="list-group-item" style="height: 56px; border: none;">
+        <div class="form-group">
+            <div class="input-group">
+                <label class="input-group-addon"
+                       style="width: 140px;">
+                    T.V.A %
+                </label>
+                <input type="text"
+                       class="form-control"
+                       id="tva"
+                       th:value="${product.getTax()}" >
+                <div class="input-group-btn">
+                    <button class="btn btn-default"
+                            type="button"
+                            tabindex="-1"
+                            data-toggle="tooltip"
+                            data-placement="left"
+                            id="check_tax"
+                            title="Saisir le % de T.V.A."
+                            style="cursor: help;">
+                                    <span class="glyphicon glyphicon-check"
+                                          aria-hidden="true"
+                                          style="padding-left: 6px;">
+                                    </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <!-- Product picture -->
+    <li class="list-group-item" style="height: 56px; border: none;">
+        <div class="form-group">
+            <div class="form-group">
+                <div class="input-group">
+                    <label class="input-group-addon"
+                           style="width: 140px;">
+                        Photo
+                    </label>
+                    <input type="text"
+                           class="form-control"
+                           style="cursor: pointer;"
+                           id="picture"
+                           readonly
+                           th:value="${product.getPicture()}" >
+                    <div class="input-group-btn">
+                        <button class="btn btn-default"
+                                type="button"
+                                tabindex="-1"
+                                id="check_photo"
+                                data-toggle="tooltip"
+                                data-placement="left"
+                                title="Cliquer ci-contre pour sélectionner une image"
+                                style="cursor: help;">
+                                        <span class="glyphicon glyphicon-check"
+                                              aria-hidden="true"
+                                              style="padding-left: 6px;">
+                                        </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+    <div class="panel panel-default">
+        <div class="panel-body text-center">
+            <img th:src="${product.getPicture()}" class="img-rounded" id="image" alt="Image du produit"
+                 style="height: 280px;">
+        </div>
+    </div>
+    <hr>
+    <div class="text-center">
+        <button type="button" class="btn btn-success" id="btnAdd" disabled>
+            Modifier ce produit
+        </button>
+    </div>
+    <br>
+    <div data-th-include="admin/fragments/products/update/modal_upload :: modal_upload"></div>
+
+</div>
+
+
+</body>
+</html>

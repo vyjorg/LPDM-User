@@ -10,8 +10,9 @@
             <div th:if="${list != null}">
 
                 <div th:each="product: ${list}" class="col-sm-4 shadow-box product">
-                    <h5 th:text="${product.getName()}"></h5>
+                    <h4 th:text="${product.getName()}"></h4>
                     <img th:src="${product.getPicture()}" class="product product-img"/><br/>
+                    <a th:href="@{/producer/product/{id} (id=${product.getId()})}"> <button class="btn btn-primary">Modification</button> </a>
 
                 </div>
             </div>
