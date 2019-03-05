@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html data-layout-decorate="~{shop/layout}" lang="fr" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>LPDM - Producer</title>
+</head>
+<body>
+<div data-layout-fragment="content" style="padding-top: 10px;">
+    <!-- Adding the Javascript file -->
+    <script data-th-src="@{/js/producer/modifStock.js}"></script>
+
+    <input type=hidden id="stock" name="abcName" data-th-value="${stock.id}"/>
+    <input type=hidden id="product" name="abcName" data-th-value="${stock.productId}"/>
+
+    <!-- stock quantity -->
+    <li class="list-group-item" style="height: 56px; border: none;">
+        <div class="form-group">
+            <div class="input-group">
+                <label class="input-group-addon"
+                       style="width: 140px;">
+                    Quantité
+                </label>
+                <input type="text"
+                       class="form-control"
+                       id="quantity"
+                       th:value="${stock.getQuantity()}">
+                <div class="input-group-btn">
+                    <button class="btn btn-default"
+                            type="button"
+                            tabindex="-1"
+                            data-toggle="tooltip"
+                            data-placement="left"
+                            title="Saisir la quantité de produit"
+                            style="cursor: help;"
+                            id="check_quantity">
+                                    <span class="glyphicon glyphicon-check"
+                                          aria-hidden="true"
+                                          style="padding-left: 6px;">
+                                    </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <!-- stock expiration -->
+    <li class="list-group-item" style="height: 56px; border: none;">
+        <div class="form-group">
+            <div class="input-group">
+                <label class="input-group-addon"
+                       style="width: 140px;">
+                    Date d'expiration
+                </label>
+                <input type='date' class="form-control" id='expiration' th:value="${stock.getExpireDate()}"/>
+                <div class="input-group-btn">
+                    <button class="btn btn-default"
+                            type="button"
+                            tabindex="-1"
+                            data-toggle="tooltip"
+                            data-placement="left"
+                            title="Saisir la date d'expiration du produit"
+                            style="cursor: help;"
+                            id="check_expiration">
+                                    <span class="glyphicon glyphicon-check"
+                                          aria-hidden="true"
+                                          style="padding-left: 6px;">
+                                    </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <!-- stock packaging -->
+    <li class="list-group-item" style="height: 56px; border: none;">
+        <div class="form-group">
+            <div class="input-group">
+                <label class="input-group-addon"
+                       style="width: 140px;">
+                    Packaging
+                </label>
+                <input type="text"
+                       class="form-control"
+                       id="packaging"
+                       th:value="${stock.getPackaging()}">
+                <div class="input-group-btn">
+                    <button class="btn btn-default"
+                            type="button"
+                            tabindex="-1"
+                            id="check_packaging"
+                            data-toggle="tooltip"
+                            data-placement="left"
+                            title="Saisir le packaging du produit"
+                            style="cursor: help;">
+                                    <span class="glyphicon glyphicon-check"
+                                          aria-hidden="true"
+                                          style="padding-left: 6px;">
+                                    </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <!-- stock unitByPackage -->
+    <li class="list-group-item" style="height: 56px; border: none;">
+        <div class="form-group">
+            <div class="input-group">
+                <label class="input-group-addon"
+                       style="width: 140px;">
+                    Nombre d'unité
+                </label>
+                <input type="text"
+                       class="form-control"
+                       id="unity"
+                       th:value="${stock.getUnitByPackage()}">
+                <div class="input-group-btn">
+                    <button class="btn btn-default"
+                            type="button"
+                            tabindex="-1"
+                            data-toggle="tooltip"
+                            data-placement="left"
+                            title="Saisir la quantité de produit dans un package"
+                            style="cursor: help;"
+                            id="check_unity">
+                                    <span class="glyphicon glyphicon-check"
+                                          aria-hidden="true"
+                                          style="padding-left: 6px;">
+                                    </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <!-- stock description -->
+    <li class="list-group-item" style="height: 56px; border: none;">
+        <div class="form-group">
+            <div class="input-group">
+                <label class="input-group-addon"
+                       style="width: 140px;">
+                    Description
+                </label>
+                <input type="text"
+                       class="form-control"
+                       id="description"
+                       th:value="${stock.getDescription()}">
+                <div class="input-group-btn">
+                    <button class="btn btn-default"
+                            type="button"
+                            tabindex="-1"
+                            id="check_description"
+                            data-toggle="tooltip"
+                            data-placement="left"
+                            title="Saisir la description du produit"
+                            style="cursor: help;">
+                                    <span class="glyphicon glyphicon-check"
+                                          aria-hidden="true"
+                                          style="padding-left: 6px;">
+                                    </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <!-- Modal fragment -->
+    <div class="modal-dialog" id="modalAdd">
+        <div class="modal-content">
+
+            <!-- Modal header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modification d'un stock</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div  class="alert alert-success" autofocus>
+                    La requête a bien été effectuée.
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="text-center">
+        <button type="button" class="btn btn-success" id="btnAdd">
+            Modifier ce stock
+        </button>
+    </div>
+    <br>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html data-layout-decorate="~{shop/layout}" lang="fr" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>LPDM - Producer</title>
+</head>
+<body>
+<div data-layout-fragment="content" style="padding-top: 10px;">
+    <div class="row">
+
+        <div th:if="${list != null}">
+
+            <div th:each="stock: ${list}" class="col-sm-4 shadow-box product">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><span class="text-center">Identifiant de stock : </span><span th:text="${stock.getId()}"></span></h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row text-center">
+                            <p><span>Quantité : </span><span th:text="${stock.getQuantity()}"></span></p>
+                            <p><span>Date d'expiration : </span><span th:text="${stock.getExpireDate()}"></span></p>
+                            <p><span>Packaging : </span><span th:text="${stock.getPackaging()}"></span></p>
+                        </div>
+                        <div>
+                            <p></p>
+                            <a class="text-center" th:href="@{/producer/stock/modif/{id} (id=${stock.getId()})}"> <button class="btn btn-primary">Modification</button> </a>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div th:if="${list == null}">
+            <h2 class="text-center">Vous n'avez aucun stock enregistré.</h2>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

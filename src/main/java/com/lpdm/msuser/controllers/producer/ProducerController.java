@@ -109,8 +109,6 @@ public class ProducerController {
 
     @GetMapping("/producer/product/stock/add/{id}")
     public String addStock(HttpSession session, Model model , @PathVariable int id){
-        log.info("Affichage de la liste des produits du user");
-
         AppUserBean user = (AppUserBean) session.getAttribute("user");
         ProductBean product = msProductProxy.findProduct(id);
 
@@ -128,5 +126,40 @@ public class ProducerController {
 
         log.info("Stock : " + stock);
         return msStockProxy.addNewStock(stock);
+    }
+
+    @GetMapping("/producer/product/stock/modif/{id}")
+    public String listModifStock(HttpSession session, Model model , @PathVariable int id){
+        AppUserBean user = (AppUserBean) session.getAttribute("user");
+        List<StockBean> list = msProductProxy.findProduct(id).getListStock();
+
+        if(list.size()==0){
+            list=null;
+        }
+
+        model.addAttribute("user",user);
+        model.addAttribute("list",list);
+
+        sessionController.addSessionAttributes(session, model);
+        return "shop/fragments/producer/listmodifstock";
+    }
+
+    @GetMapping("/producer/stock/modif/{id}")
+    public String modifStock(HttpSession session, Model model , @PathVariable int id){
+        AppUserBean user = (AppUserBean) session.getAttribute("user");
+        StockBean stock = msStockProxy.findStockById(id);
+
+        model.addAttribute("user",user);
+        model.addAttribute("stock",stock);
+
+        sessionController.addSessionAttributes(session, model);
+        return "shop/fragments/producer/stockmodif";
+    }
+
+    @PutMapping(value = {"/producer/stock/modif", "/producer/stock/modif/"})
+    public StockBean modifStock(@Valid @RequestBody StockBean stock){
+
+        log.info("Stock : " + stock);
+        return msStockProxy.updateStock(stock);
     }
 }
