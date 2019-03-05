@@ -4,7 +4,9 @@ import com.lpdm.msuser.controllers.SessionController;
 import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msproduct.CategoryBean;
 import com.lpdm.msuser.msproduct.ProductBean;
+import com.lpdm.msuser.msproduct.StockBean;
 import com.lpdm.msuser.proxies.MsProductProxy;
+import com.lpdm.msuser.proxies.MsStockProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class ProducerController {
 
     @Autowired
     private MsProductProxy msProductProxy;
+
+    @Autowired
+    private MsStockProxy msStockProxy;
 
     @GetMapping("/producer/product")
     public String addProductForm(HttpSession session, Model model){
@@ -85,5 +90,43 @@ public class ProducerController {
 
         log.info("Product : " + product);
         msProductProxy.updateProduct(product);
+    }
+
+    @GetMapping("/producer/product/stock")
+    public String listProductForStock(HttpSession session, Model model){
+        log.info("Affichage de la liste des produits du user");
+
+        AppUserBean user = (AppUserBean) session.getAttribute("user");
+        List<ProductBean> list = msProductProxy.listProductByProducerId(user.getId());
+
+        model.addAttribute("user",user);
+        model.addAttribute("list",list);
+
+        sessionController.addSessionAttributes(session, model);
+        return "shop/fragments/producer/stock";
+    }
+
+
+    @GetMapping("/producer/product/stock/add/{id}")
+    public String addStock(HttpSession session, Model model , @PathVariable int id){
+        log.info("Affichage de la liste des produits du user");
+
+        AppUserBean user = (AppUserBean) session.getAttribute("user");
+        ProductBean product = msProductProxy.findProduct(id);
+
+        model.addAttribute("user",user);
+        model.addAttribute("product",product);
+
+
+        sessionController.addSessionAttributes(session, model);
+        return "shop/fragments/producer/addStock";
+    }
+
+
+    @PostMapping(value = {"/producer/stock/add", "/producer/stock/add/"})
+    public StockBean addNewStock(@Valid @RequestBody StockBean stock){
+
+        log.info("Stock : " + stock);
+        return msStockProxy.addNewStock(stock);
     }
 }
