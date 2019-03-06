@@ -1,5 +1,7 @@
 package com.lpdm.msuser.controllers;
 
+import com.lpdm.msuser.msauthentication.AppRoleBean;
+import com.lpdm.msuser.msauthentication.AppUserBean;
 import com.lpdm.msuser.msproduct.ProductBean;
 import com.lpdm.msuser.proxies.MsProductProxy;
 import com.lpdm.msuser.proxies.MsUserProxy;
@@ -44,7 +46,6 @@ public class HomeController {
         //model.addAttribute("producers", userProxy.getUsersByRole(3));
         //model.addAttribute( "products", productToBeDisplayed(productProxy.listProduct(), 1 , 3));
         sessionController.addSessionAttributes(session,model);
-
         return "shop/fragments/home";//"home";
     }
 

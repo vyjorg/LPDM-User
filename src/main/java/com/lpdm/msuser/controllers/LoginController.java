@@ -99,6 +99,17 @@ public class LoginController {
             logger.info("appUser : " + appUser.toString());
             logger.info("Entering user in session");
             session.setAttribute("user", appUser);
+            boolean producer = false;
+            List<AppRoleBean> roles = appUser.getAppRole();
+              for (AppRoleBean role : roles) {
+                    logger.info(role.getRoleName());
+                    if (role.getRoleName().equals("PRODUCER")) {
+                        producer = true;
+                    }
+                }
+            logger.info(Boolean.toString(producer));
+            model.addAttribute("producer", producer);
+
             sessionController.addSessionAttributes(session, model);
             return "shop/fragments/home";
         }
