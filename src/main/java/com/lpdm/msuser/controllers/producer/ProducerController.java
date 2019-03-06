@@ -162,4 +162,39 @@ public class ProducerController {
         log.info("Stock : " + stock);
         return msStockProxy.updateStock(stock);
     }
+
+    @GetMapping("/producer/product/stock/delete/{id}")
+    public String listdeleteStock(HttpSession session, Model model , @PathVariable int id){
+        AppUserBean user = (AppUserBean) session.getAttribute("user");
+        List<StockBean> list = msProductProxy.findProduct(id).getListStock();
+
+        if(list.size()==0){
+            list=null;
+        }
+
+        model.addAttribute("user",user);
+        model.addAttribute("list",list);
+
+        sessionController.addSessionAttributes(session, model);
+        return "shop/fragments/producer/listdeletestock";
+    }
+
+    @GetMapping("/producer/stock/delete/{id}")
+    public String deleteStock(HttpSession session, Model model , @PathVariable int id){
+        AppUserBean user = (AppUserBean) session.getAttribute("user");
+        StockBean stock = msStockProxy.findStockById(id);
+        List<StockBean> list = msProductProxy.findProduct(stock.getProductId()).getListStock();
+
+        if(list.size()==0){
+            list=null;
+        }
+
+        msStockProxy.deleteStockById(id);
+
+        model.addAttribute("user",user);
+        model.addAttribute("list",list);
+
+        sessionController.addSessionAttributes(session, model);
+        return listdeleteStock(session,model,stock.getProductId());
+    }
 }
