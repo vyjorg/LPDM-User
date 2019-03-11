@@ -45,6 +45,20 @@ public class HomeController {
         //model.addAttribute("categories", productProxy.listCategories());
         //model.addAttribute("producers", userProxy.getUsersByRole(3));
         //model.addAttribute( "products", productToBeDisplayed(productProxy.listProduct(), 1 , 3));
+        if(session.getAttribute("user") !=null) {
+            AppUserBean appUser = (AppUserBean) session.getAttribute("user");
+            boolean producer = false;
+            List<AppRoleBean> roles = appUser.getAppRole();
+            for (AppRoleBean role : roles) {
+                logger.info(role.getRoleName());
+                if (role.getRoleName().equals("PRODUCER")) {
+                    producer = true;
+                }
+            }
+            logger.info(Boolean.toString(producer));
+            model.addAttribute("producer", producer);
+        }
+
         sessionController.addSessionAttributes(session,model);
         return "shop/fragments/home";//"home";
     }
