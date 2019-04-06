@@ -52,7 +52,7 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("address", msLocationProxy.findAddressById(user.getId()));
         sessionController.addSessionAttributes(session, model);
-        return "users/userdescription";
+        return "shop/fragments/account/description";
     }
 
     /**
@@ -68,5 +68,7 @@ public class UserController {
         sessionController.addSessionAttributes(session, model);
         return "users/list";
     }
+
+
 
 }
