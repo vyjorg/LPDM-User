@@ -78,5 +78,6 @@ public class SessionController {
         cartTotal = 0;
         session.removeAttribute("user");
         session.removeAttribute("total");
+        session.removeAttribute("cart");
     }
 }
