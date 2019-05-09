@@ -43,6 +43,8 @@ public class SessionController {
      */
     public void addSessionAttributes(HttpSession session, Model model){
 
+        double cartTotal = 0;
+
         try {
             AppUserBean user = (AppUserBean) session.getAttribute("user");
             model.addAttribute("user", user);
@@ -50,9 +52,11 @@ public class SessionController {
             logger.info("Pas d'utilisateur identifié");
         }
         List<OrderedProductBean> orderedProducts = (List<OrderedProductBean>) session.getAttribute("cart");
-        double cartTotal = (double) session.getAttribute("cartTotal");
-
-
+        try {
+             cartTotal = (double) session.getAttribute("cartTotal");
+        }catch (NullPointerException e){
+            logger.info("Le cart n'est pas initialisé");
+        }
 
         model.addAttribute("cart", orderedProducts == null ? new ArrayList<OrderedProductBean>() : orderedProducts);
         model.addAttribute("producers", msUserProxy.getUsersByRole(3));
