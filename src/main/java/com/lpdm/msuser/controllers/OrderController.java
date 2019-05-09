@@ -101,8 +101,8 @@ public class OrderController {
             return "shop/fragments/account/login";
         }
 
-        order.setTotal(sessionController.cartTotal);
-        order.setOrderedProducts(sessionController.cart);
+        order.setTotal((int)session.getAttribute("cartTotal"));
+        order.setOrderedProducts((List<OrderedProductBean>) session.getAttribute("cart"));
         order.setStatus(StatusEnum.PROCESSED);
         order.setOrderDate(LocalDateTime.now());
         order.setPayment(payment);
@@ -126,7 +126,16 @@ public class OrderController {
     @GetMapping("/{id}/add")
     public String addItem(@PathVariable("id") int productId, Model model, HttpSession session){
 
+        int cartTotal = 0;
         logger.info("Entrée dans addItem pour produit : " + productId);
+        try {
+            cartTotal = (int) session.getAttribute("cartTotal");
+        }catch(NullPointerException e){
+            logger.info("Le cart n'a pas été initialisé");
+        }
+        List<OrderedProductBean> orderedProducts = (List<OrderedProductBean>) session.getAttribute("cart");
+
+        orderedProducts = orderedProducts == null? new ArrayList<OrderedProductBean>() : orderedProducts;
 
         OrderedProductBean orderedProduct = null;
 
@@ -134,7 +143,7 @@ public class OrderController {
 
         // check stock quantity available
 
-        for (OrderedProductBean item: sessionController.cart) {
+        for (OrderedProductBean item: orderedProducts) {
             if (item.getProduct().getId() == productId) {
                 orderedProduct = item;
                 orderedProduct.setQuantity(orderedProduct.getQuantity() + 1);
@@ -145,11 +154,12 @@ public class OrderController {
             orderedProduct = new OrderedProductBean();
             orderedProduct.setProduct(product);
             orderedProduct.setQuantity(1);
-            sessionController.cart.add(orderedProduct);
+            orderedProducts.add(orderedProduct);
+            session.setAttribute("cart", orderedProducts);
         }
 
-        sessionController.cartTotal += product.getPrice();
-        logger.info("total panier + :" + sessionController.cartTotal);
+        session.setAttribute("cartTotal", cartTotal += product.getPrice() );
+        //sessionController.cartTotal += product.getPrice();
 
 
         model.addAttribute("product", product);
@@ -171,28 +181,36 @@ public class OrderController {
     public String subItem(@PathVariable("id") int productId, Model model, HttpSession session){
 
         logger.info("Entrée dans addItem pour produit : " + productId);
-
+        List<OrderedProductBean> orderedProducts = (List<OrderedProductBean>) session.getAttribute("cart");
+        double cartTotal = (double)session.getAttribute("cartTotal");
         OrderedProductBean orderedProduct = null;
-        ProductBean product = null;
+        ProductBean product;
 
         product = msProductProxy.findProduct(productId);
 
         logger.info("product: " + product);
 
-        for (OrderedProductBean item : sessionController.cart) {
+        for (OrderedProductBean item : orderedProducts) {
             if (item.getProduct().getId() == productId) {
                 orderedProduct = item;
                 orderedProduct.setQuantity(orderedProduct.getQuantity() >= 1 ? orderedProduct.getQuantity() - 1 : 0);
-                if (orderedProduct.getQuantity() == 0)
-                    sessionController.cart.remove(orderedProduct);
+                if (orderedProduct.getQuantity() == 0) {
+                    orderedProducts.remove(orderedProduct);
+                    //sessionController.cart.remove(ord redProduct);
+                    session.setAttribute("cart", orderedProducts);
+                }
                 break;
             }
         }
-        logger.info("après la boucle");
-        if (orderedProduct != null)
-            sessionController.cartTotal = orderedProduct.getQuantity() >= 0 ? sessionController.cartTotal -= product.getPrice() : sessionController.cartTotal;
 
-        logger.info("total panier - :" + sessionController.cartTotal);
+
+        logger.info("après la boucle");
+        if (orderedProduct != null) {
+            cartTotal = orderedProduct.getQuantity() >= 0 ? cartTotal -= product.getPrice() : cartTotal;
+            session.setAttribute("cartTotal", cartTotal);
+        }
+
+        logger.info("total panier - :" + session.getAttribute("cartTotal"));
 
         model.addAttribute("products", msProductProxy.listProduct());
         sessionController.addSessionAttributes(session, model);
@@ -200,8 +218,8 @@ public class OrderController {
     }
 
     @GetMapping("/paypalsuccess")
-    public String successPaypal(){
-        sessionController.emptyCart();
+    public String successPaypal(HttpSession session){
+        sessionController.emptyCart(session);
         return "orders/paypalsuccess";
     }
 

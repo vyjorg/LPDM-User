@@ -53,9 +53,11 @@ public class SessionController {
         }catch (NullPointerException e){
             logger.info("Pas d'utilisateur identifié");
         }
-        model.addAttribute("cart", cart);
+        List<OrderedProductBean> orderedProducts = (List<OrderedProductBean>) session.getAttribute("cart");
+
+        model.addAttribute("cart", orderedProducts == null ? new ArrayList<OrderedProductBean>() : orderedProducts);
         model.addAttribute("producers", msUserProxy.getUsersByRole(3));
-        model.addAttribute("total", cartTotal);
+        model.addAttribute("total", session.getAttribute("cartTotal"));
         model.addAttribute("products", msProductProxy.listProduct());
         model.addAttribute("categories", msProductProxy.listCategories());
         model.addAttribute("roles", msAuthProxy.findAllRoles());
@@ -64,9 +66,9 @@ public class SessionController {
     /**
      * clears cart
      */
-    public void emptyCart(){
-        cartTotal = 0;
-        cart.clear();
+    public void emptyCart(HttpSession session){
+        session.setAttribute("cartTotal", 0);
+        session.setAttribute("cart", new ArrayList<OrderedProductBean>());
     }
 
     /**
@@ -74,8 +76,8 @@ public class SessionController {
      * @param session
      */
     public void logout(HttpSession session){
-        cart.clear();
-        cartTotal = 0;
+        session.setAttribute("cartTotal", 0);
+        session.setAttribute("cart", new ArrayList<OrderedProductBean>());
         session.removeAttribute("user");
         session.removeAttribute("total");
         session.removeAttribute("cart");

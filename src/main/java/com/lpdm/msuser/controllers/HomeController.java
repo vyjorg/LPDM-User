@@ -42,9 +42,6 @@ public class HomeController {
     public String home(HttpSession session, Model model){
         logger.info("Entrée dans la méthode 'home'");
 
-        //model.addAttribute("categories", productProxy.listCategories());
-        //model.addAttribute("producers", userProxy.getUsersByRole(3));
-        //model.addAttribute( "products", productToBeDisplayed(productProxy.listProduct(), 1 , 3));
         if(session.getAttribute("user") !=null) {
             AppUserBean appUser = (AppUserBean) session.getAttribute("user");
             boolean producer = false;
@@ -94,7 +91,6 @@ public class HomeController {
         return toBeDisplayed;
 
     }
-
 
 
 }

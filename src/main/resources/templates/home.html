@@ -42,7 +42,8 @@
             <img th:src="${product.getPicture()}" class="product"/><br/>
             <a th:href="@{'/products/' + ${product.getId()}}" th:value="${product.getId()}"
                th:text="${product.getName()}"/> <div th:text="${product.getPrice()}"/><br/>
-            <p><a th:href="@{'/orders/' + ${product.getId()} + '/sub'}" class="minus" th:value="${product.getId()}" >-</a> <input class="nbitem" /> <a th:href="@{'/orders/' + ${product.getId()} + '/add'}" class="plus" th:value="${product.getId()}" >+</a></p>
+            <p><a th:href="@{'/orders/' + ${product.getId()} + '/sub'}" class="minus" th:value="${product.getId()}" >-</a> <input class="nbitem" />
+                <a th:href="@{'/orders/' + ${product.getId()} + '/add'}" class="plus" th:value="${product.getId()}" >+</a></p>
         </div>
 
     </div>

@@ -82,7 +82,7 @@ public class ProductController {
      */
     @GetMapping("/emptycart")
     public String emptyCart(HttpSession session, Model model) {
-        sessionController.emptyCart();
+        sessionController.emptyCart(session);
         sessionController.addSessionAttributes(session, model);
         return "shop/fragments/home";
     }
