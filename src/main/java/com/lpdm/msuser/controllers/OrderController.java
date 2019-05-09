@@ -101,7 +101,7 @@ public class OrderController {
             return "shop/fragments/account/login";
         }
 
-        order.setTotal((int)session.getAttribute("cartTotal"));
+        order.setTotal((double)session.getAttribute("cartTotal"));
         order.setOrderedProducts((List<OrderedProductBean>) session.getAttribute("cart"));
         order.setStatus(StatusEnum.PROCESSED);
         order.setOrderDate(LocalDateTime.now());
@@ -126,10 +126,10 @@ public class OrderController {
     @GetMapping("/{id}/add")
     public String addItem(@PathVariable("id") int productId, Model model, HttpSession session){
 
-        int cartTotal = 0;
+        double cartTotal = 0;
         logger.info("Entrée dans addItem pour produit : " + productId);
         try {
-            cartTotal = (int) session.getAttribute("cartTotal");
+            cartTotal = (double)session.getAttribute("cartTotal");
         }catch(NullPointerException e){
             logger.info("Le cart n'a pas été initialisé");
         }
@@ -182,7 +182,8 @@ public class OrderController {
 
         logger.info("Entrée dans addItem pour produit : " + productId);
         List<OrderedProductBean> orderedProducts = (List<OrderedProductBean>) session.getAttribute("cart");
-        double cartTotal = (double)session.getAttribute("cartTotal");
+        orderedProducts = orderedProducts == null? new ArrayList<OrderedProductBean>() : orderedProducts;
+        double cartTotal = Double.valueOf((int)session.getAttribute("cartTotal"));
         OrderedProductBean orderedProduct = null;
         ProductBean product;
 
@@ -196,7 +197,6 @@ public class OrderController {
                 orderedProduct.setQuantity(orderedProduct.getQuantity() >= 1 ? orderedProduct.getQuantity() - 1 : 0);
                 if (orderedProduct.getQuantity() == 0) {
                     orderedProducts.remove(orderedProduct);
-                    //sessionController.cart.remove(ord redProduct);
                     session.setAttribute("cart", orderedProducts);
                 }
                 break;

@@ -47,7 +47,6 @@ public class HomeController {
             boolean producer = false;
             List<AppRoleBean> roles = appUser.getAppRole();
             for (AppRoleBean role : roles) {
-                logger.info(role.getRoleName());
                 if (role.getRoleName().equals("PRODUCER")) {
                     producer = true;
                 }

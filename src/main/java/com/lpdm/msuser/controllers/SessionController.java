@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.ui.Model;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -30,11 +31,6 @@ public class SessionController {
     @Autowired
     MsUserProxy msUserProxy;
 
-    public List<OrderedProductBean> cart = new ArrayList<>();
-
-    public double cartTotal;
-
-
     @Bean
     public SessionController getSession(){
         return new SessionController();
@@ -54,10 +50,13 @@ public class SessionController {
             logger.info("Pas d'utilisateur identifié");
         }
         List<OrderedProductBean> orderedProducts = (List<OrderedProductBean>) session.getAttribute("cart");
+        double cartTotal = (double) session.getAttribute("cartTotal");
+
+
 
         model.addAttribute("cart", orderedProducts == null ? new ArrayList<OrderedProductBean>() : orderedProducts);
         model.addAttribute("producers", msUserProxy.getUsersByRole(3));
-        model.addAttribute("total", session.getAttribute("cartTotal"));
+        model.addAttribute("total", cartTotal);
         model.addAttribute("products", msProductProxy.listProduct());
         model.addAttribute("categories", msProductProxy.listCategories());
         model.addAttribute("roles", msAuthProxy.findAllRoles());
@@ -67,7 +66,7 @@ public class SessionController {
      * clears cart
      */
     public void emptyCart(HttpSession session){
-        session.setAttribute("cartTotal", 0);
+        session.setAttribute("cartTotal", (double)0);
         session.setAttribute("cart", new ArrayList<OrderedProductBean>());
     }
 
@@ -76,7 +75,7 @@ public class SessionController {
      * @param session
      */
     public void logout(HttpSession session){
-        session.setAttribute("cartTotal", 0);
+        session.setAttribute("cartTotal", (double)0);
         session.setAttribute("cart", new ArrayList<OrderedProductBean>());
         session.removeAttribute("user");
         session.removeAttribute("total");

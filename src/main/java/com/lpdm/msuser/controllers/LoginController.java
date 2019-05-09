@@ -171,7 +171,6 @@ public class LoginController {
     @GetMapping("/logout")
     public String logout(HttpSession session, Model model){
         sessionController.addSessionAttributes(session, model);
-        logger.info(sessionController.cart.toString());
         sessionController.logout(session);
         return "shop/fragments/home";
     }
